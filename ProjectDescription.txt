@@ -1,0 +1,9 @@
+Eleni Panagiotou (1): The local topological free energy of SARS-CoV-2 .  
+The novel coronavirus SARS-CoV-2 infects human cells using a mechanism that involves binding and structural rearrangement of its spike protein.
+Understanding protein rearrangement and identifying specific residues where mutations affect protein rearrangement has attracted a lot of
+attention for drug development. The 3-dimensional conformation of proteins can be characterized using tools from Mathematics and more precisely,
+Knot Theory. We will use the newly discovered Vassiliev measures to associate a local topological/geometrical free energy along with the
+SARS-CoV-2 spike protein.  The participating students (in collaboration with their mentor) will need to create code in Python that calculates
+Vassiliev measures. The students will calculate these parameters for a culled protein data set in the Protein Data Bank and for crystal structures
+of SARS-CoV-2 mutants in pre and post-fusion conformations to determine regions in the SARS-CoV-2 Spike protein that are key for its function and
+appropriate targets for drug development.
