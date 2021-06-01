@@ -443,6 +443,3 @@ spikeList = spikeDF.values.tolist()                 #change df to a list of atom
 calculate_open(spikeList)
 #vas is 0.132 for 6zge
 
-
-
-
