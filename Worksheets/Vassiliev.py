@@ -418,12 +418,13 @@ def plot_open(knot):
 def vas_scan(protein):
     vas_instance = Vas()
     max_list = []
+    
     start_time = time.time()
 
     for scanlength in range(200, 601, 200):
         vas_list = []
         for start in range(0, len(protein) - scanlength - 1, 50):    #scan the protein at every possible starting index
-            local_vas = vas_instance.vas_open(protein[start:scanlength])
+            local_vas = vas_instance.vas_open(protein[start : start + scanlength])
             vas_list.append( local_vas )
             print(local_vas)
         
@@ -439,7 +440,8 @@ def vas_scan(protein):
     print(f"\nThe time elapsed was {end_time - start_time} seconds")
     return max_list
 
-
+def plot_by_section(knot, scanlength):
+    return
 
 ##########################
 
@@ -470,5 +472,5 @@ print(f"Protein has {len(spikeList)} CA atoms\n")
 
 vas_list = vas_scan(spikeList)
 
+
 print(f"vas list: {vas_list}")
-#vas is  for 6acd
