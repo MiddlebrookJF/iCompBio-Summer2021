@@ -370,6 +370,7 @@ class Vas:
         print(vks)
         print(vkavg)
 
+#WII: Calculate second Vassiliev measure of knot and plot it
 def plot_closed(knot):
     instance = Vas()
 
@@ -393,6 +394,7 @@ def plot_closed(knot):
     ax.plot3D(x, y, z)
     plt.show()
 
+#WII: Calculate second Vassiliev measure of open 3d curve and plot it
 def plot_open(knot):
     instance = Vas()
 
@@ -413,7 +415,8 @@ def plot_open(knot):
     ax.plot3D(x, y, z)
     plt.show()
 
-def vas_slide(protein):
+#WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
+def vas_scan(protein):
     vas = Vas()
     max_list = []
     start_time = time.time()
@@ -426,8 +429,8 @@ def vas_slide(protein):
         max_vas = max(vas_list)                 #find max values of vas in given iteration, then record them
         max_start = vas_list.index(max_vas)
         max_loc = [max_start, max_start + scanlength]
-        max_list.append(max_loc)
-        print(f"list for {scanlength} scanlength is {max_list}")
+        max_list.append([max_loc, max_vas])
+        print(f"list after {scanlength} scanlength is {max_list}")
     
     end_time = time.time()
     print(f"\nThe time elapsed was {end_time - start_time} seconds")
@@ -462,7 +465,7 @@ sixACD = pd.read_csv(r'Coordinates\6acd.csv')
 print(sixACD.head())
 spikeList = sixACD.values.tolist()                 #change df to a list of atoms' coordinates
 
-vas_list = vas_slide(spikeList)
+vas_list = vas_scan(spikeList)
 
 print(f"vas list: {vas_list}")
 #vas is  for 6acd
