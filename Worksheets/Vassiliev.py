@@ -89,7 +89,6 @@ class Vas:
 
     @staticmethod
     def vas_closed(verts):
-        sum_vas=0
         all_vas=[]
         
         #write as [[x,y,z],[x,y,z],...,[x,y,z]]
@@ -161,7 +160,7 @@ class Vas:
         #print(" ")
         #print(crossings)
         #print(" ")
-        
+    
         verts.append(verts[0])
         for k in range(0,len(crossings)-1):
             for l in range(k+1,len(crossings)):
@@ -212,23 +211,22 @@ class Vas:
                         v2 = v2 + float(np.sign(Vas.gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(Vas.gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]), np.array(verts[x + 1]))))
 
         verts.pop(len(verts)-1)
-        sum_vas += v2
         all_vas.append(v2)
         
         # print(all_vas)
-        vas_avg = sum_vas / 2
-        return vas_avg
+        v2 /= 2
+        return v2
 
     @staticmethod
     def vas_open(verts):
-        niterations = 500
+        niterations = 100           #originally 500
         nverts = len(verts)
 
         if nverts < 5:
-            return 0    #vas_avg = 0
-        else:
-            sum_vas = 0
-        
+            vas_avg = 0
+            return vas_avg
+
+        sum_vas = 0
         all_vas=[]
         for p in range(0, niterations):
             #write as [[x,y,z],[x,y,z],...,[x,y,z]]
@@ -417,20 +415,24 @@ def plot_open(knot):
 
 #WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
 def vas_scan(protein):
-    vas = Vas()
+    vas_instance = Vas()
     max_list = []
     start_time = time.time()
 
-    for scanlength in range(100, 600, 100):
+    for scanlength in range(200, 601, 200):
         vas_list = []
-        for start in range(0, len(protein) - scanlength - 1, 1):    #scan the protein at every possible starting index
-            vas_list.append( vas.vas_open(protein[start:scanlength]) )
+        for start in range(0, len(protein) - scanlength - 1, 100):    #scan the protein at every possible starting index
+            local_vas = vas_instance.vas_open(protein[start:scanlength])
+            vas_list.append( local_vas )
+            print(local_vas)
+        
+        print(f"vas list is {vas_list}")
         
         max_vas = max(vas_list)                 #find max values of vas in given iteration, then record them
         max_start = vas_list.index(max_vas)
         max_loc = [max_start, max_start + scanlength]
         max_list.append([max_loc, max_vas])
-        print(f"list after {scanlength} scanlength is {max_list}")
+        print(f"max list after {scanlength} scanlength is {max_list}")
     
     end_time = time.time()
     print(f"\nThe time elapsed was {end_time - start_time} seconds")
@@ -462,7 +464,8 @@ def vas_scan(protein):
 # #vas is 0.995 for open trefoil
 
 sixACD = pd.read_csv(r'Coordinates\6acd.csv')
-print(sixACD.head())
+# print(sixACD.head())
+print("\n")
 spikeList = sixACD.values.tolist()                 #change df to a list of atoms' coordinates
 
 vas_list = vas_scan(spikeList)
