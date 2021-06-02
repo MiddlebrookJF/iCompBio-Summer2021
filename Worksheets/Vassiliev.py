@@ -111,52 +111,53 @@ class Vas:
 
         if nverts < 5:
             v2 = 0
-        else:
-            for j in range(0, nverts): 
-                vect01=np.array(verts[j])
-                if j < nverts-1:
-                    vect02=np.array(verts[j+1])
-                else:
-                    vect02=np.array(verts[0])
-                
-                for i in range(j+2, nverts):
-                    if i != j+nverts-1:
-                        vect11=np.array(verts[i])
-                        if i < nverts-1:
-                            vect12=np.array(verts[i+1])
-                        else:
-                            vect12=np.array(verts[0])
-                        #print(j, vect01, vect02)
-                        #print(i, vect11, vect12)
+            return v2
+            
+        for j in range(0, nverts): 
+            vect01=np.array(verts[j])
+            if j < nverts-1:
+                vect02=np.array(verts[j+1])
+            else:
+                vect02=np.array(verts[0])
+            
+            for i in range(j+2, nverts):
+                if i != j+nverts-1:
+                    vect11=np.array(verts[i])
+                    if i < nverts-1:
+                        vect12=np.array(verts[i+1])
+                    else:
+                        vect12=np.array(verts[0])
+                    #print(j, vect01, vect02)
+                    #print(i, vect11, vect12)
 
-                        x01=vect01[0]
-                        x02=vect02[0]
-                        x11=vect11[0]
-                        x12=vect12[0]
-                        y01=vect01[1]
-                        y02=vect02[1]
-                        y11=vect11[1]
-                        y12=vect12[1]
+                    x01=vect01[0]
+                    x02=vect02[0]
+                    x11=vect11[0]
+                    x12=vect12[0]
+                    y01=vect01[1]
+                    y02=vect02[1]
+                    y11=vect11[1]
+                    y12=vect12[1]
 
-                        x0=x02-x01
-                        x1=x12-x11
-                        y0=y02-y01
-                        y1=y12-y11
+                    x0=x02-x01
+                    x1=x12-x11
+                    y0=y02-y01
+                    y1=y12-y11
 
-                        #Kramer's rule to find intersection points in the projection
-                        A = np.array([ [x0, -x1], [y0, -y1] ])
-                        B = np.array([x11-x01, y11-y01])
-                        if np.linalg.det(A) != 0:
-                            X = np.linalg.inv(A).dot(B)
-                            if (0 <= X[0] <= 1) and (0 <= X[1] <= 1):       #Check if the potential intersection is within the edges
-                                I = np.array([ X[0]*x0+x01, X[0]*y0+y01 ])
-                                #print(I)
-                                intersections.append(I)
-                                zi0=vect01[2]+(X[0]*(vect02[2]-vect01[2]))
-                                zi1=vect11[2]+(X[1]*(vect12[2]-vect11[2]))
-                                #print(zi0, zi1)
-                                crossings.append([j,i,X[0],X[1]])
-                                z.append([zi0,zi1])
+                    #Kramer's rule to find intersection points in the projection
+                    A = np.array([ [x0, -x1], [y0, -y1] ])
+                    B = np.array([x11-x01, y11-y01])
+                    if np.linalg.det(A) != 0:
+                        X = np.linalg.inv(A).dot(B)
+                        if (0 <= X[0] <= 1) and (0 <= X[1] <= 1):       #Check if the potential intersection is within the edges
+                            I = np.array([ X[0]*x0+x01, X[0]*y0+y01 ])
+                            #print(I)
+                            intersections.append(I)
+                            zi0=vect01[2]+(X[0]*(vect02[2]-vect01[2]))
+                            zi1=vect11[2]+(X[1]*(vect12[2]-vect11[2]))
+                            #print(zi0, zi1)
+                            crossings.append([j,i,X[0],X[1]])
+                            z.append([zi0,zi1])
         #print(" ")
         #print(crossings)
         #print(" ")
@@ -421,18 +422,18 @@ def vas_scan(protein):
 
     for scanlength in range(200, 601, 200):
         vas_list = []
-        for start in range(0, len(protein) - scanlength - 1, 100):    #scan the protein at every possible starting index
+        for start in range(0, len(protein) - scanlength - 1, 50):    #scan the protein at every possible starting index
             local_vas = vas_instance.vas_open(protein[start:scanlength])
             vas_list.append( local_vas )
             print(local_vas)
         
-        print(f"vas list is {vas_list}")
+        print(f"The Vas measures from 0 to {len(protein)} are {vas_list}")
         
-        max_vas = max(vas_list)                 #find max values of vas in given iteration, then record them
+        max_vas = max(vas_list)                 #find max value of vas in given iteration, then record them
         max_start = vas_list.index(max_vas)
         max_loc = [max_start, max_start + scanlength]
+        print(f"The maximum Vassiliev for scanlength of {scanlength} is {max_vas}, at atoms {max_loc}\n")
         max_list.append([max_loc, max_vas])
-        print(f"max list after {scanlength} scanlength is {max_list}")
     
     end_time = time.time()
     print(f"\nThe time elapsed was {end_time - start_time} seconds")
@@ -464,9 +465,8 @@ def vas_scan(protein):
 # #vas is 0.995 for open trefoil
 
 sixACD = pd.read_csv(r'Coordinates\6acd.csv')
-# print(sixACD.head())
-print("\n")
 spikeList = sixACD.values.tolist()                 #change df to a list of atoms' coordinates
+print(f"Protein has {len(spikeList)} CA atoms\n")
 
 vas_list = vas_scan(spikeList)
 
