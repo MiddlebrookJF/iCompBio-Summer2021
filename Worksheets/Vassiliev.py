@@ -224,10 +224,10 @@ class Vas:
         niterations = 500
         nverts = len(verts)
 
-        if nverts<5:
-            vas_avg=0
+        if nverts < 5:
+            return 0    #vas_avg = 0
         else:
-            sum_vas=0
+            sum_vas = 0
         
         all_vas=[]
         for p in range(0, niterations):
@@ -370,7 +370,7 @@ class Vas:
         print(vks)
         print(vkavg)
 
-def calculate_closed(knot):
+def plot_closed(knot):
     instance = Vas()
 
     start_time = time.time()
@@ -393,7 +393,7 @@ def calculate_closed(knot):
     ax.plot3D(x, y, z)
     plt.show()
 
-def calculate_open(knot):
+def plot_open(knot):
     instance = Vas()
 
     start_time = time.time()
@@ -413,6 +413,28 @@ def calculate_open(knot):
     ax.plot3D(x, y, z)
     plt.show()
 
+def vas_slide(protein):
+    vas = Vas()
+    max_list = []
+    start_time = time.time()
+
+    for scanlength in range(100, 600, 100):
+        vas_list = []
+        for start in range(0, len(protein) - scanlength - 1, 1):    #scan the protein at every possible starting index
+            vas_list.append( vas.vas_open(protein[start:scanlength]) )
+        
+        max_vas = max(vas_list)                 #find max values of vas in given iteration, then record them
+        max_start = vas_list.index(max_vas)
+        max_loc = [max_start, max_start + scanlength]
+        max_list.append(max_loc)
+        print(f"list for {scanlength} scanlength is {max_list}")
+    
+    end_time = time.time()
+    print(f"\nThe time elapsed was {end_time - start_time} seconds")
+    return max_list
+
+
+
 ##########################
 
 # trefoil = [[1, 0, 0],
@@ -422,7 +444,7 @@ def calculate_open(knot):
 #             [5, 2, 5],
 #             [4, 6, -2]]
 
-# calculate_closed(trefoil)
+# plot_closed(trefoil)
 # #vas is 1.0 for closed trefoil
 
 # trefoil = [[1, 0, 0],
@@ -433,13 +455,14 @@ def calculate_open(knot):
 #             [4, 6, -2],
 #             [0.5, 0.5, 0.5]]
 
-# calculate_open(trefoil)
+# plot_open(trefoil)
 # #vas is 0.995 for open trefoil
 
-spikeDF = pd.read_csv(r'Coordinates\6zge.csv')
-print(spikeDF.head())
-spikeList = spikeDF.values.tolist()                 #change df to a list of atoms' coordinates
+sixACD = pd.read_csv(r'Coordinates\6acd.csv')
+print(sixACD.head())
+spikeList = sixACD.values.tolist()                 #change df to a list of atoms' coordinates
 
-calculate_open(spikeList)
-#vas is 0.132 for 6zge
+vas_list = vas_slide(spikeList)
 
+print(f"vas list: {vas_list}")
+#vas is  for 6acd
