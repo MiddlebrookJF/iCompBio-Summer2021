@@ -86,7 +86,6 @@ class Vas:
         #print(np.dot(yv, zv))
         return(np.array([xv,yv,zv]))
 
-
     @staticmethod
     def vas_closed(verts):
         all_vas=[]
@@ -144,7 +143,7 @@ class Vas:
                     y0=y02-y01
                     y1=y12-y11
 
-                    #Kramer's rule to find intersection points in the projection
+                    #Cramer's rule to find intersection points in the projection
                     A = np.array([ [x0, -x1], [y0, -y1] ])
                     B = np.array([x11-x01, y11-y01])
                     if np.linalg.det(A) != 0:
@@ -220,125 +219,115 @@ class Vas:
 
     @staticmethod
     def vas_open(verts):
-        niterations = 100           #originally 500
         nverts = len(verts)
-
         if nverts < 5:
-            vas_avg = 0
-            return vas_avg
+            return 0        #If less than 5 points, the Vassiliev is 0
 
+        niterations = 100           #originally 500
         sum_vas = 0
-        all_vas=[]
-        for p in range(0, niterations):
+        # all_vas=[]
+
+        for p in range(0, niterations):                 #n random projections of the knot so that the vas can be calculted n times and then averaged
             #write as [[x,y,z],[x,y,z],...,[x,y,z]]
             v2 = 0
-            nverts = len(verts)
-            intersections = []
-            crossings = []
-            z = []
-            kcoords = []
+            intersections, crossings, z, kcoords = [], [], [], []
             
             r = Vas.randomvector(3)
             for k in range(0, nverts):
-                xk = ((r[0][0]*verts[k][0])+(r[0][1]*verts[k][1])+(r[0][2]*verts[k][2]))/(math.sqrt((r[0][0]*r[0][0])+(r[0][1]*r[0][1])+(r[0][2]*r[0][2])))
-                yk = ((r[1][0]*verts[k][0])+(r[1][1]*verts[k][1])+(r[1][2]*verts[k][2]))/(math.sqrt((r[1][0]*r[1][0])+(r[1][1]*r[1][1])+(r[1][2]*r[1][2])))
-                zk = ((r[2][0]*verts[k][0])+(r[2][1]*verts[k][1])+(r[2][2]*verts[k][2]))/(math.sqrt((r[2][0]*r[2][0])+(r[2][1]*r[2][1])+(r[2][2]*r[2][2])))
-                kcoord = [xk,yk,zk]
-                kcoords.append(kcoord)
-            #print(kcoords)
+                xk = ((r[0][0]*verts[k][0])+(r[0][1]*verts[k][1])+(r[0][2]*verts[k][2])) / (math.sqrt((r[0][0]*r[0][0])+(r[0][1]*r[0][1])+(r[0][2]*r[0][2])))
+                yk = ((r[1][0]*verts[k][0])+(r[1][1]*verts[k][1])+(r[1][2]*verts[k][2])) / (math.sqrt((r[1][0]*r[1][0])+(r[1][1]*r[1][1])+(r[1][2]*r[1][2])))
+                zk = ((r[2][0]*verts[k][0])+(r[2][1]*verts[k][1])+(r[2][2]*verts[k][2])) / (math.sqrt((r[2][0]*r[2][0])+(r[2][1]*r[2][1])+(r[2][2]*r[2][2])))
+                kcoords.append([xk,yk,zk])
             
             verts = kcoords           #these are the projected coordinates
 
-            for j in range(0, nverts - 3):
-                    vect01=np.array(verts[j])
-                    vect02=np.array(verts[j+1])
-                    for i in range(j+2, nverts-1):
+            for j in range(0, nverts - 3):      #Happens nverts - 3 or around 1000 times
+                vect01 = np.array(verts[j])
+                vect02 = np.array(verts[j+1])
 
-                            vect11=np.array(verts[i])
-                            vect12=np.array(verts[i+1])
-                            #else:
-                                #vect12=np.array(verts[0])
-                            #print(j, vect01, vect02)
-                            #print(i, vect11, vect12)
+                for i in range(j+2, nverts-1):
+                    vect11 = np.array(verts[i])
+                    vect12 = np.array(verts[i+1])
+                    #else:
+                        #vect12=np.array(verts[0])
+                    #print(j, vect01, vect02)
+                    #print(i, vect11, vect12)
 
-                            x01=vect01[0]
-                            x02=vect02[0]
-                            x11=vect11[0]
-                            x12=vect12[0]
-                            y01=vect01[1]
-                            y02=vect02[1]
-                            y11=vect11[1]
-                            y12=vect12[1]
+                    x01=vect01[0]
+                    x02=vect02[0]
+                    x11=vect11[0]
+                    x12=vect12[0]
+                    y01=vect01[1]
+                    y02=vect02[1]
+                    y11=vect11[1]
+                    y12=vect12[1]
 
-                            x0=x02-x01
-                            x1=x12-x11
-                            y0=y02-y01
-                            y1=y12-y11
+                    x0=x02-x01
+                    x1=x12-x11
+                    y0=y02-y01
+                    y1=y12-y11
 
-                            A=np.array([[x0,-x1],[y0,-y1]]) ###Kramer's rule for intersection 
-                            B=np.array([x11-x01,y11-y01])
-                            if np.linalg.det(A)!=0:
-                                X=np.linalg.inv(A).dot(B)
-                                if (0<=X[0]<=1) and (0<=X[1]<=1):
-                                    I=np.array([X[0]*x0+x01,X[0]*y0+y01])
-                                    #print(I)
-                                    intersections.append(I)
-                                    zi0=vect01[2]+(X[0]*(vect02[2]-vect01[2]))
-                                    zi1=vect11[2]+(X[1]*(vect12[2]-vect11[2]))
-                                    #print(zi0, zi1)
-                                    crossings.append([j,i,X[0],X[1]]) #### [edge j, edge I, 
-                                    z.append([zi0,zi1])
-            #print(" ")
-            #print(crossings)
-            #print(" ")
+                    A=np.array([[x0,-x1],[y0,-y1]])     #Cramer's rule for intersection 
+                    if (np.linalg.det(A) != 0):
+                        B = np.array([x11-x01,y11-y01])
+                        X=np.linalg.inv(A).dot(B)
+
+                        if (0 <= X[0] <= 1) and (0 <= X[1] <= 1):
+                            I = np.array([X[0]*x0+x01, X[0]*y0+y01])
+                            intersections.append(I)
+
+                            zi0 = vect01[2]+(X[0]*(vect02[2]-vect01[2]))
+                            zi1 = vect11[2]+(X[1]*(vect12[2]-vect11[2]))
+                            
+                            z.append([zi0,zi1])
+                            crossings.append([j,i,X[0],X[1]]) 
+            #print(f"\n{crossings}\n")\
 
             for k in range(0,len(crossings)-1):
-                for l in range(k+1,len(crossings)):
+                for l in range(k+1, len(crossings)):
                     u=crossings[k][0]
                     v=crossings[k][1]
                     w=crossings[l][0]
                     x=crossings[l][1]
-                    if (u<w) and (w<v) and (v<x) and ((z[k][0]>z[k][1] and z[l][0]<z[l][1]) or (z[k][0]<z[k][1] and z[l][0]>z[l][1])):
-                        #print(crossings[k],crossings[l])
-                        #print(u,v,w,x)
-                        #print(verts[u])
-                        #print(verts[u+1])
-                        #print(verts[v])
-                        #print(verts[v+1])
-                        #print(np.sign(gauss_lk(np.array(verts[u]),np.array(verts[u+1]),np.array(verts[v]),np.array(verts[v+1]))))
-                        v2=v2+float(np.sign(Vas.gauss_lk(np.array(verts[u]),np.array(verts[u+1]),np.array(verts[v]),np.array(verts[v+1]))))*float(np.sign(Vas.gauss_lk(np.array(verts[w]),np.array(verts[w+1]),np.array(verts[x]),np.array(verts[x+1]))))
-                    else:
-                        if (u==w) and (crossings[k][2]<crossings[l][2]) and (w<v) and (v<x) and ((z[k][0]>z[k][1] and z[l][0]<z[l][1]) or (z[k][0]<z[k][1] and z[l][0]>z[l][1])):
-                            #print("UW",crossings[k],crossings[l])
-                            #print(u,v,w,x)
-                            #print(verts[u])
-                            #print(verts[u + 1])
-                            #print(verts[v])
-                            #print(verts[v + 1])
-                            #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
-                            v2 = v2 + float(np.sign(Vas.gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(Vas.gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]),np.array(verts[x + 1]))))
-                        if (v==x) and (crossings[k][3]<crossings[l][3]) and (u<w) and (w<v) and ((z[k][0]>z[k][1] and z[l][0]<z[l][1]) or (z[k][0]<z[k][1] and z[l][0]>z[l][1])):
-                            #print("VX",crossings[k],crossings[l])
-                            #print(u,v,w,x)
-                            #print(verts[u])
-                            #print(verts[u + 1])
-                            #print(verts[v])
-                            #print(verts[v + 1])
-                            #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
-                            v2 = v2 + float(np.sign(Vas.gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(Vas.gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]),np.array(verts[x + 1]))))
-                        if (v==w) and (crossings[l][2]<crossings[k][3]) and (u<w) and (v<x) and ((z[k][0]>z[k][1] and z[l][0]<z[l][1]) or (z[k][0]<z[k][1] and z[l][0]>z[l][1])):
-                            #print("VW", crossings[k], crossings[l])
-                            #print(u,v,w,x)
-                            #print(verts[u])
-                            #print(verts[u + 1])
-                            #print(verts[v])
-                            #print(verts[v + 1])
-                            #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
-                            #print(float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]), np.array(verts[x + 1])))))
-                            v2 = v2 + float(np.sign(Vas.gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(Vas.gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]), np.array(verts[x + 1]))))
+                    if (u<w) and (w<v) and (v<x) and ((z[k][0] > z[k][1] and z[l][0] < z[l][1]) or (z[k][0] < z[k][1] and z[l][0] > z[l][1])):
+                        
+                        v2 += float(np.sign(Vas.gauss_lk(np.array(verts[u]),np.array(verts[u+1]),np.array(verts[v]),np.array(verts[v+1])))) * float(np.sign(Vas.gauss_lk(np.array(verts[w]),np.array(verts[w+1]),np.array(verts[x]),np.array(verts[x+1]))))
+                    
+                    elif (z[k][0] > z[k][1] and z[l][0] < z[l][1]) or (z[k][0] < z[k][1] and z[l][0] > z[l][1]):
+                            if (u==w) and (crossings[k][2]<crossings[l][2]) and (w<v) and (v<x):
+                                #print("UW",crossings[k],crossings[l])
+                                #print(u,v,w,x)
+                                #print(verts[u])
+                                #print(verts[u + 1])
+                                #print(verts[v])
+                                #print(verts[v + 1])
+                                #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
+                                v2 += float(np.sign(Vas.gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(Vas.gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]),np.array(verts[x + 1]))))
+                            if (v==x) and (crossings[k][3]<crossings[l][3]) and (u<w) and (w<v):
+                                #print("VX",crossings[k],crossings[l])
+                                #print(u,v,w,x)
+                                #print(verts[u])
+                                #print(verts[u + 1])
+                                #print(verts[v])
+                                #print(verts[v + 1])
+                                #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
+                                v2 += float(np.sign(Vas.gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(Vas.gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]),np.array(verts[x + 1]))))
+                            if (v==w) and (crossings[l][2]<crossings[k][3]) and (u<w) and (v<x):
+                                #print("VW", crossings[k], crossings[l])
+                                #print(u,v,w,x)
+                                #print(verts[u])
+                                #print(verts[u + 1])
+                                #print(verts[v])
+                                #print(verts[v + 1])
+                                #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
+                                #print(float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]), np.array(verts[x + 1])))))
+                                v2 += float(np.sign(Vas.gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(Vas.gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]), np.array(verts[x + 1]))))
 
             sum_vas += v2
-            all_vas.append(v2)
+
+            # all_vas.append(v2)
+            # print(v2)
+        #end for p in range(0, niterations)
 
         #print(all_vas)
         vas_avg = (sum_vas/niterations) / 2
@@ -418,20 +407,21 @@ def plot_open(knot):
 def vas_scan(protein):
     vas_instance = Vas()
     max_list = []
+    interval = 100
     
     start_time = time.time()
 
-    for scanlength in range(200, 601, 200):
+    for scanlength in range(400, 601, 400):
         vas_list = []
-        for start in range(0, len(protein) - scanlength - 1, 50):    #scan the protein at every possible starting index
+        for start in range(0, len(protein) - scanlength - 1, interval):    #scan the protein at every possible starting index
             local_vas = vas_instance.vas_open(protein[start : start + scanlength])
             vas_list.append( local_vas )
-            print(local_vas)
+            print(f"{local_vas} at {start}:{start + scanlength}")
         
         print(f"The Vas measures from 0 to {len(protein)} are {vas_list}")
         
-        max_vas = max(vas_list)                 #find max value of vas in given iteration, then record them
-        max_start = vas_list.index(max_vas)
+        max_vas = max(np.abs(vas_list))                 #find max value of vas in given iteration, then record them
+        max_start = vas_list.index(max_vas) * interval
         max_loc = [max_start, max_start + scanlength]
         print(f"The maximum Vassiliev for scanlength of {scanlength} is {max_vas}, at atoms {max_loc}\n")
         max_list.append([max_loc, max_vas])
@@ -440,37 +430,66 @@ def vas_scan(protein):
     print(f"\nThe time elapsed was {end_time - start_time} seconds")
     return max_list
 
-def plot_by_section(knot, scanlength):
-    return
+def plot_by_section(knot, section, interval):
+
+    ax = plt.axes(projection='3d')
+    for i in range(section[0], section[1] - interval, interval):
+        x, y, z = [], [], []
+        for j in range (i, i + interval, 1):
+            x.append(knot[j][0])
+            y.append(knot[j][1])
+            z.append(knot[j][2])
+        print(f"Knot from {i} to {i + interval} plotted")
+
+        ax.plot3D(x, y, z)
+        if (i + interval + interval > section[1]):
+            for j in range (i + interval, section[1], 1):
+                x.append(knot[j][0])
+                y.append(knot[j][1])
+                z.append(knot[j][2])
+            print(f"Knot from {i + interval} to {section[1]} plotted")
+    
+    plt.show()
 
 ##########################
 
-# trefoil = [[1, 0, 0],
-#             [4, 0, 0],
-#             [1, 6, 2],
-#             [0, 2, -5],
-#             [5, 2, 5],
-#             [4, 6, -2]]
+# trefoil stuff
+    # trefoil = [[1, 0, 0],
+    #             [4, 0, 0],
+    #             [1, 6, 2],
+    #             [0, 2, -5],
+    #             [5, 2, 5],
+    #             [4, 6, -2]]
 
-# plot_closed(trefoil)
-# #vas is 1.0 for closed trefoil
+    # plot_closed(trefoil)
+    # #vas is 1.0 for closed trefoil
 
-# trefoil = [[1, 0, 0],
-#             [4, 0, 0],
-#             [1, 6, 2],
-#             [0, 2, -5],
-#             [5, 2, 5],
-#             [4, 6, -2],
-#             [0.5, 0.5, 0.5]]
+    # trefoil = [[1, 0, 0],
+    #             [4, 0, 0],
+    #             [1, 6, 2],
+    #             [0, 2, -5],
+    #             [5, 2, 5],
+    #             [4, 6, -2],
+    #             [0.5, 0.5, 0.5]]
 
-# plot_open(trefoil)
-# #vas is 0.995 for open trefoil
+    # plot_open(trefoil)
+    # #vas is 0.995 for open trefoil
 
-sixACD = pd.read_csv(r'Coordinates\6acd.csv')
-spikeList = sixACD.values.tolist()                 #change df to a list of atoms' coordinates
-print(f"Protein has {len(spikeList)} CA atoms\n")
+proteinName = ["6zge"]
+proteinDF = pd.read_csv(fr'Coordinates\{proteinName}.csv')
+proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+print(f"Protein has {len(proteinList)} CA atoms\n")
 
-vas_list = vas_scan(spikeList)
+start_time = time.time()            #start
+spike_vas = Vas.vas_open(proteinList)
+end_time = time.time()              #end
+print(f"\nThe time elapsed for the vas_open method was {end_time - start_time} seconds")
+pd.Dataframe([proteinName, len(proteinList), (end_time - start_time)])  #try to create a DF out of all these things
 
+# vas_list = vas_scan(spikeList)
+# print(f"vas list: {vas_list}")
 
-print(f"vas list: {vas_list}")
+# plot_by_section(spikeList, [0, len(spikeList)], 200)
+# interval = 200
+# for i in range(0, len(spikeList), interval):
+#     plot_by_section(spikeList, [i, i + interval], interval)         #change 0 to i to have it show individually
