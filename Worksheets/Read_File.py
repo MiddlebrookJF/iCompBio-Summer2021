@@ -1,3 +1,6 @@
+# File: Read_File.py
+# Creators: Jason Wang
+
 import glob
 import os
 

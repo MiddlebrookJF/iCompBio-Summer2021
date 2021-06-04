@@ -1,3 +1,7 @@
+# File: Vassiliev.py
+# Project: The local topological free energy of SARS-CoV-2
+# Editors: Dr. Eleni Panagiotou, Jason Wang, Jeffrey Richards
+
 import os
 import math
 import numpy as np
@@ -5,6 +9,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import time
 from multiprocessing import Pool
+from functools import partial
+
+#finds scalar triple product of 3 3-D vectors
+def tripleProduct(a,b,c): 
+    return np.dot(np.cross(a,b),c)
 
 #Gauss linking integral of two vectors given their endpoints, all inputs are np.arrays
 def gauss_lk(a1,a2,b1,b2): 
@@ -64,288 +73,126 @@ def randomBasis():
     #generate third unit vector orthogonal to first two
     yv = np.cross(zv, xv)
 
-    print(np.array([xv, yv, zv]))
-    return(np.array([xv,yv,zv]))
+    return [xv,yv,zv]
 
-def vas_closed(verts):
-    all_vas=[]
+#calculates crossings given walk and two points (vectors to next points from those points)
+def crossing (walk, i, k):
+    #set up variables, separating out coordinates
+    x00, x01, x10, x11 = [walk[i][0], walk[i+1][0], walk[k][0], walk[k+1][0]]
+    y00, y01, y10, y11 = [walk[i][1], walk[i+1][1], walk[k][1], walk[k+1][1]]
+    z00, z01, z10, z11 = [walk[i][2], walk[i+1][2], walk[k][2], walk[k+1][2]]
     
-    #write as [[x,y,z],[x,y,z],...,[x,y,z]]
-    v2=0
-    nverts=len(verts)
-    intersections=[]
-    crossings=[]
-    z=[]
-    kcoords=[]
-    
-    r = randomBasis()
-    #Takes vertices and puts into a new coordinate system based on a random vector. This gives us new vertices kcoords
-    for k in range(0, nverts):
-        xk=((r[0][0]*verts[k][0])+(r[0][1]*verts[k][1])+(r[0][2]*verts[k][2]))/(math.sqrt((r[0][0]*r[0][0])+(r[0][1]*r[0][1])+(r[0][2]*r[0][2])))
-        yk=((r[1][0]*verts[k][0])+(r[1][1]*verts[k][1])+(r[1][2]*verts[k][2]))/(math.sqrt((r[1][0]*r[1][0])+(r[1][1]*r[1][1])+(r[1][2]*r[1][2])))
-        zk=((r[2][0]*verts[k][0])+(r[2][1]*verts[k][1])+(r[2][2]*verts[k][2]))/(math.sqrt((r[2][0]*r[2][0])+(r[2][1]*r[2][1])+(r[2][2]*r[2][2])))
-        kcoord=[xk,yk,zk]
-        kcoords.append(kcoord)
-    verts = kcoords           #these are the projected coordinates
-
-    if nverts < 5:
-        v2 = 0
-        return v2
-        
-    for j in range(0, nverts): 
-        vect01=np.array(verts[j])
-        if j < nverts-1:
-            vect02=np.array(verts[j+1])
+    #Cramer's rule to find parametrized intersection
+    A = [[x01-x00, x10-x11],[y01-y00, y10-y11]]
+    B = [[x10-x00],[y10-y00]]
+    if np.linalg.det(A) != 0:
+        paramInt = np.matmul(np.linalg.inv(A),B) 
+        frac1 = paramInt[0] 
+        frac2 = paramInt[1]
+        if (0 <= frac1 <= 1) and (0 <= frac2 <= 1): #checks if intersection is within vectors
+            z0 = z00 + frac1*(z01-z00)
+            z1 = z10 + frac2*(z11-z10)
+            return ([i, k, i if z0>z1 else k, frac1, frac2]) #return two original points, the overstrand, and the fractions
         else:
-            vect02=np.array(verts[0])
-        
-        for i in range(j+2, nverts):
-            if i != j+nverts-1:
-                vect11=np.array(verts[i])
-                if i < nverts-1:
-                    vect12=np.array(verts[i+1])
-                else:
-                    vect12=np.array(verts[0])
-                #print(j, vect01, vect02)
-                #print(i, vect11, vect12)
+            return None
+    else:
+        return None
 
-                x01=vect01[0]
-                x02=vect02[0]
-                x11=vect11[0]
-                x12=vect12[0]
-                y01=vect01[1]
-                y02=vect02[1]
-                y11=vect11[1]
-                y12=vect12[1]
+#checks each of the possible conditions for a pair of crossings, returns true if any are true
+def vas_conditions(cross1, cross2):
+    conditions = []
+    i,j,k,l = [cross1[0],cross2[0],cross1[1],cross2[1]]
 
-                x0=x02-x01
-                x1=x12-x11
-                y0=y02-y01
-                y1=y12-y11
-
-                #Cramer's rule to find intersection points in the projection
-                A = np.array([ [x0, -x1], [y0, -y1] ])
-                B = np.array([x11-x01, y11-y01])
-                if np.linalg.det(A) != 0:
-                    X = np.linalg.inv(A).dot(B)
-                    if (0 <= X[0] <= 1) and (0 <= X[1] <= 1):       #Check if the potential intersection is within the edges
-                        I = np.array([ X[0]*x0+x01, X[0]*y0+y01 ])
-                        #print(I)
-                        intersections.append(I)
-                        zi0=vect01[2]+(X[0]*(vect02[2]-vect01[2]))
-                        zi1=vect11[2]+(X[1]*(vect12[2]-vect11[2]))
-                        #print(zi0, zi1)
-                        crossings.append([j,i,X[0],X[1]])
-                        z.append([zi0,zi1])
-    #print(" ")
-    #print(crossings)
-    #print(" ")
-
-    verts.append(verts[0])
-    for k in range(0,len(crossings)-1):
-        for l in range(k+1,len(crossings)):
-            u=crossings[k][0]
-            v=crossings[k][1]
-            w=crossings[l][0]
-            x=crossings[l][1]
-
-            #Check that crossings qualify based on 1 < 2, etc. and that they alternate correctly
-            if (u<w) and (w<v) and (v<x) and ((z[k][0]>z[k][1] and z[l][0]<z[l][1]) or (z[k][0]<z[k][1] and z[l][0]>z[l][1])):
-                #print(crossings[k],crossings[l])
-                #print(u,v,w,x)
-                #print(verts[u])
-                #print(verts[u+1])
-                #print(verts[v])
-                #print(verts[v+1])
-                #print(np.sign(gauss_lk(np.array(verts[u]),np.array(verts[u+1]),np.array(verts[v]),np.array(verts[v+1]))))
-                v2=v2+float(np.sign(gauss_lk(np.array(verts[u]),np.array(verts[u+1]),np.array(verts[v]),np.array(verts[v+1]))))*float(np.sign(gauss_lk(np.array(verts[w]),np.array(verts[w+1]),np.array(verts[x]),np.array(verts[x+1]))))
-            else:
-                #Check for when one edge is the same for the two pairs
-                if (u==w) and (crossings[k][2]<crossings[l][2]) and (w<v) and (v<x) and ((z[k][0]>z[k][1] and z[l][0]<z[l][1]) or (z[k][0]<z[k][1] and z[l][0]>z[l][1])):
-                    #print("UW",crossings[k],crossings[l])
-                    #print(u,v,w,x)
-                    #print(verts[u])
-                    #print(verts[u + 1])
-                    #print(verts[v])
-                    #print(verts[v + 1])
-                    #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
-                    v2 = v2 + float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]),np.array(verts[x + 1]))))
-                if (v==x) and (crossings[k][3]<crossings[l][3]) and (u<w) and (w<v) and ((z[k][0]>z[k][1] and z[l][0]<z[l][1]) or (z[k][0]<z[k][1] and z[l][0]>z[l][1])):
-                    #print("VX",crossings[k],crossings[l])
-                    #print(u,v,w,x)
-                    #print(verts[u])
-                    #print(verts[u + 1])
-                    #print(verts[v])
-                    #print(verts[v + 1])
-                    #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
-                    v2 = v2 + float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]),np.array(verts[x + 1]))))
-                if (v==w) and (crossings[l][2]<crossings[k][3]) and (u<w) and (v<x) and ((z[k][0]>z[k][1] and z[l][0]<z[l][1]) or (z[k][0]<z[k][1] and z[l][0]>z[l][1])):
-                    #print("VW", crossings[k], crossings[l])
-                    #print(u,v,w,x)
-                    #print(verts[u])
-                    #print(verts[u + 1])
-                    #print(verts[v])
-                    #print(verts[v + 1])
-                    #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
-                    #print(float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]), np.array(verts[x + 1])))))
-                    v2 = v2 + float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]), np.array(verts[x + 1]))))
-
-    verts.pop(len(verts)-1)
-    # all_append(v2)
+    conditions.append(i<j<k<l)
+    conditions.append(i==j<k<l and cross1[3]<cross2[3])
+    conditions.append(i<j==k<l and cross2[3]<cross1[4])
+    conditions.append(i<j<k==l and cross1[4]<cross2[4])
     
-    # print(all_vas)
-    v2 /= 2
-    return v2
+    return any(conditions)
+    
 
-def vas_open(verts, niterations=100):
-    nverts = len(verts)
-    if nverts < 5:
-        return 0        #If less than 5 points, the Vassiliev is 0
+#calculates second Vassiliev measure of just one projection, using crossing and vas_conditions
+def vas_proj(walk, proj=[[1,0,0],[0,1,0],[0,0,1]]):
+    nverts = len(walk)
+    vas_sum = 0
+    IList = []
+    
+    #transform the coordinates of the walk
+    walk = np.matmul(walk, np.transpose(proj).tolist())
+    
+    #create list of pairs to check
+    pairs=[]
+    for j in range(nverts-3):
+        for k in range(j+2,nverts-1):
+            intersection = crossing(walk,j,k)
+            if(intersection != None):
+                IList.append(intersection)
 
-    sum_vas = 0
-    # all_vas=[]
+    #for each pair of crossings, check if ordered correctly 
+    for cross1 in IList: 
+        for cross2 in IList: 
+            i,j,k,l = [cross1[0],cross2[0],cross1[1],cross2[1]] #i,j,k,l are indices of walk with a crossing
+            if (vas_conditions(cross1, cross2)): #ensure coordinates are in order
+                if (cross1[2]==i and cross2[2]==l) or (cross1[2]==k and cross2[2]==j): #one is under and one is over
+                    signedprod1 = np.sign(tripleProduct(walk[i+1]-walk[i], walk[k+1]-walk[k],walk[i]-walk[k]))
+                    signedprod2 = np.sign(tripleProduct(walk[j+1]-walk[j], walk[l+1]-walk[l],walk[j]-walk[l]))
+                    vas_sum += signedprod1*signedprod2 #add the signed product (+/- 1)
+    
+    return(vas_sum * 0.5)
 
-    for p in range(0, niterations):                 #n random projections of the knot so that the vas can be calculted n times and then averaged
-        #write as [[x,y,z],[x,y,z],...,[x,y,z]]
-        v2 = 0
-        intersections, crossings, z, kcoords = [], [], [], []
-        
-        r = randomBasis()
-        for k in range(0, nverts):
-            xk = ((r[0][0]*verts[k][0])+(r[0][1]*verts[k][1])+(r[0][2]*verts[k][2])) / (math.sqrt((r[0][0]*r[0][0])+(r[0][1]*r[0][1])+(r[0][2]*r[0][2])))
-            yk = ((r[1][0]*verts[k][0])+(r[1][1]*verts[k][1])+(r[1][2]*verts[k][2])) / (math.sqrt((r[1][0]*r[1][0])+(r[1][1]*r[1][1])+(r[1][2]*r[1][2])))
-            zk = ((r[2][0]*verts[k][0])+(r[2][1]*verts[k][1])+(r[2][2]*verts[k][2])) / (math.sqrt((r[2][0]*r[2][0])+(r[2][1]*r[2][1])+(r[2][2]*r[2][2])))
-            kcoords.append([xk,yk,zk])
-        
-        verts = kcoords           #these are the projected coordinates
+#estimates second Vassiliev measure of open chain, using vas_proj, crossings, vas_conditions
+#takes a walk as parameter, number of trials and list of random bases are optional
+def vas_open(chain, trials=100, size=10, poolNum=2):
+    random_list = []
+    vas_list = []
+    for i in range(trials):
+        random_list.append(randomBasis())
 
-        for j in range(0, nverts - 3):      #Happens nverts - 3 or around 1000 times
-            vect01 = np.array(verts[j])
-            vect02 = np.array(verts[j+1])
+    for j in random_list:
+        vas_list.append(vas_proj(chain, j))
+    
+    #print(vas_list)
+    vas_sum = sum(vas_list)/trials
+    return vas_sum
 
-            for i in range(j+2, nverts-1):
-                vect11 = np.array(verts[i])
-                vect12 = np.array(verts[i+1])
-                #else:
-                    #vect12=np.array(verts[0])
-                #print(j, vect01, vect02)
-                #print(i, vect11, vect12)
+def vas_open_parallel(chain, trials=100, size=10, poolNum=2):
+    random_list = []
+    
+    for i in range(trials):
+        random_list.append(randomBasis())
 
-                x01=vect01[0]
-                x02=vect02[0]
-                x11=vect11[0]
-                x12=vect12[0]
-                y01=vect01[1]
-                y02=vect02[1]
-                y11=vect11[1]
-                y12=vect12[1]
+    if __name__== '__main__':
+        #iterate over the list with multiple processors
+        p = Pool(poolNum)
+        part = partial(vas_proj, chain)
+        result = p.map(func = part, iterable = random_list, chunksize = size)
+        if(result != None):
+            #print(result)
+            vas_sum = sum(result)/trials
+        p.close()
+        p.join()
+        return vas_sum
 
-                x0=x02-x01
-                x1=x12-x11
-                y0=y02-y01
-                y1=y12-y11
+#vas of either open or closed chain, passed as boolean; default is open
+def vas_measure(walk, closed = False):
+    if (closed):
+        walk.append(walk[0])
+        return vas_open_parallel(walk, trials=1)
+    return vas_open_parallel(walk)
 
-                A=np.array([[x0,-x1],[y0,-y1]])     #Cramer's rule for intersection 
-                if (np.linalg.det(A) != 0):
-                    B = np.array([x11-x01,y11-y01])
-                    X=np.linalg.inv(A).dot(B)
-
-                    if (0 <= X[0] <= 1) and (0 <= X[1] <= 1):
-                        I = np.array([X[0]*x0+x01, X[0]*y0+y01])
-                        intersections.append(I)
-
-                        zi0 = vect01[2]+(X[0]*(vect02[2]-vect01[2]))
-                        zi1 = vect11[2]+(X[1]*(vect12[2]-vect11[2]))
-                        
-                        z.append([zi0,zi1])
-                        crossings.append([j,i,X[0],X[1]]) 
-        #print(f"\n{crossings}\n")\
-
-        for k in range(0,len(crossings)-1):
-            for l in range(k+1, len(crossings)):
-                u=crossings[k][0]
-                v=crossings[k][1]
-                w=crossings[l][0]
-                x=crossings[l][1]
-                if (u<w) and (w<v) and (v<x) and ((z[k][0] > z[k][1] and z[l][0] < z[l][1]) or (z[k][0] < z[k][1] and z[l][0] > z[l][1])):
-                    
-                    v2 += float(np.sign(gauss_lk(np.array(verts[u]),np.array(verts[u+1]),np.array(verts[v]),np.array(verts[v+1])))) * float(np.sign(gauss_lk(np.array(verts[w]),np.array(verts[w+1]),np.array(verts[x]),np.array(verts[x+1]))))
-                
-                elif (z[k][0] > z[k][1] and z[l][0] < z[l][1]) or (z[k][0] < z[k][1] and z[l][0] > z[l][1]):
-                        if (u==w) and (crossings[k][2]<crossings[l][2]) and (w<v) and (v<x):
-                            #print("UW",crossings[k],crossings[l])
-                            #print(u,v,w,x)
-                            #print(verts[u])
-                            #print(verts[u + 1])
-                            #print(verts[v])
-                            #print(verts[v + 1])
-                            #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
-                            v2 += float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]),np.array(verts[x + 1]))))
-                        if (v==x) and (crossings[k][3]<crossings[l][3]) and (u<w) and (w<v):
-                            #print("VX",crossings[k],crossings[l])
-                            #print(u,v,w,x)
-                            #print(verts[u])
-                            #print(verts[u + 1])
-                            #print(verts[v])
-                            #print(verts[v + 1])
-                            #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
-                            v2 += float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]),np.array(verts[x + 1]))))
-                        if (v==w) and (crossings[l][2]<crossings[k][3]) and (u<w) and (v<x):
-                            #print("VW", crossings[k], crossings[l])
-                            #print(u,v,w,x)
-                            #print(verts[u])
-                            #print(verts[u + 1])
-                            #print(verts[v])
-                            #print(verts[v + 1])
-                            #print(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1]))))
-                            #print(float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]), np.array(verts[x + 1])))))
-                            v2 += float(np.sign(gauss_lk(np.array(verts[u]), np.array(verts[u + 1]), np.array(verts[v]), np.array(verts[v + 1])))) * float(np.sign(gauss_lk(np.array(verts[w]), np.array(verts[w + 1]), np.array(verts[x]), np.array(verts[x + 1]))))
-
-        sum_vas += v2
-
-        # all_append(v2)
-        # print(v2)
-    #end for p in range(0, niterations)
-
-    #print(all_vas)
-    vas_avg = (sum_vas/niterations) / 2
-    return vas_avg
-
-    def vas_randwalk(n):
-        #n = number of edges
-        vks=[]
-        vksum=0
-        for t in range(0,500):
-            walk=[[0,0,0]]
-            #fig = plt.figure()
-            #ax = plt.axes(projection='3d')
-            for i in range (1,n+1):
-                pt=[]
-                r = randomBasis()
-                pt.append(walk[i-1][0]+r[2][0])
-                pt.append(walk[i-1][1]+r[2][1])
-                pt.append(walk[i-1][2]+r[2][2])
-                walk.append(pt)
-            print(walk)
-            vk = vas_open(walk)
-            print(vk)
-            vks.append(vk)
-            vksum+=vk
-        vkavg=vksum/len(vks)
-        print(vks)
-        print(vkavg)
+#calculate runtime
+def runtime (startTime):
+   return time.time()-startTime
 
 #WII: Calculate second Vassiliev measure of knot and plot it
 def plot_vas(knot, closed=False):
     vas = 0
-    start_time = time.time()
+    
     if closed:
         vas = vas_open(np.append(knot, knot[0]), 1)     #gives 0.5
     else:
         vas = vas_open(knot)
-    end_time = time.time()
 
-    print(f"The time elapsed was {end_time - start_time} seconds")
     print("\nThe Vassiliev Measure of the knot is " + str(vas) + "\n")
 
     x, y, z = [], [], []
@@ -366,8 +213,6 @@ def plot_vas(knot, closed=False):
 def vas_scan(protein):
     max_list = []
     interval = 100
-    
-    start_time = time.time()
 
     for scanlength in range(400, 601, 400):
         vas_list = []
@@ -384,8 +229,6 @@ def vas_scan(protein):
         print(f"The maximum Vassiliev for scanlength of {scanlength} is {max_vas}, at atoms {max_loc}\n")
         max_list.append([max_loc, max_vas])
     
-    end_time = time.time()
-    print(f"\nThe time elapsed was {end_time - start_time} seconds")
     return max_list
 
 def plot_by_section(knot, section, interval):
@@ -411,15 +254,21 @@ def plot_by_section(knot, section, interval):
 
 ##########################
 
-# trefoil stuff
-trefoil = [[1, 0, 0],
+### trefoil stuff ###
+proteinList = [[1, 0, 0],             #trefoil
             [4, 0, 0],
             [1, 6, 2],
             [0, 2, -5],
             [5, 2, 5],
             [4, 6, -2]]
 
-plot_vas(trefoil, True)
+startTime = time.time()
+value = vas_measure(proteinList, closed=True)
+execTime = runtime(startTime)
+if(value!=None):
+    print (proteinList, ':' , len(proteinList))
+    print(f'Vas: {value}')
+    print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
 #vas is 1.0 for closed trefoil
 
     # trefoil = [[1, 0, 0],

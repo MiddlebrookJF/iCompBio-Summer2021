@@ -1,4 +1,6 @@
-#import statements
+# File: Vas_Defs_JW.py
+# Creators: Jason Wang
+
 import os
 import math
 import numpy as np
