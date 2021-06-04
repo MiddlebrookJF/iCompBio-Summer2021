@@ -8,7 +8,7 @@ def read_pdb(f):
         for line in reader:
             data.append(line.split())
 
-    #search for those that contain CA and list there coordinates
+    #search for those that contain CA and list their coordinates
     alphaCCoords = []
     for i in range(len(data)):
         if(data[i][0] == "ATOM"):

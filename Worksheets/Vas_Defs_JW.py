@@ -64,7 +64,6 @@ def gauss_lk(a1,a2,b1,b2):
 def gauss_lkList(list):
     return gauss_lk(list[0], list[1], list[2], list[3])
 
-
 #finds writhe of an entire chain; input is a chain of coordinates as an np.array
 #uses gauss_lk and gauss_lk_list
 def compute_wr(walk, size = 1000, poolNum = 2):
@@ -73,39 +72,37 @@ def compute_wr(walk, size = 1000, poolNum = 2):
     nvertices=len(walk)
     
     #multiprocessing unit
-    if __name__ == '__main__':
-
+    # if __name__ == '__main__':
         #create list with every set of vertices to pass through gauss_lk
-        pairlist=[]
-        for j in range (nvertices-3):
-                u1=walk[j]
-                u2=walk[j+1]
-                for i in range (j+2,nvertices-1):
-                    v1=walk[i]
-                    v2=walk[i+1]
-                    pairlist.append([u1,u2,v1,v2])
-        
-        #iterate over the list with multiple processors
-        p = Pool(poolNum)
-        result = p.map(func = gauss_lkList, iterable = pairlist, chunksize = size)
-        if(result!= None):
-            wr = 2*sum(result)
-            acn = 2*sum(abs(i) for i in result)
-        p.close()
-        p.join()
-        return wr, acn
+    pairlist=[]
+    for j in range (nvertices-3):
+            u1=walk[j]
+            u2=walk[j+1]
+            for i in range (j+2,nvertices-1):
+                v1=walk[i]
+                v2=walk[i+1]
+                pairlist.append([u1,u2,v1,v2])
     
+    #iterate over the list with multiple processors
+    p = Pool(poolNum)
+    result = p.map(func = gauss_lkList, iterable = pairlist, chunksize = size)
+    if(result != None):
+        wr = 2*sum(result)
+        acn = 2*sum(abs(i) for i in result)
+    p.close()
+    p.join()
+    return wr, acn
 
 #creates a random orthonormal 3*3 basis
 def randomBasis(): 
     #generate random vector and normalize
     zv = np.random.normal(size=3)
-    zv = zv/np.linalg.norm(zv) 
+    zv /= np.linalg.norm(zv) 
   
    #generate another random vector, find orthogonal projection, and normalize
     xv = np.random.normal(size=3)
     xv -= zv*np.dot(xv, zv) 
-    xv = xv/np.linalg.norm(xv)
+    xv /= np.linalg.norm(xv)
     
     #generate third unit vector orthogonal to first two
     yv = np.cross(zv, xv)
@@ -198,28 +195,24 @@ def vas_open_parallel(chain, trials=100, size=10, poolNum=2):
     for i in range(trials):
         random_list.append(randomBasis())
 
-    if __name__== '__main__':
-        #iterate over the list with multiple processors
-        p = Pool(poolNum)
-        part = partial(vas_proj, chain)
-        result = p.map(func = part, iterable = random_list, chunksize = 10)
-        if(result != None):
-            #print(result)
-            vas_sum = sum(result)/trials
-        p.close()
-        p.join()
-        return vas_sum
+    # if __name__== '__main__':
+    #iterate over the list with multiple processors
+    p = Pool(poolNum)
+    part = partial(vas_proj, chain)
+    result = p.map(func = part, iterable = random_list, chunksize = size)
+    if(result != None):
+        #print(result)
+        vas_sum = sum(result)/trials
+    p.close()
+    p.join()
+    return vas_sum
 
 
 #vas of either open or closed chain, passed as boolean; default is open
 def vas_measure(walk, closed = False):
-    vas=0
-    if(closed):
-        closedWalk = np.append(walk, walk[0])
-        vas = vas_open(closedWalk)
-    else:
-        vas = vas_open(walk)
-    return vas
+    if (closed):
+        return vas_open(np.append(walk, walk[0]), trials=1)
+    return vas_open(walk)
 
 #creates a random walk of length n, each segment length 1
 def randwalk(n):
@@ -268,22 +261,22 @@ def runtime (startTime):
 
 #### RUN COMPUTATIONS BELOW HERE
 
-proteins = read.readAll_pdb(fr"C:\Users\jmidr\source\repos\iCompBio-Spring2021\Proteins-PDB") #insert file path of pdb files here (/*folder/*folder/etc), or leave blank
-proteins = sorted(proteins.items(), key=lambda x: len(x[1])) #returns tuples of (protein, chain) sorted by chain length
+# proteins = read.readAll_pdb(fr"Proteins-PDB") #insert file path of pdb files here (/*folder/*folder/etc), or leave blank
+# proteins = sorted(proteins.items(), key=lambda x: len(x[1])) #returns tuples of (protein, chain) sorted by chain length
 
-#estimate vas of each point
-vasValues = {}
-for tuple in proteins:
-    # value = None
-    # while value == None: #ensure an actual return result before moving on
-    startTime = time.time()
-    value = vas_open_parallel(tuple[1],1000, size=20)
-    execTime = runtime(startTime)
-    if(value!=None):
-        print (tuple[0], ':' , len(tuple[1]))
-        print('Vas: %f' %(value))
-        print('Runtime: %f \n'%(execTime))
-        vasValues.update({tuple[0]:value})
+# #estimate vas of each point
+# vasValues = {}
+# for tuple in proteins:
+#     # value = None
+#     # while value == None: #ensure an actual return result before moving on
+#     startTime = time.time()
+#     value = vas_open_parallel(tuple[1],1000, size=20)
+#     execTime = runtime(startTime)
+#     if(value!=None):
+#         print (tuple[0], ':' , len(tuple[1]))
+#         print('Vas: %f' %(value))
+#         print('Runtime: %f \n'%(execTime))
+#         vasValues.update({tuple[0]:value})
 
 ##match protein name with point, append to plotted tuple
 #foldData=["1qpu",5.30,"5mbn",4.83,"1lmb",4.78,"2pdd",4.20,"1hrc",3.80,"1imq",3.16,"2abd",2.85,"2vil",3.25,"2hbb",2.87,"1ubq",3.19,"1cis",1.75,"1urn",2.53,"3gb1",2.46,"2ptl",1.78,"1fkf",0.60,"1hdn",1.17,"1afi",0.26,"1aps",-0.64,"1csp",2.84,"1tit",1.51,"1shf",1.97]

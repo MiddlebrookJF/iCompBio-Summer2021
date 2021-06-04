@@ -1,45 +1,36 @@
-import numpy as np
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import time
 import pandas as pd
-from .Vassiliev import Vas
+import Read_File as read
+import Vas_Defs_JW as Vas
 
-def vas_closed(knot):
-    vas = Vas.vas_closed(knot)
-    print("\nThe Vassiliev Measure of the closed knot is " + str(vas) + "\n")
+proteins = read.readAll_pdb(fr"Proteins-PDB")
+proteins = sorted(proteins.items(), key=lambda x: len(x[1])) #returns tuples of (protein, chain) sorted by chain length
 
-    x, y, z = [], [], []
-    for i in range (0, len(knot)):
-        x.append(knot[i][0])
-        y.append(knot[i][1])
-        z.append(knot[i][2])
-    x.append(knot[0][0])
-    y.append(knot[0][1])
-    z.append(knot[0][2])
+#estimate vas of each point
+vasValues = {}
+for tuple in proteins:
+    # value = None
+    # while value == None: #ensure an actual return result before moving on
+    startTime = time.time()
+    value = Vas.vas_open_parallel(tuple[1], 100, size=20)
+    execTime = Vas.runtime(startTime)
+    if(value!=None):
+        print (tuple[0], ':' , len(tuple[1]))
+        print('Vas: %f' %(value))
+        print('Runtime: %f \n'%(execTime))
+        vasValues.update({tuple[0]:value})
 
-    ax = plt.axes(projection='3d')
-    ax.plot3D(x, y, z)
-    plt.show()
+# proteinList = [[1, 0, 0],
+#             [4, 0, 0],
+#             [1, 6, 2],
+#             [0, 2, -5],
+#             [5, 2, 5],
+#             [4, 6, -2]]
 
-def vas_open(knot):
-    vas = Vas.vas_open(knot)
-    print("\nThe Vassiliev Measure of the open 3d curve is " + str(vas) + "\n")
+# proteinName = "6acd"
+# proteinDF = pd.read_csv(fr'Coordinates\{proteinName}.csv')
+# proteinList = proteinDF.values.tolist()
 
-    x, y, z = [], [], []
-    for i in range (0, len(knot)):
-        x.append(knot[i][0])
-        y.append(knot[i][1])
-        z.append(knot[i][2])
-
-    ax = plt.axes(projection='3d')
-    ax.plot3D(x, y, z)
-    plt.show()
-
-#########################
-
-spikeDF = pd.read_csv(r'Coordinates\6zge.csv')
-print(spikeDF.head())
-spikeList = spikeDF.values.tolist()                 #change df to a list of atoms' coordinates
-
-vas_open(spikeList)
+# measure = Vas.vas_measure(proteinList, closed=True)
+# print(measure)
+# #vas is 1.0 for closed trefoil
