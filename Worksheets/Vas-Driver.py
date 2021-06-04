@@ -3,22 +3,27 @@ import pandas as pd
 import Read_File as read
 import Vas_Defs_JW as Vas
 
-proteins = read.readAll_pdb(fr"Proteins-PDB")
-proteins = sorted(proteins.items(), key=lambda x: len(x[1])) #returns tuples of (protein, chain) sorted by chain length
+# proteins = read.readAll_pdb(fr"Proteins-PDB")
+# proteins = sorted(proteins.items(), key=lambda x: len(x[1])) #returns tuples of (protein, chain) sorted by chain length
 
-#estimate vas of each point
-vasValues = {}
-for tuple in proteins:
-    # value = None
-    # while value == None: #ensure an actual return result before moving on
-    startTime = time.time()
-    value = Vas.vas_open_parallel(tuple[1], 100, size=20)
-    execTime = Vas.runtime(startTime)
-    if(value!=None):
-        print (tuple[0], ':' , len(tuple[1]))
-        print('Vas: %f' %(value))
-        print('Runtime: %f \n'%(execTime))
-        vasValues.update({tuple[0]:value})
+# #estimate vas of each point
+# vasValues = {}
+# for tuple in proteins:
+#     # value = None
+#     # while value == None: #ensure an actual return result before moving on
+#     startTime = time.time()
+#     value = Vas.vas_open_parallel(tuple[1], 100, size=20)
+#     execTime = Vas.runtime(startTime)
+#     if(value!=None):
+#         print (tuple[0], ':' , len(tuple[1]))
+#         print('Vas: %f' %(value))
+#         print('Runtime: %f \n'%(execTime))
+#         vasValues.update({tuple[0]:value})
+
+# protein = read.read_pdb("Proteins-PDB/6zge.pdb")
+
+# value = Vas.vas_open_parallel(protein)
+# print(value)
 
 # proteinList = [[1, 0, 0],
 #             [4, 0, 0],

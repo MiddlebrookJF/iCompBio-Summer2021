@@ -2,8 +2,8 @@ import glob
 import os
 
 #read pdb file and find coordinates of CA of first model
-def read_pdb(f):
-    with open(f, 'r') as reader:
+def read_pdb(path):
+    with open(path, 'r') as reader:
         data = []
         for line in reader:
             data.append(line.split())
@@ -34,9 +34,10 @@ def readAll_pdb():
     return dictNameCoords
 
 #read all pdb files in a specific file location
-def readAll_pdb(fileLocation):
+def readAll_pdb(path):
     cwd = os.getcwd
-    os.chdir(fileLocation)
+    if os.curdir != path:
+        os.chdir(path)
     pdbFiles = glob.glob('*.pdb') #find all files with extension .pdb
     dictNameCoords = {}
     for file in pdbFiles:
