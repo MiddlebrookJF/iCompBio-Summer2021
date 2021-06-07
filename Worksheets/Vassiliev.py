@@ -214,9 +214,9 @@ def vas_scan(protein):
     max_list = []
     interval = 100
 
-    for scanlength in range(400, 601, 400):
+    for scanlength in range(200, 601, 200):
         vas_list = []
-        for start in range(0, len(protein) - scanlength - 1, interval):    #scan the protein at every possible starting index
+        for start in range(0, len(protein)-scanlength-1, interval):    #scan the protein at every possible starting index
             local_vas = vas_open(protein[start : start + scanlength])
             vas_list.append( local_vas )
             print(f"{local_vas} at {start}:{start + scanlength}")
@@ -254,21 +254,22 @@ def plot_by_section(knot, section, interval):
 
 ##########################
 
-### trefoil stuff ###
-proteinList = [[1, 0, 0],             #trefoil
-            [4, 0, 0],
-            [1, 6, 2],
-            [0, 2, -5],
-            [5, 2, 5],
-            [4, 6, -2]]
+### Trefoil for testing ###
 
-startTime = time.time()
-value = vas_measure(proteinList, closed=True)
-execTime = runtime(startTime)
-if(value!=None):
-    print (proteinList, ':' , len(proteinList))
-    print(f'Vas: {value}')
-    print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
+# proteinList = [[1, 0, 0],             #trefoil
+#             [4, 0, 0],
+#             [1, 6, 2],
+#             [0, 2, -5],
+#             [5, 2, 5],
+#             [4, 6, -2]]
+
+# startTime = time.time()
+# value = vas_measure(proteinList, closed=True)
+# execTime = runtime(startTime)
+# if(value!=None):
+#     print (proteinList, ':' , len(proteinList))
+#     print(f'Vas: {value}')
+#     print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
 #vas is 1.0 for closed trefoil
 
     # trefoil = [[1, 0, 0],
@@ -282,16 +283,35 @@ if(value!=None):
     # plot_vas(trefoil)
     # #vas is 0.995 for open trefoil
 
-# proteinName = ["6zge"]
-# proteinDF = pd.read_csv(fr'Coordinates\{proteinName}.csv')
-# proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-# print(f"Protein has {len(proteinList)} CA atoms\n")
 
-# start_time = time.time()            #start
-# spike_vas = vas_open(proteinList)
-# end_time = time.time()              #end
-# print(f"\nThe time elapsed for the vas_open method was {end_time - start_time} seconds")
-# pd.Dataframe([proteinName, len(proteinList), (end_time - start_time)])  #try to create a DF out of all these things
+### Proteins ###
+
+# proteins = ["6zge", "6acd", "6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
+# for proteinName in proteins:
+#     proteinDF = pd.read_csv(fr'Coordinates\{proteinName}.csv')
+#     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+#     print(len(proteinList))
+
+#     startTime = time.time()
+#     value = vas_measure(proteinList)
+#     execTime = runtime(startTime)
+#     if(value != None):
+#         print (proteinList[0:10], ':' , len(proteinList))
+#         print(f'Vas for {proteinName}: {value}')
+#         print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
+
+proteins = ["6zge", "6acd"]
+for proteinName in proteins:
+    proteinDF = pd.read_csv(fr'Coordinates\{proteinName}.csv')
+    proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+    print(f"{proteinName} has {len(proteinList)} CA atoms.")
+
+    startTime = time.time()
+    max_list = vas_scan(proteinList)
+    execTime = runtime(startTime)
+    print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
+
+### Scanning and Plotting ###
 
 # vas_list = vas_scan(spikeList)
 # print(f"vas list: {vas_list}")
