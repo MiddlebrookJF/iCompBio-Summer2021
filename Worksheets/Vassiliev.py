@@ -1,6 +1,7 @@
 # File: Vassiliev.py
 # Project: The local topological free energy of SARS-CoV-2
 # Editors: Dr. Eleni Panagiotou, Jason Wang, Jeffrey Richards
+#Not to be used with the cluster
 
 import os
 import math
@@ -212,26 +213,37 @@ def plot_vas(knot, closed=False):
 #WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
 def vas_scan(protein):
     max_list = []
-    interval = 100
+    interval = 200
+    pLength = len(protein)
 
     for scanlength in range(200, 601, 200):
         sTime = time.time()
         vas_list = []
 
-        for start in range(0, len(protein)-scanlength-1, interval):    #scan the protein at every possible starting index
-            local_vas = vas_open(protein[start : start + scanlength])
+        for start in range(0, pLength - scanlength, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
+            upperbound = start + scanlength
+            local_vas = vas_open_parallel(protein[start : upperbound])
             vas_list.append( local_vas )
-            print(f"\n{local_vas} at {start}:{start + scanlength}")
+            print(f"{local_vas} at {start}:{upperbound}")
 
-        print(f"\nThe Vas measures from 0 to {len(protein)} are {vas_list}")
+            if(upperbound + interval > pLength):                   #last iteration
+                if(pLength < upperbound + interval - (interval/2)):           #Determines range of last scan
+                    start = pLength - interval
+                else: start += interval
+                
+                local_vas = vas_open_parallel(protein[start : pLength])
+                vas_list.append( local_vas )
+                print(f"{local_vas} at {start}:{pLength}")
+
+        print(f"The Vas measures from 0 to {pLength} are {vas_list}")
         
         max_vas = max(np.abs(vas_list))                 #find max value of vas in given iteration, then record them
         max_start = vas_list.index(max_vas) * interval
         max_loc = [max_start, max_start + scanlength]
-        print(f"\nThe maximum Vassiliev for scanlength of {scanlength} is {max_vas}, at atoms {max_loc}")
+        print(f"The maximum Vassiliev for scanlength of {scanlength} is {max_vas}, at atoms {max_loc}")
         max_list.append([max_loc, max_vas])
 
-        print(f"\n{runtime(sTime)/60} minutes of runtime for {scanlength} scanlength")
+        print(f"{runtime(sTime)/60} minutes of runtime for {scanlength} scanlength\n")
     
     return max_list
 
@@ -302,14 +314,12 @@ def plot_by_section(knot, section, interval):
 #     if(value != None):
 #         print (proteinList[0:10], ':' , len(proteinList))
 #         print(f'Vas for {proteinName}: {value}')
-#         print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
-
+#         print(f'Total runtime for {proteinName}: {execTime} seconds or {execTime/60} minutes\n')
 
 
 ### Scanning and Plotting ###
 
-# proteins = ["6zge", "6acd", "6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
-proteins = ["6zge"]
+proteins = ["6zge", "6acd", "6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
 for proteinName in proteins:
     proteinDF = pd.read_csv(f'Coordinates/{proteinName}.csv')
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
@@ -318,7 +328,7 @@ for proteinName in proteins:
     startTime = time.time()
     max_list = vas_scan(proteinList)
     execTime = runtime(startTime)
-    print(f'\nTotal runtime for {proteinName}: {execTime} seconds or {execTime/60} minutes\n')
+    print(f'Total runtime for {proteinName}: {execTime} seconds or {execTime/60} minutes\n')
 
 # plot_by_section(spikeList, [0, len(spikeList)], 200)
 # interval = 200

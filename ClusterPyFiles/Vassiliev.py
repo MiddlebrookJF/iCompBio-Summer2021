@@ -1,6 +1,7 @@
 # File: Vassiliev.py
 # Project: The local topological free energy of SARS-CoV-2
 # Editors: Dr. Eleni Panagiotou, Jason Wang, Jeffrey Richards
+#THIS IS MEANT FOR USE IN THE CLUSTER
 
 import os
 import math
@@ -223,7 +224,7 @@ def vas_scan(protein):
             upperbound = start + scanlength
             local_vas = vas_open(protein[start : upperbound])
             vas_list.append( local_vas )
-            print(f"{local_vas} at {start}:{upperbound}")
+            print("{local_vas} at {start}:{upperbound}".format(local_vas=local_vas, start=start, upperbound=upperbound))
 
             if(upperbound + interval > pLength):                   #last iteration
                 if(pLength < upperbound + interval - (interval/2)):           #Determines range of last scan
@@ -232,17 +233,17 @@ def vas_scan(protein):
                 
                 local_vas = vas_open(protein[start : pLength])
                 vas_list.append( local_vas )
-                print(f"{local_vas} at {start}:{pLength}")
+                print("{local_vas} at {start}:{pLength}".format(local_vas=local_vas, start=start, pLength=pLength))
 
-        print(f"The Vas measures from 0 to {pLength} are {vas_list}")
+        print("The Vas measures from 0 to {pLength} are {vas_list}".format(pLength=pLength, vas_list=vas_list))
         
         max_vas = max(np.abs(vas_list))                 #find max value of vas in given iteration, then record them
         max_start = vas_list.index(max_vas) * interval
         max_loc = [max_start, max_start + scanlength]
-        print(f"The maximum Vassiliev for scanlength of {scanlength} is {max_vas}, at atoms {max_loc}")
+        print("The maximum Vassiliev for scanlength of {scanlength} is {max_vas}, at atoms {max_loc}".format(scanlength=scanlength, max_vas=max_vas, max_loc=max_loc))
         max_list.append([max_loc, max_vas])
 
-        print(f"{runtime(sTime)/60} minutes of runtime for {scanlength} scanlength\n")
+        print("{execMin} minutes of runtime for {scanlength} scanlength\n".format(execMin=runtime(sTime)/60, scanlength=scanlength))
     
     return max_list
 
@@ -255,7 +256,7 @@ def plot_by_section(knot, section, interval):
             x.append(knot[j][0])
             y.append(knot[j][1])
             z.append(knot[j][2])
-        print(f"Knot from {i} to {i + interval} plotted")
+        print("Knot from {i} to {upper} plotted".format(i=i, upper=i+interval))
 
         ax.plot3D(x, y, z)
         if (i + interval + interval > section[1]):
@@ -263,73 +264,39 @@ def plot_by_section(knot, section, interval):
                 x.append(knot[j][0])
                 y.append(knot[j][1])
                 z.append(knot[j][2])
-            print(f"Knot from {i + interval} to {section[1]} plotted")
+                print("Knot from {upper} to {section1} plotted".format(upper=i+interval, section1=section[1]))
     
     plt.show()
 
 ##########################
 
-### Trefoil for testing ###
+### Proteins Vas and Vas_Scan Together FOR CLUSTER ###
 
-# proteinList = [[1, 0, 0],             #trefoil
-#             [4, 0, 0],
-#             [1, 6, 2],
-#             [0, 2, -5],
-#             [5, 2, 5],
-#             [4, 6, -2]]
-
-# startTime = time.time()
-# value = vas_measure(proteinList, closed=True)
-# execTime = runtime(startTime)
-# if(value!=None):
-#     print (proteinList, ':' , len(proteinList))
-#     print(f'Vas: {value}')
-#     print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
-#vas is 1.0 for closed trefoil
-
-    # trefoil = [[1, 0, 0],
-    #             [4, 0, 0],
-    #             [1, 6, 2],
-    #             [0, 2, -5],
-    #             [5, 2, 5],
-    #             [4, 6, -2],
-    #             [0.5, 0.5, 0.5]]
-
-    # plot_vas(trefoil)
-    # #vas is 0.995 for open trefoil
-
-
-### Proteins ###
-
-# proteins = ["6zge", "6acd", "6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
-# proteins = ["6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
-# for proteinName in proteins:
-#     proteinDF = pd.read_csv(fr'Coordinates\{proteinName}.csv')
-#     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-#     print(f"{proteinName} has {len(proteinList)} CA atoms.")
-
-#     startTime = time.time()
-#     value = vas_measure(proteinList)
-#     execTime = runtime(startTime)
-#     if(value != None):
-#         print (proteinList[0:10], ':' , len(proteinList))
-#         print(f'Vas for {proteinName}: {value}')
-#         print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
-
-
-### Scanning and Plotting ###
-
-# proteins = ["6zge", "6acd", "6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
-proteins = ["6zge"]
+proteins = ["6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
 for proteinName in proteins:
-    proteinDF = pd.read_csv(f'Coordinates/{proteinName}.csv')
+    proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-    print(f"\n{proteinName} has {len(proteinList)} CA atoms.")
+    print(len(proteinList))
 
+    ## Overall Vas ##
+    startTime = time.time()
+    value = vas_measure(proteinList)
+    execTime = runtime(startTime)
+    if(value != None):
+        print (proteinList[0:10], ':' , len(proteinList))
+        print('Vas for {proteinName}: {value}'.format(proteinName=proteinName, value=value))
+        print('Runtime for {proteinName} total vas: {execTime} seconds or {execTime/60} minutes\n'.format(proteinName=proteinName, execTime=execTime))
+    
+    ## Vas Scan ##
     startTime = time.time()
     max_list = vas_scan(proteinList)
     execTime = runtime(startTime)
-    print(f'Total runtime for {proteinName}: {execTime} seconds or {execTime/60} minutes\n')
+    print('Total runtime for {proteinName} scan: {execTime} seconds or {execMin} minutes\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))
+
+
+### Plotting ###
+
+
 
 # plot_by_section(spikeList, [0, len(spikeList)], 200)
 # interval = 200
