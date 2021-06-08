@@ -238,7 +238,7 @@ def vas_scan(protein):
         print("The Vas measures from 0 to {pLength} are {vas_list}".format(pLength=pLength, vas_list=vas_list))
         
         max_vas = max(np.abs(vas_list))                 #find max value of vas in given iteration, then record them
-        max_start = vas_list.index(max_vas) * interval
+        max_start = vas_list.index(max(vas_list)) * interval
         max_loc = [max_start, max_start + scanlength]
         print("The maximum Vassiliev for scanlength of {scanlength} is {max_vas}, at atoms {max_loc}".format(scanlength=scanlength, max_vas=max_vas, max_loc=max_loc))
         max_list.append([max_loc, max_vas])
