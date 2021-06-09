@@ -4,11 +4,12 @@
 #Not to be used with the cluster
 
 import os
+import time
 import math
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import time
+import glob
 from multiprocessing import Pool
 from functools import partial
 
@@ -302,30 +303,33 @@ def plot_by_section(knot, section, interval):
 
 ### Proteins ###
 
-proteins = ["6xkl", "6zgh"]
-# proteins = ["6zge", "6acd", "6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
+proteins = glob.glob('Coordinates/*.csv')
 pInfoDF = pd.DataFrame()
-numProjections = 2
-for proteinName in proteins:
-    proteinDF = pd.read_csv(f'Coordinates/{proteinName}.csv')
-    proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-    print(len(proteinList))
+# numProjList = [1000, 5000]
+numProjList = [5000]
+for numProjections in numProjList[0:len(numProjList)/2]:
+    for proteinPath in proteins:
+        proteinDF = pd.read_csv(proteinPath)
+        proteinName = proteinPath[-8:-4]
+        proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+        print(len(proteinList))
 
-    startTime = time.time()
-    value = vas_open(proteinList, trials=numProjections)
-    execTime = runtime(startTime)
-    if(value != None):
-        print (proteinList[0:10], ':' , len(proteinList))
-        print(f'Vas for {proteinName}: {value}')
-        print(f'Total runtime for {proteinName}: {execTime} seconds or {execTime/60} minutes\n')
-
-        thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
+        ## Overall Vas ##
+        startTime = time.time()
+        value = vas_open_parallel(proteinList, trials=numProjections)
+        execTime = runtime(startTime)
+        if(value != None):
+            print (proteinList[0:10], ':' , len(proteinList))
+            print('Vas for {proteinName}: {value}'.format(proteinName=proteinName, value=value))
+            print('Runtime for {proteinName} total vas: {execTime} seconds or {execTime/60} minutes\n'.format(proteinName=proteinName, execTime=execTime))
+            
+            thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
                 columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
-        pInfoDF = pInfoDF.append(thisDF)
+            pInfoDF = pInfoDF.append(thisDF)
 
-#Add Vassiliev data for proteins
-with open("Vas-Data/ProteinVas1.csv", mode='a', newline='') as f:
-    pInfoDF.to_csv(f, header=f.tell()==0, index=False)
+    #Add Vassiliev data for proteins
+    with open("Vas-Data/ProteinVas.csv", mode='a', newline='') as f:
+        pInfoDF.to_csv(f, header=f.tell()==0, index=False)
 
 
 ### Scanning and Plotting ###
