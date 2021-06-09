@@ -1,0 +1,160 @@
+1100
+([[260.751, 251.00900000000001, 265.297], [259.374, 252.799, 262.233], [261.165, 255.56400000000002, 260.309], [259.608, 257.80400000000003, 257.647], [261.994, 258.013, 254.687], [262.60900000000004, 261.53, 253.34900000000002], [264.48400000000004, 262.975, 250.335], [262.487, 261.147, 247.65099999999998], [261.495, 262.968, 244.455], [257.869, 262.693, 243.338]], ':', 1100)
+Vas for 6zgi: 0.18
+Runtime for 6zgi total vas: 1364.34914303 seconds or 22.7391523838 minutes
+
+0.105 at 0:200
+0.01 at 200:400
+-0.075 at 400:600
+0.005 at 600:800
+0.005 at 800:1000
+0.01 at 1000:1100
+The Vas measures from 0 to 1100 are [0.105, 0.01, -0.075, 0.005, 0.005, 0.01]
+The maximum Vassiliev for scanlength of 200 is 0.105, at atoms [0, 200]
+7.13501566648 minutes of runtime for 200 scanlength
+
+0.06 at 0:400
+-0.035 at 200:600
+-0.08 at 400:800
+0.18 at 600:1000
+0.01 at 800:1100
+The Vas measures from 0 to 1100 are [0.06, -0.035, -0.08, 0.18, 0.01]
+The maximum Vassiliev for scanlength of 400 is 0.18, at atoms [600, 1000]
+25.3265964309 minutes of runtime for 400 scanlength
+
+0.085 at 0:600
+0.055 at 200:800
+0.045 at 400:1000
+0.065 at 600:1100
+The Vas measures from 0 to 1100 are [0.085, 0.055, 0.045, 0.065]
+The maximum Vassiliev for scanlength of 600 is 0.085, at atoms [0, 600]
+46.6036513329 minutes of runtime for 600 scanlength
+
+Total runtime for 6zgi scan: 4743.91586018 seconds or 79.0652643363 minutes
+
+1069
+([[264.105, 249.29, 265.77099999999996], [262.337, 251.74599999999998, 263.45099999999996], [264.268, 254.37099999999998, 261.476], [263.61, 256.536, 258.421], [265.634, 257.407, 255.328], [266.505, 261.103, 255.072], [267.553, 263.20099999999996, 252.06599999999997], [265.91200000000003, 260.903, 249.511], [264.77299999999997, 262.51, 246.25], [262.217, 260.668, 244.12400000000002]], ':', 1069)
+Vas for 6zgg: 0.14
+Runtime for 6zgg total vas: 1229.47695994 seconds or 20.4912826657 minutes
+
+0.105 at 0:200
+0.01 at 200:400
+-0.06 at 400:600
+0.005 at 600:800
+0.0 at 800:1000
+0.02 at 869:1069
+The Vas measures from 0 to 1069 are [0.105, 0.01, -0.06, 0.005, 0.0, 0.02]
+The maximum Vassiliev for scanlength of 200 is 0.105, at atoms [0, 200]
+8.04614836772 minutes of runtime for 200 scanlength
+
+0.03 at 0:400
+0.0 at 200:600
+-0.07 at 400:800
+0.045 at 600:1000
+0.02 at 869:1069
+The Vas measures from 0 to 1069 are [0.03, 0.0, -0.07, 0.045, 0.02]
+The maximum Vassiliev for scanlength of 400 is 0.07, at atoms [600, 1000]
+23.1666772683 minutes of runtime for 400 scanlength
+
+0.16 at 0:600
+0.05 at 200:800
+-0.085 at 400:1000
+0.04 at 869:1069
+The Vas measures from 0 to 1069 are [0.16, 0.05, -0.085, 0.04]
+The maximum Vassiliev for scanlength of 600 is 0.16, at atoms [0, 600]
+38.2383452336 minutes of runtime for 600 scanlength
+
+Total runtime for 6zgg scan: 4167.07034302 seconds or 69.4511723836 minutes
+
+875
+([[263.128, 249.093, 264.059], [260.528, 251.328, 262.387], [262.688, 254.19, 261.099], [262.17, 255.99, 257.78], [264.416, 256.9, 254.84900000000002], [265.356, 260.353, 253.562], [266.62, 261.68, 250.22099999999998], [264.23, 259.426, 248.282], [263.064, 261.172, 245.097], [260.49, 258.901, 243.449]], ':', 875)
+Vas for 6zgh: 0.1
+Runtime for 6zgh total vas: 861.624891043 seconds or 14.3604148507 minutes
+
+0.105 at 0:200
+0.01 at 200:400
+0.015 at 400:600
+0.0 at 600:800
+0.025 at 675:875
+The Vas measures from 0 to 875 are [0.105, 0.01, 0.015, 0.0, 0.025]
+The maximum Vassiliev for scanlength of 200 is 0.105, at atoms [0, 200]
+6.84686566591 minutes of runtime for 200 scanlength
+
+0.125 at 0:400
+0.005 at 200:600
+0.075 at 400:800
+0.04 at 675:875
+The Vas measures from 0 to 875 are [0.125, 0.005, 0.075, 0.04]
+The maximum Vassiliev for scanlength of 400 is 0.125, at atoms [0, 400]
+18.0192500353 minutes of runtime for 400 scanlength
+
+0.07 at 0:600
+0.035 at 200:800
+0.025 at 675:875
+The Vas measures from 0 to 875 are [0.07, 0.035, 0.025]
+The maximum Vassiliev for scanlength of 600 is 0.07, at atoms [0, 600]
+26.3244669835 minutes of runtime for 600 scanlength
+
+Total runtime for 6zgh scan: 3071.43502188 seconds or 51.190583698 minutes
+
+968
+([[179.46400000000003, 252.729, 213.667], [182.203, 251.049, 215.69400000000002], [182.32, 248.31, 218.31], [184.933, 246.90200000000002, 220.69400000000002], [186.90400000000002, 243.826, 219.50099999999998], [187.37, 242.877, 223.18], [189.04, 239.451, 223.262], [187.98, 237.949, 219.925], [190.274, 236.942, 217.083], [192.638, 234.28599999999997, 218.481]], ':', 968)
+Vas for 6xkl: 0.065
+Runtime for 6xkl total vas: 1053.84410405 seconds or 17.5640684009 minutes
+
+-0.01 at 0:200
+0.015 at 200:400
+0.0 at 400:600
+0.02 at 600:800
+0.0 at 800:968
+The Vas measures from 0 to 968 are [-0.01, 0.015, 0.0, 0.02, 0.0]
+The maximum Vassiliev for scanlength of 200 is 0.02, at atoms [600, 800]
+6.55068091551 minutes of runtime for 200 scanlength
+
+-0.025 at 0:400
+-0.005 at 200:600
+0.05 at 400:800
+0.02 at 600:968
+The Vas measures from 0 to 968 are [-0.025, -0.005, 0.05, 0.02]
+The maximum Vassiliev for scanlength of 400 is 0.05, at atoms [400, 800]
+21.6011285027 minutes of runtime for 400 scanlength
+
+-0.03 at 0:600
+0.04 at 200:800
+0.06 at 400:968
+The Vas measures from 0 to 968 are [-0.03, 0.04, 0.06]
+The maximum Vassiliev for scanlength of 600 is 0.06, at atoms [400, 1000]
+36.3738162001 minutes of runtime for 600 scanlength
+
+Total runtime for 6xkl scan: 3871.53759694 seconds or 64.5256266157 minutes
+
+972
+([[199.551, 119.465, 178.56099999999998], [196.56, 120.69, 176.47299999999998], [193.97400000000002, 119.73100000000001, 173.80200000000002], [191.669, 121.47399999999999, 171.28], [188.12, 121.74700000000001, 172.763], [186.43400000000003, 121.899, 169.283], [182.627, 122.619, 169.292], [182.05, 121.625, 173.00099999999998], [180.92700000000002, 123.04299999999999, 176.396], [177.563, 124.598, 175.372]], ':', 972)
+Vas for 7kdk: 0.04
+Runtime for 7kdk total vas: 1077.19300604 seconds or 17.9532167673 minutes
+
+0.005 at 0:200
+0.0 at 200:400
+0.01 at 400:600
+0.005 at 600:800
+0.0 at 800:972
+The Vas measures from 0 to 972 are [0.005, 0.0, 0.01, 0.005, 0.0]
+The maximum Vassiliev for scanlength of 200 is 0.01, at atoms [400, 600]
+6.64992725054 minutes of runtime for 200 scanlength
+
+-0.02 at 0:400
+0.005 at 200:600
+0.095 at 400:800
+0.025 at 600:972
+The Vas measures from 0 to 972 are [-0.02, 0.005, 0.095, 0.025]
+The maximum Vassiliev for scanlength of 400 is 0.095, at atoms [400, 800]
+21.4335675836 minutes of runtime for 400 scanlength
+
+0.025 at 0:600
+0.115 at 200:800
+0.08 at 400:972
+The Vas measures from 0 to 972 are [0.025, 0.115, 0.08]
+The maximum Vassiliev for scanlength of 600 is 0.115, at atoms [200, 800]
+37.3252247691 minutes of runtime for 600 scanlength
+
+Total runtime for 7kdk scan: 3924.52322006 seconds or 65.4087203344 minutes

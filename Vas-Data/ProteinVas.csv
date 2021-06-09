@@ -1,3 +1,8 @@
-﻿Name,NumCaAtoms,Vassiliev,RuntimeSeconds
-6zge,1100,0.08,4160
-6acd,1065,0.22,13356
+﻿Name,NumCaAtoms,Vassiliev,RuntimeSeconds,NumProjections
+6zge,1100,0.08,4160,100
+6acd,1065,0.22,13356,100
+6xkl,968,0.06,1117,100
+6gg,1069,0.085,1340,100
+6zgh,875,0.095,860,100
+6zgi,1100,0.19,1345,100
+7kdk,972,-0.035,934,100

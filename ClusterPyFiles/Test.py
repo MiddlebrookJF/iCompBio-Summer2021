@@ -1,5 +1,6 @@
 
-print("\nTesting - 1 2 3")
-some_list = [6, "blue"]
-print(some_list)
-print("\n\n")
+import glob
+
+proteinList = glob.glob("Coordinates/*.csv")
+for proteinPath in proteinList:
+    print(proteinPath[-8:-4])

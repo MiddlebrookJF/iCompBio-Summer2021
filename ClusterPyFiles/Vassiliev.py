@@ -5,10 +5,11 @@
 
 import os
 import math
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
 import time
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import glob
 from multiprocessing import Pool
 from functools import partial
 
@@ -143,7 +144,7 @@ def vas_proj(walk, proj=[[1,0,0],[0,1,0],[0,0,1]]):
 
 #estimates second Vassiliev measure of open chain, using vas_proj, crossings, vas_conditions
 #takes a walk as parameter, number of trials and list of random bases are optional
-def vas_open(chain, trials=100, size=10, poolNum=2):
+def vas_open(chain, trials=1000, size=10, poolNum=2):
     random_list = []
     vas_list = []
     for i in range(trials):
@@ -156,7 +157,7 @@ def vas_open(chain, trials=100, size=10, poolNum=2):
     vas_sum = sum(vas_list)/trials
     return vas_sum
 
-def vas_open_parallel(chain, trials=100, size=10, poolNum=2):
+def vas_open_parallel(chain, trials=1000, size=10, poolNum=2):
     random_list = []
     
     for i in range(trials):
@@ -175,11 +176,11 @@ def vas_open_parallel(chain, trials=100, size=10, poolNum=2):
         return vas_sum
 
 #vas of either open or closed chain, passed as boolean; default is open
-def vas_measure(walk, closed = False):
+def vas_measure(walk, closed = False, trials=1000):
     if (closed):
         walk.append(walk[0])
         return vas_open_parallel(walk, trials=1)
-    return vas_open_parallel(walk)
+    return vas_open_parallel(walk, trials=trials)
 
 #calculate runtime
 def runtime (startTime):
@@ -211,9 +212,9 @@ def plot_vas(knot, closed=False):
     plt.show()
 
 #WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
-def vas_scan(protein):
+def vas_scan(protein, numProjections=1000):
     max_list = []
-    interval = 200
+    interval = 50
     pLength = len(protein)
 
     for scanlength in range(200, 601, 200):
@@ -222,7 +223,7 @@ def vas_scan(protein):
 
         for start in range(0, pLength - scanlength, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
             upperbound = start + scanlength
-            local_vas = vas_open(protein[start : upperbound])
+            local_vas = vas_open_parallel(protein[start : upperbound], trials=numProjections)
             vas_list.append( local_vas )
             print("{local_vas} at {start}:{upperbound}".format(local_vas=local_vas, start=start, upperbound=upperbound))
 
@@ -272,31 +273,47 @@ def plot_by_section(knot, section, interval):
 
 ### Proteins Vas and Vas_Scan Together FOR CLUSTER ###
 
-proteins = ["6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
-for proteinName in proteins:
-    proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
+proteins = glob.glob('Coordinates/*.csv')
+pInfoDF = pd.DataFrame()
+# numProjList = [1000, 5000]
+numProjList = [1000]
+for numProjections in numProjList:
+    for proteinPath in proteins:
+        proteinDF = pd.read_csv(proteinPath)
+        proteinName = proteinPath[-8:-4]
+        proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+        print(len(proteinList))
+
+        ## Overall Vas ##
+        startTime = time.time()
+        value = vas_open_parallel(proteinList, trials=numProjections)
+        execTime = runtime(startTime)
+        if(value != None):
+            print (proteinList[0:10], ':' , len(proteinList))
+            print('Vas for {proteinName}: {value}'.format(proteinName=proteinName, value=value))
+            print('Runtime for {proteinName} total vas: {execTime} seconds or {execTime/60} minutes\n'.format(proteinName=proteinName, execTime=execTime))
+            
+            thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
+                columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
+            pInfoDF = pInfoDF.append(thisDF)
+
+    #Add Vassiliev data for proteins
+    with open("Vas-Data/ProteinVas.csv", mode='a', newline='') as f:
+        pInfoDF.to_csv(f, header=f.tell()==0, index=False)
+
+for proteinPath in proteins:
+    proteinDF = pd.read_csv(proteinPath)
+    proteinName = proteinPath[-8:-4]
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
     print(len(proteinList))
 
-    ## Overall Vas ##
-    startTime = time.time()
-    value = vas_measure(proteinList)
-    execTime = runtime(startTime)
-    if(value != None):
-        print (proteinList[0:10], ':' , len(proteinList))
-        print('Vas for {proteinName}: {value}'.format(proteinName=proteinName, value=value))
-        print('Runtime for {proteinName} total vas: {execTime} seconds or {execTime/60} minutes\n'.format(proteinName=proteinName, execTime=execTime))
-    
     ## Vas Scan ##
     startTime = time.time()
     max_list = vas_scan(proteinList)
     execTime = runtime(startTime)
     print('Total runtime for {proteinName} scan: {execTime} seconds or {execMin} minutes\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))
 
-
 ### Plotting ###
-
-
 
 # plot_by_section(spikeList, [0, len(spikeList)], 200)
 # interval = 200

@@ -143,7 +143,7 @@ def vas_proj(walk, proj=[[1,0,0],[0,1,0],[0,0,1]]):
 
 #estimates second Vassiliev measure of open chain, using vas_proj, crossings, vas_conditions
 #takes a walk as parameter, number of trials and list of random bases are optional
-def vas_open(chain, trials=100, size=10, poolNum=2):
+def vas_open(chain, trials=1000, size=10, poolNum=2):
     random_list = []
     vas_list = []
     for i in range(trials):
@@ -156,7 +156,7 @@ def vas_open(chain, trials=100, size=10, poolNum=2):
     vas_sum = sum(vas_list)/trials
     return vas_sum
 
-def vas_open_parallel(chain, trials=100, size=10, poolNum=2):
+def vas_open_parallel(chain, trials=1000, size=10, poolNum=2):
     random_list = []
     
     for i in range(trials):
@@ -175,11 +175,11 @@ def vas_open_parallel(chain, trials=100, size=10, poolNum=2):
         return vas_sum
 
 #vas of either open or closed chain, passed as boolean; default is open
-def vas_measure(walk, closed = False):
+def vas_measure(walk, closed = False, trials=1000):
     if (closed):
         walk.append(walk[0])
         return vas_open_parallel(walk, trials=1)
-    return vas_open_parallel(walk)
+    return vas_open_parallel(walk, trials=1000)
 
 #calculate runtime
 def runtime (startTime):
@@ -302,33 +302,44 @@ def plot_by_section(knot, section, interval):
 
 ### Proteins ###
 
+proteins = ["6xkl", "6zgh"]
 # proteins = ["6zge", "6acd", "6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
-# for proteinName in proteins:
-#     proteinDF = pd.read_csv(fr'Coordinates\{proteinName}.csv')
-#     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-#     print(len(proteinList))
+pInfoDF = pd.DataFrame()
+numProjections = 2
+for proteinName in proteins:
+    proteinDF = pd.read_csv(f'Coordinates/{proteinName}.csv')
+    proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+    print(len(proteinList))
 
-#     startTime = time.time()
-#     value = vas_measure(proteinList)
-#     execTime = runtime(startTime)
-#     if(value != None):
-#         print (proteinList[0:10], ':' , len(proteinList))
-#         print(f'Vas for {proteinName}: {value}')
-#         print(f'Total runtime for {proteinName}: {execTime} seconds or {execTime/60} minutes\n')
+    startTime = time.time()
+    value = vas_open(proteinList, trials=numProjections)
+    execTime = runtime(startTime)
+    if(value != None):
+        print (proteinList[0:10], ':' , len(proteinList))
+        print(f'Vas for {proteinName}: {value}')
+        print(f'Total runtime for {proteinName}: {execTime} seconds or {execTime/60} minutes\n')
+
+        thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
+                columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
+        pInfoDF = pInfoDF.append(thisDF)
+
+#Add Vassiliev data for proteins
+with open("Vas-Data/ProteinVas1.csv", mode='a', newline='') as f:
+    pInfoDF.to_csv(f, header=f.tell()==0, index=False)
 
 
 ### Scanning and Plotting ###
 
-proteins = ["6zge", "6acd", "6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
-for proteinName in proteins:
-    proteinDF = pd.read_csv(f'Coordinates/{proteinName}.csv')
-    proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-    print(f"\n{proteinName} has {len(proteinList)} CA atoms.")
+# proteins = ["6zge", "6acd", "6zgi", "6zgg", "6zgh", "6xkl", "7kdk"]
+# for proteinName in proteins:
+#     proteinDF = pd.read_csv(f'Coordinates/{proteinName}.csv')
+#     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+#     print(f"\n{proteinName} has {len(proteinList)} CA atoms.")
 
-    startTime = time.time()
-    max_list = vas_scan(proteinList)
-    execTime = runtime(startTime)
-    print(f'Total runtime for {proteinName}: {execTime} seconds or {execTime/60} minutes\n')
+#     startTime = time.time()
+#     max_list = vas_scan(proteinList)
+#     execTime = runtime(startTime)
+#     print(f'Total runtime for {proteinName}: {execTime} seconds or {execTime/60} minutes\n')
 
 # plot_by_section(spikeList, [0, len(spikeList)], 200)
 # interval = 200
