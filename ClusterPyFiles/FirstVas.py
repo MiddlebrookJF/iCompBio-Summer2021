@@ -5,7 +5,6 @@ import math
 import time
 import numpy as np
 import pandas as pd
-# import matplotlib.pyplot as plt
 import glob
 from multiprocessing import Pool
 from functools import partial
@@ -141,7 +140,7 @@ def vas_proj(walk, proj=[[1,0,0],[0,1,0],[0,0,1]]):
 
 #estimates second Vassiliev measure of open chain, using vas_proj, crossings, vas_conditions
 #takes a walk as parameter, number of trials and list of random bases are optional
-def vas_open(chain, trials=1000, size=10, poolNum=2):
+def vas_open(chain, trials=1000, size=50, poolNum=4):
     random_list = []
     vas_list = []
     for i in range(trials):
@@ -154,7 +153,7 @@ def vas_open(chain, trials=1000, size=10, poolNum=2):
     vas_sum = sum(vas_list)/trials
     return vas_sum
 
-def vas_open_parallel(chain, trials=1000, size=10, poolNum=2):
+def vas_open_parallel(chain, trials=1000, size=50, poolNum=4):
     random_list = []
     
     for i in range(trials):
@@ -182,31 +181,6 @@ def vas_measure(walk, closed = False, trials=1000):
 #calculate runtime
 def runtime (startTime):
    return time.time()-startTime
-
-# #WII: Calculate second Vassiliev measure of knot and plot it
-# def plot_vas(knot, closed=False):
-#     vas = 0
-    
-#     if closed:
-#         vas = vas_open(np.append(knot, knot[0]), 1)     #gives 0.5
-#     else:
-#         vas = vas_open(knot)
-
-#     print("\nThe Vassiliev Measure of the knot is " + str(vas) + "\n")
-
-#     x, y, z = [], [], []
-#     for i in range (0, len(knot)):
-#         x.append(knot[i][0])
-#         y.append(knot[i][1])
-#         z.append(knot[i][2])
-#     if closed:
-#         x.append(knot[0][0])
-#         y.append(knot[0][1])
-#         z.append(knot[0][2])
-
-#     ax = plt.axes(projection='3d')
-#     ax.plot3D(x, y, z)
-#     plt.show()
 
 #WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
 def vas_scan(protein, numProjections=1000):
@@ -245,34 +219,13 @@ def vas_scan(protein, numProjections=1000):
     
     return max_list
 
-# def plot_by_section(knot, section, interval):
-
-#     ax = plt.axes(projection='3d')
-#     for i in range(section[0], section[1] - interval, interval):
-#         x, y, z = [], [], []
-#         for j in range (i, i + interval, 1):
-#             x.append(knot[j][0])
-#             y.append(knot[j][1])
-#             z.append(knot[j][2])
-#         print("Knot from {i} to {upper} plotted".format(i=i, upper=i+interval))
-
-#         ax.plot3D(x, y, z)
-#         if (i + interval + interval > section[1]):
-#             for j in range (i + interval, section[1], 1):
-#                 x.append(knot[j][0])
-#                 y.append(knot[j][1])
-#                 z.append(knot[j][2])
-#                 print("Knot from {upper} to {section1} plotted".format(upper=i+interval, section1=section[1]))
-    
-#     plt.show()
-
 ##########################
 
-### Proteins Vas and Vas_Scan Together FOR CLUSTER ###
+### Proteins Vassiliev calculation FOR CLUSTER ###
 
 proteins = glob.glob('Coordinates/*.csv')
 numProjections=1000
-for proteinPath in proteins[0 : round(len(proteins)/2)]:
+for proteinPath in proteins[0 : int(len(proteins)/2)]:
     proteinDF = pd.read_csv(proteinPath)
     proteinName = proteinPath[-8:-4]
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
