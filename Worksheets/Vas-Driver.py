@@ -39,3 +39,33 @@ import Vas_Defs_JW as Vas
 # measure = Vas.vas_measure(proteinList, closed=True)
 # print(measure)
 # #vas is 1.0 for closed trefoil
+
+
+### Trefoil for testing ###
+
+# proteinList = [[1, 0, 0],             #trefoil
+#             [4, 0, 0],
+#             [1, 6, 2],
+#             [0, 2, -5],
+#             [5, 2, 5],
+#             [4, 6, -2]]
+
+# startTime = time.time()
+# value = vas_measure(proteinList, closed=True)
+# execTime = runtime(startTime)
+# if(value!=None):
+#     print (proteinList, ':' , len(proteinList))
+#     print(f'Vas: {value}')
+#     print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
+#vas is 1.0 for closed trefoil
+
+    # trefoil = [[1, 0, 0],
+    #             [4, 0, 0],
+    #             [1, 6, 2],
+    #             [0, 2, -5],
+    #             [5, 2, 5],
+    #             [4, 6, -2],
+    #             [0.5, 0.5, 0.5]]
+
+    # plot_vas(trefoil)
+    # #vas is 0.995 for open trefoil

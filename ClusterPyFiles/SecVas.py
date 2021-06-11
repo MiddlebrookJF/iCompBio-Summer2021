@@ -284,12 +284,5 @@ for proteinPath in proteins[round(len(proteins)/2) : len(proteins)]:
     if(value != None):
         thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
             columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
-        with open("Vas-Data/ProteinVas2.csv", mode='a', newline='') as f:
+        with open("Vas-Data/ProteinVas2.csv", mode='a') as f:
             thisDF.to_csv(f, header=f.tell()==0, index=False)
-
-### Plotting ###
-
-# plot_by_section(spikeList, [0, len(spikeList)], 200)
-# interval = 200
-# for i in range(0, len(spikeList), interval):
-#     plot_by_section(spikeList, [i, i + interval], interval)         #change 0 to i to have it show individually

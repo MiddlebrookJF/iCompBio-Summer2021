@@ -1,15 +1,14 @@
 # File: Vassiliev.py
 # Project: The local topological free energy of SARS-CoV-2
-# Editors: Dr. Eleni Panagiotou, Jason Wang, Jeffrey Richards
 #Not to be used with the cluster
 
 import os
 import time
 import math
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 import glob
+import matplotlib.pyplot as plt
 from multiprocessing import Pool
 from functools import partial
 
@@ -121,7 +120,7 @@ def vas_proj(walk, proj=[[1,0,0],[0,1,0],[0,0,1]]):
     
     #transform the coordinates of the walk
     walk = np.matmul(walk, np.transpose(proj).tolist())
-    
+
     #create list of pairs to check
     pairs=[]
     for j in range(nverts-3):
@@ -189,11 +188,7 @@ def runtime (startTime):
 #WII: Calculate second Vassiliev measure of knot and plot it
 def plot_vas(knot, closed=False):
     vas = 0
-    
-    if closed:
-        vas = vas_open(np.append(knot, knot[0]), 1)     #gives 0.5
-    else:
-        vas = vas_open(knot)
+    vas = vas_measure(knot, closed=closed)
 
     print("\nThe Vassiliev Measure of the knot is " + str(vas) + "\n")
 
@@ -271,40 +266,10 @@ def plot_by_section(knot, section, interval):
 
 ##########################
 
-### Trefoil for testing ###
-
-# proteinList = [[1, 0, 0],             #trefoil
-#             [4, 0, 0],
-#             [1, 6, 2],
-#             [0, 2, -5],
-#             [5, 2, 5],
-#             [4, 6, -2]]
-
-# startTime = time.time()
-# value = vas_measure(proteinList, closed=True)
-# execTime = runtime(startTime)
-# if(value!=None):
-#     print (proteinList, ':' , len(proteinList))
-#     print(f'Vas: {value}')
-#     print(f'Runtime: {execTime} seconds or {execTime/60} minutes\n')
-#vas is 1.0 for closed trefoil
-
-    # trefoil = [[1, 0, 0],
-    #             [4, 0, 0],
-    #             [1, 6, 2],
-    #             [0, 2, -5],
-    #             [5, 2, 5],
-    #             [4, 6, -2],
-    #             [0.5, 0.5, 0.5]]
-
-    # plot_vas(trefoil)
-    # #vas is 0.995 for open trefoil
-
-
 ### Proteins ###
 
 proteins = glob.glob('Coordinates/*.csv')
-numProjections=500
+numProjections = 300
 for proteinPath in proteins:
     proteinDF = pd.read_csv(proteinPath)
     proteinName = proteinPath[-8:-4]
@@ -318,7 +283,7 @@ for proteinPath in proteins:
         thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
             columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
         #Add vas data of one protein to a csv
-        with open("Vas-Data/ProteinVas.csv", mode='a', newline='') as f:
+        with open("Vas-Data/ProteinVas.csv", mode='a') as f:
             thisDF.to_csv(f, header=f.tell()==0, index=False)
 
 

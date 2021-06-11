@@ -283,10 +283,3 @@ for proteinPath in proteins[0 : round(len(proteins)/2)]:
     max_list = vas_scan(proteinList)
     execTime = runtime(startTime)
     print('Total runtime for {proteinName} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))
-
-### Plotting ###
-
-# plot_by_section(spikeList, [0, len(spikeList)], 200)
-# interval = 200
-# for i in range(0, len(spikeList), interval):
-#     plot_by_section(spikeList, [i, i + interval], interval)         #change 0 to i to have it show individually
