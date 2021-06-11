@@ -26,7 +26,6 @@ The maximum Vassiliev for scanlength of 400 is 0.18, at atoms [600, 1000]
 0.055 at 200:800
 0.045 at 400:1000
 0.065 at 600:1100
-The Vas measures from 0 to 1100 are [0.085, 0.055, 0.045, 0.065]
 The maximum Vassiliev for scanlength of 600 is 0.085, at atoms [0, 600]
 46.6036513329 minutes of runtime for 600 scanlength
 
