@@ -269,10 +269,13 @@ def plot_by_section(knot, section, interval):
 ### Proteins ###
 
 proteins = glob.glob('Coordinates/*.csv')
-numProjections = 300
-for proteinPath in proteins:
-    proteinDF = pd.read_csv(proteinPath)
-    proteinName = proteinPath[-8:-4]
+numProjections = 100
+# for proteinPath in proteins:
+#     proteinDF = pd.read_csv(proteinPath)
+#     proteinName = proteinPath[-8:-4]
+#     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+for proteinName in ['7krq', '7m8k', '7mjg', '7lyl', '7lww', '7lws', '7lyn', '7lwt']:
+    proteinDF = pd.read_csv(f'Coordinates/{proteinName}.csv')
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
 
     ## Overall Vas ##
