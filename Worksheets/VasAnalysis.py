@@ -1,4 +1,4 @@
-# File: Analysis.py
+# File: VasAnalysis.py
 # Project: The local topological free energy of SARS-CoV-2
 
 import numpy as np
