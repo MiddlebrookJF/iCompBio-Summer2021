@@ -1,0 +1,9 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -N Scan3-jrichards
+#$ -j y
+#$ -o /home/jrichards/Vas-Data/third_scan.txt
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=24:00:00
+
+python /home/jrichards/ExFiles/ThirdScan.py

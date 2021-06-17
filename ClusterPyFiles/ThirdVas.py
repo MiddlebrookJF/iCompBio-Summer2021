@@ -182,12 +182,49 @@ def vas_measure(walk, closed = False, trials=1000):
 def runtime (startTime):
    return time.time()-startTime
 
+#WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
+def vas_scan(protein, numProjections=1000):
+    max_list = []
+    interval = 50
+    pLength = len(protein)
+
+    for scanlength in range(200, 601, 200):
+        sTime = time.time()
+        vas_list = []
+
+        for start in range(0, pLength - scanlength, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
+            upperbound = start + scanlength
+            local_vas = vas_open_parallel(protein[start : upperbound], trials=numProjections)
+            vas_list.append( local_vas )
+            print("{local_vas} at {start}:{upperbound}".format(local_vas=local_vas, start=start, upperbound=upperbound))
+
+            if(upperbound + interval > pLength):                   #last iteration
+                if(pLength < upperbound + interval - (interval/2)):           #Determines range of last scan
+                    start = pLength - interval
+                else: start += interval
+                
+                local_vas = vas_open(protein[start : pLength])
+                vas_list.append( local_vas )
+                print("{local_vas} at {start}:{pLength}".format(local_vas=local_vas, start=start, pLength=pLength))
+
+        print("The Vas measures from 0 to {pLength} are {vas_list}".format(pLength=pLength, vas_list=vas_list))
+        
+        max_vas = max(np.abs(vas_list))                 #find max value of vas in given iteration, then record them
+        max_start = vas_list.index(max(vas_list)) * interval
+        max_loc = [max_start, max_start + scanlength]
+        print("The maximum Vas for scanlength {scanlength} is {max_vas}, at atoms {max_loc}".format(scanlength=scanlength, max_vas=max_vas, max_loc=max_loc))
+        max_list.append([max_loc, max_vas])
+
+        print("{execMin} minutes of runtime for {scanlength} scanlength\n".format(execMin=runtime(sTime)/60, scanlength=scanlength))
+    
+    return max_list
+
 ##########################
 
 ### Proteins Vas_Scan FOR CLUSTER ###
 
 proteins = glob.glob('Coordinates/*.csv')
-numProjections=1000
+numProjections=2000
 for proteinPath in proteins[int(len(proteins)*2/3) : len(proteins)]:
     proteinDF = pd.read_csv(proteinPath)
     proteinName = proteinPath[-8:-4]
@@ -200,5 +237,5 @@ for proteinPath in proteins[int(len(proteins)*2/3) : len(proteins)]:
     if(value != None):
         thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
             columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
-        with open("Vas-Data/ProteinVas2.csv", mode='a') as f:
+        with open(f"Vas-Data/NewVas{numProjections}.csv", mode='a') as f:
             thisDF.to_csv(f, header=f.tell()==0, index=False)

@@ -1,0 +1,9 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -N Vas2-jrichards
+#$ -j y
+#$ -o /home/jrichards/Vas-Data/vas_out.txt
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=20:00:00
+
+python /home/jrichards/ExFiles/SecVas.py
