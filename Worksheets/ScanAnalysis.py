@@ -33,22 +33,51 @@ def plot_vas(proteinName, scanlength, section, vas, maxVas=False):
     plt.savefig(f'Vas-Data/Scans/{proteinName}/{scanlength}/{section}.png')
     plt.clf()
 
-print('\n\n\n')
+def plot_all(lines):
+    proteinName = ''
+    max_loc = 0
+    scanlength = 200
+
+    for line in lines:
+        words = line.split(' ')
+        if len(words) < 2: continue
+        if words[1] == 'length':
+            proteinName = words[3]
+            scanlength = 200
+        elif words[1] == 'at':          #Plot section at this line along with vas
+            plot_vas(proteinName, scanlength, words[2], words[0])
+        elif words[1] == 'maximum':
+            max_loc = words[-2][1:-1] + ':' + words[-1][0:-1]
+            plot_vas(proteinName, int(words[5]), max_loc, words[7][0:-1], maxVas=True)
+            scanlength += 200
+            
+def plot_vas_change(lines):
+    proteinName = ''
+    scanlength = 200
+    vas_list = []
+    start_list = []
+
+    for line in lines:
+        words = line.split(' ')
+        if len(words) < 2: continue
+        if words[1] == 'length':
+            proteinName = words[3]
+            scanlength = 200
+        if words[1] == 'at':          #Plot section at this line along with vas
+            vas_list.append(float(words[0]) * 100)
+            start_list.append(words[2].split(':')[0])
+        if words[1] == 'maximum':
+            plt.plot(start_list, vas_list)
+            plt.title(f'Change in V2 for {proteinName} at {scanlength} scan length')
+            plt.xlabel('Starting Point')
+            plt.ylabel('Local V2 * 100')
+            plt.show()
+            start_list.clear()
+            vas_list.clear()
+            scanlength += 200
+
 with open('Vas-Data/1000Scan0.txt') as scanFile:
     lines = scanFile.readlines()
 
-proteinName = ''
-max_loc = 0
-scanlength = 200
-for line in lines:
-    words = line.split(' ')
-    if len(words) < 2: continue
-    if words[1] == 'length':
-        proteinName = words[3]
-        scanlength = 200
-    elif words[1] == 'at':          #Plot section at this line along with vas
-        plot_vas(proteinName, scanlength, words[2], words[0])
-    elif words[1] == 'maximum':
-        max_loc = words[-2][1:-1] + ':' + words[-1][0:-1]
-        plot_vas(proteinName, int(words[5]), max_loc, words[7][0:-1], maxVas=True)
-        scanlength += 200
+plot_vas_change(lines)
+
