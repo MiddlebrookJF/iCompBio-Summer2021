@@ -183,12 +183,12 @@ def runtime (startTime):
    return time.time()-startTime
 
 #WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
-def vas_scan(protein, numProjections=1000):
+def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
     max_list = []
-    interval = 50
+    interval = 1
     pLength = len(protein)
 
-    for scanlength in range(200, 601, 200):
+    for scanlength in scanlengths:
         sTime = time.time()
         vas_list = []
 
@@ -223,9 +223,9 @@ def vas_scan(protein, numProjections=1000):
 
 ### Proteins Vas_Scan FOR CLUSTER ###
 
-proteins = glob.glob('Coordinates/*.csv')
+proteins = glob.glob('Coordinates/6zge.csv')
 numProjections=1000
-for proteinPath in proteins[int(len(proteins)*2/3) : len(proteins)]:
+for proteinPath in proteins[int(len(proteins)/2) : len(proteins)]:
     proteinDF = pd.read_csv(proteinPath)
     proteinName = proteinPath[-8:-4]
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
@@ -233,6 +233,6 @@ for proteinPath in proteins[int(len(proteins)*2/3) : len(proteins)]:
 
     ## Vas Scan ##
     startTime = time.time()
-    max_list = vas_scan(proteinList)
+    max_list = vas_scan(proteinList, scanlengths=[400])
     execTime = runtime(startTime)
     print('Total runtime for {proteinName} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))
