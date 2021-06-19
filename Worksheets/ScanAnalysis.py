@@ -7,6 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from statistics import mean
 
+#Used by plot_all to plot an indiviual protein section and then save the figure as a png
 def plot_vas(proteinName, scanlength, section, vas, maxVas=False):
     knot = pd.read_csv(f'Coordinates/{proteinName}.csv').values.tolist()
 
@@ -50,7 +51,7 @@ def plot_all(lines):
             max_loc = words[-2][1:-1] + ':' + words[-1][0:-1]
             plot_vas(proteinName, int(words[5]), max_loc, words[7][0:-1], maxVas=True)
             scanlength += 200
-            
+
 def plot_vas_change(lines):
     proteinName = ''
     scanlength = 200
@@ -63,21 +64,41 @@ def plot_vas_change(lines):
         if words[1] == 'length':
             proteinName = words[3]
             scanlength = 200
-        if words[1] == 'at':          #Plot section at this line along with vas
+        if words[1] == 'at':
             vas_list.append(float(words[0]) * 100)
             start_list.append(words[2].split(':')[0])
         if words[1] == 'maximum':
             plt.plot(start_list, vas_list)
             plt.title(f'Change in V2 for {proteinName} at {scanlength} scan length')
             plt.xlabel('Starting Point')
-            plt.ylabel('Local V2 * 100')
+            plt.ylabel('Local V2 (in hundredths')
             plt.show()
             start_list.clear()
             vas_list.clear()
             scanlength += 200
 
+def vas_matrix(lines):
+    proteinName = ''
+    scanlength = 1
+    matrix = []
+
+    for line in lines:
+        words = line.split(' ')
+        if len(words) < 2: break
+        if words[1] == 'at':
+            section = words[2].split(':')
+            section[0], section[1] = int(section[0]), int(section[1])
+            matrix[section[0]][section[1]] = float(words[0]) * 100        #Puts v2 into the spot
+            continue
+        if words[1] == 'length':
+            proteinName = words[3]
+            proteinLength = int(words[5][0:-2])
+            matrix = [[0 for i in range(proteinLength)] for j in range(proteinLength)]
+        if words[1] == 'maximum':
+            print(matrix)
+            scanlength += 1
+
 with open('Vas-Data/1000Scan0.txt') as scanFile:
     lines = scanFile.readlines()
 
-plot_vas_change(lines)
-
+vas_matrix(lines)

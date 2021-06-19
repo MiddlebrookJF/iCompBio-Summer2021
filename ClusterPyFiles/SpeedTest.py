@@ -6,6 +6,7 @@ import time
 import numpy as np
 import pandas as pd
 import glob
+import multiprocessing as mp
 from multiprocessing import Pool
 from functools import partial
 
@@ -140,7 +141,7 @@ def vas_proj(walk, proj=[[1,0,0],[0,1,0],[0,0,1]]):
 
 #estimates second Vassiliev measure of open chain, using vas_proj, crossings, vas_conditions
 #takes a walk as parameter, number of trials and list of random bases are optional
-def vas_open(chain, trials=1000, size=50, poolNum=4):
+def vas_open(chain, trials=1000, size=50, processNum=4):
     random_list = []
     vas_list = []
     for i in range(trials):
@@ -153,7 +154,7 @@ def vas_open(chain, trials=1000, size=50, poolNum=4):
     vas_sum = sum(vas_list)/trials
     return vas_sum
 
-def vas_open_parallel(chain, trials=1000, size=50, poolNum=4):
+def vas_open_parallel(chain, trials=1000, size=50, processNum=4):
     random_list = []
     
     for i in range(trials):
@@ -161,7 +162,7 @@ def vas_open_parallel(chain, trials=1000, size=50, poolNum=4):
 
     if __name__== '__main__':
         #iterate over the list with multiple processors
-        p = Pool(poolNum)
+        p = Pool(processNum)
         part = partial(vas_proj, chain)
         result = p.map(func = part, iterable = random_list, chunksize = size)
         if(result != None):
@@ -223,19 +224,21 @@ def vas_scan(protein, numProjections=1000):
 
 ### Proteins Vassiliev calculation FOR CLUSTER ###
 
-proteins = glob.glob('Coordinates/*.csv')
-numProjections=2000
-for proteinPath in proteins[0 : int(len(proteins)/3)]:
+proteinPath = ('Coordinates/6zgh.csv')
+numProjections = 50
+for processes in [int(mp.cpu_count()), int(mp.cpu_count()/2), 4]:
     proteinDF = pd.read_csv(proteinPath)
     proteinName = proteinPath[-8:-4]
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
 
     ## Overall Vas ##
     startTime = time.time()
-    value = vas_open_parallel(proteinList, trials=numProjections)
+    value = vas_open_parallel(proteinList, trials=numProjections, processNum=processes)
     execTime = runtime(startTime)
     if(value != None):
-        thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
-            columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
-        with open(f"Vas-Data/NewVas{numProjections}.csv", mode='a') as f:
+        thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, processes]],
+            columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','Processes'])
+        with open(f"Vas-Data/SpeedTest.csv", mode='a') as f:
             thisDF.to_csv(f, header=f.tell()==0, index=False)
+
+
