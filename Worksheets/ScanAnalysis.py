@@ -72,7 +72,11 @@ def plot_vas_change(lines):
             plt.title(f'Change in V2 for {proteinName} at {scanlength} scan length')
             plt.xlabel('Starting Point')
             plt.ylabel('Local V2 (in hundredths')
-            plt.show()
+
+            if not os.path.exists(f'Vas-Data/Change/{proteinName}'):
+                os.mkdir(f'Vas-Data/Change/{proteinName}')
+            plt.savefig(f'Vas-Data/Change/{proteinName}/{scanlength}.png')
+            plt.clf()
             start_list.clear()
             vas_list.clear()
             scanlength += 200
@@ -101,4 +105,4 @@ def vas_matrix(lines):
 with open('Vas-Data/1000Scan0.txt') as scanFile:
     lines = scanFile.readlines()
 
-vas_matrix(lines)
+plot_vas_change(lines)
