@@ -89,20 +89,21 @@ def vas_matrix(lines):
     for line in lines:
         words = line.split(' ')
         if len(words) < 2: break
-        if words[1] == 'at':
+        if words[1] == 'at':        #Add the section and its V2 to the matrix
             section = words[2].split(':')
             section[0], section[1] = int(section[0]), int(section[1])
-            matrix[section[0]][section[1]] = float(words[0]) * 100        #Puts v2 into the spot
+            matrix[section[0]][section[1]-1] = float(words[0]) * 100        #Puts v2 into the spot
             continue
         if words[1] == 'length':
             proteinName = words[3]
             proteinLength = int(words[5][0:-2])
-            matrix = [[0 for i in range(proteinLength)] for j in range(proteinLength)]
+            matrix = np.zeros((proteinLength, proteinLength), dtype=float)
         if words[1] == 'maximum':
-            print(matrix)
+            with open(f"Vas-Data/Matrices/{proteinName}.csv", mode='w', newline='') as f:
+                pd.DataFrame(matrix).to_csv(f, header = f.tell()==0)
             scanlength += 1
 
-with open('Vas-Data/1000Scan0.txt') as scanFile:
+with open('Vas-Data/6zge-200scanlength.txt') as scanFile:
     lines = scanFile.readlines()
 
-plot_vas_change(lines)
+vas_matrix(lines)

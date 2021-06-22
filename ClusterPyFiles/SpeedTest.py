@@ -226,7 +226,7 @@ def vas_scan(protein, numProjections=1000):
 
 proteinPath = ('Coordinates/6zgh.csv')
 numProjections = 50
-for processes in [int(mp.cpu_count()), int(mp.cpu_count()/2), 4]:
+for processes in [int(mp.cpu_count()/2), 4, 2]:
     proteinDF = pd.read_csv(proteinPath)
     proteinName = proteinPath[-8:-4]
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
