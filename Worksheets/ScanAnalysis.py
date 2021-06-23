@@ -103,7 +103,7 @@ def vas_matrix(lines):
                 pd.DataFrame(matrix).to_csv(f, header = f.tell()==0)
             scanlength += 1
 
-with open('Vas-Data/6zge-200scanlength.txt') as scanFile:
+with open('Vas-Data/All-50inter-one.txt') as scanFile:
     lines = scanFile.readlines()
 
-vas_matrix(lines)
+plot_vas_change(lines)
