@@ -107,3 +107,4 @@ with open('Vas-Data/All-50inter-one.txt') as scanFile:
     lines = scanFile.readlines()
 
 plot_vas_change(lines)
+plot_all(lines)
