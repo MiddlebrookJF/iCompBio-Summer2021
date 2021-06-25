@@ -185,7 +185,7 @@ def runtime (startTime):
 #WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
 def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
     max_list = []
-    interval = 1
+    interval = 50
     pLength = len(protein)
 
     for scanlength in scanlengths:
@@ -200,7 +200,7 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
             if(upperbound + interval > pLength):                   #last iteration
                 if(pLength < upperbound + interval - (interval/2)):           #Determines range of last scan
-                    start = pLength - interval
+                    start = pLength - scanlength
                 else: start += interval
                 
                 local_vas = vas_open(protein[start : pLength])
@@ -221,18 +221,19 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
 ##########################
 
-### Proteins Vassiliev calculation FOR CLUSTER ###
+### Proteins Vas_Scan FOR CLUSTER ###
 
-proteins = glob.glob('Coordinates/6zge.csv')
+proteins = ['6zge']
 numProjections=1000
+print('Number of projections is {proj}'.format(proj=numProjections))
 for proteinPath in proteins:
-    proteinDF = pd.read_csv(proteinPath)
-    proteinName = proteinPath[-8:-4]
+    proteinDF = pd.read_csv('Coordinates/{proteinPath}.csv'.format(proteinPath=proteinPath))
+    proteinName = proteinPath
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
     print("The length of {name} is {len}.".format(name=proteinName, len=len(proteinList)))
 
     ## Vas Scan ##
     startTime = time.time()
-    max_list = vas_scan(proteinList, scanlengths=[200])
+    max_list = vas_scan(proteinList)
     execTime = runtime(startTime)
     print('Total runtime for {proteinName} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))

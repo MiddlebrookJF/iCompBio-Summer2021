@@ -2,7 +2,7 @@
 #$ -S /bin/bash
 #$ -N Scan1-jrichards
 #$ -j y
-#$ -o /home/jrichards/Vas-Data/first_scan.txt
+#$ -o /home/jrichards/Vas-Data/6zge-scan.txt
 #PBS -l nodes=1:ppn=1
 #PBS -l walltime=24:00:00
 

@@ -200,7 +200,7 @@ def vas_scan(protein, numProjections=1000):
 
             if(upperbound + interval > pLength):                   #last iteration
                 if(pLength < upperbound + interval - (interval/2)):           #Determines range of last scan
-                    start = pLength - interval
+                    start = pLength - scanlength
                 else: start += interval
                 
                 local_vas = vas_open(protein[start : pLength])
@@ -224,7 +224,7 @@ def vas_scan(protein, numProjections=1000):
 ### Proteins Vassiliev calculation FOR CLUSTER ###
 
 proteins = glob.glob('Coordinates/*.csv')
-numProjections=2000
+numProjections=1000
 for proteinPath in proteins[0 : int(len(proteins)/3)]:
     proteinDF = pd.read_csv(proteinPath)
     proteinName = proteinPath[-8:-4]
@@ -237,5 +237,5 @@ for proteinPath in proteins[0 : int(len(proteins)/3)]:
     if(value != None):
         thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
             columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
-        with open(f"Vas-Data/NewVas{numProjections}.csv", mode='a') as f:
+        with open("Vas-Data/NewVas{numProjections}.csv".format(numProjections=numProjections), mode='a') as f:
             thisDF.to_csv(f, header=f.tell()==0, index=False)

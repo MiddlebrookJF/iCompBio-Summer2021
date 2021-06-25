@@ -224,7 +224,7 @@ def vas_scan(protein, numProjections=1000):
 ### Proteins Vas_Scan FOR CLUSTER ###
 
 proteins = glob.glob('Coordinates/*.csv')
-numProjections=2000
+numProjections=1000
 for proteinPath in proteins[int(len(proteins)/3) : int(len(proteins)*2/3)]:
     proteinDF = pd.read_csv(proteinPath)
     proteinName = proteinPath[-8:-4]

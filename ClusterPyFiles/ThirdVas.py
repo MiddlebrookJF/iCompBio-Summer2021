@@ -200,7 +200,7 @@ def vas_scan(protein, numProjections=1000):
 
             if(upperbound + interval > pLength):                   #last iteration
                 if(pLength < upperbound + interval - (interval/2)):           #Determines range of last scan
-                    start = pLength - interval
+                    start = pLength - scanlength
                 else: start += interval
                 
                 local_vas = vas_open(protein[start : pLength])
@@ -224,7 +224,7 @@ def vas_scan(protein, numProjections=1000):
 ### Proteins Vas_Scan FOR CLUSTER ###
 
 proteins = glob.glob('Coordinates/*.csv')
-numProjections=2000
+numProjections=1000
 for proteinPath in proteins[int(len(proteins)*2/3) : len(proteins)]:
     proteinDF = pd.read_csv(proteinPath)
     proteinName = proteinPath[-8:-4]
