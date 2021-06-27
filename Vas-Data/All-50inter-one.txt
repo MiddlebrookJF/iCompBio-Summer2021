@@ -237,7 +237,7 @@ The length of 6acd is 1065.
 0.0105 at 750:950
 -0.008 at 800:1000
 0.0325 at 850:1050
-0.0005 at 1015:1065
+0.053 at 865:1065
 The Vas measures from 0 to 1065 are [0.1235, -0.1135, 0.002, 0.0085, 0.0025, 0.0155, 0.013, -0.004, -0.017, 0.0035, 0.018, 0.0045, 0.005, 0.0185, 0.012, 0.0105, -0.008, 0.0325, 0.0005]
 The maximum Vas for scanlength 200 is 0.1235, at atoms [0, 200]
 116.590944684 minutes of runtime for 200 scanlength
@@ -256,7 +256,7 @@ The maximum Vas for scanlength 200 is 0.1235, at atoms [0, 200]
 0.2915 at 550:950
 0.0995 at 600:1000
 0.1085 at 650:1050
-0.001 at 1015:1065
+0.0545 at 665:1065
 The Vas measures from 0 to 1065 are [0.157, -0.0765, 0.0005, 0.0155, 0.028, 0.015, 0.019, -0.005, -0.0115, 0.006, 0.057, 0.2915, 0.0995, 0.1085, 0.001]
 The maximum Vas for scanlength 400 is 0.2915, at atoms [550, 950]
 368.691039733 minutes of runtime for 400 scanlength
@@ -271,7 +271,7 @@ The maximum Vas for scanlength 400 is 0.2915, at atoms [550, 950]
 0.2785 at 350:950
 0.071 at 400:1000
 0.0135 at 450:1050
-0.001 at 1015:1065
+0.026 at 465:1065
 The Vas measures from 0 to 1065 are [0.2645, -0.052, 0.0035, 0.0125, 0.0275, 0.035, 0.068, 0.2785, 0.071, 0.0135, 0.001]
 The maximum Vas for scanlength 600 is 0.2785, at atoms [350, 950]
 374.404295333 minutes of runtime for 600 scanlength
@@ -462,7 +462,7 @@ The length of 6xkl is 968.
 0.0115 at 650:850
 0.003 at 700:900
 0.0445 at 750:950
-0.0025 at 918:968
+0.0265 at 768:968
 The Vas measures from 0 to 968 are [-0.0095, 0.004, 0.0055, 0.0085, 0.0035, 0.0285, 0.015, 0.009, 0.004, 0.0045, 0.014, 0.0235, 0.0125, 0.0115, 0.003, 0.0445, 0.0025]
 The maximum Vas for scanlength 200 is 0.0445, at atoms [750, 950]
 73.7781233668 minutes of runtime for 200 scanlength
@@ -479,7 +479,7 @@ The maximum Vas for scanlength 200 is 0.0445, at atoms [750, 950]
 0.3085 at 450:850
 0.052 at 500:900
 0.1295 at 550:950
-0.002 at 918:968
+0.1165 at 568:968
 The Vas measures from 0 to 968 are [-0.035, 0.0255, 0.0115, 0.028, 0.0095, 0.0465, 0.025, 0.031, 0.056, 0.3085, 0.052, 0.1295, 0.002]
 The maximum Vas for scanlength 400 is 0.3085, at atoms [450, 850]
 335.575194967 minutes of runtime for 400 scanlength
@@ -492,7 +492,7 @@ The maximum Vas for scanlength 400 is 0.3085, at atoms [450, 850]
 0.3555 at 250:850
 0.0235 at 300:900
 0.052 at 350:950
-0.0015 at 918:968
+0.0175 at 368:968
 The Vas measures from 0 to 968 are [-0.0245, 0.022, 0.013, 0.0355, 0.136, 0.3555, 0.0235, 0.052, 0.0015]
 The maximum Vas for scanlength 600 is 0.3555, at atoms [250, 850]
 514.463041766 minutes of runtime for 600 scanlength
@@ -519,7 +519,7 @@ The length of 7krq is 1121.
 0.005 at 800:1000
 0.0 at 850:1050
 0.026 at 900:1100
-0.001 at 1071:1121
+0.0015 at 921:1121
 The Vas measures from 0 to 1121 are [0.1145, -0.0905, 0.008, 0.006, 0.0145, 0.0075, 0.054, -0.0335, -0.011, -0.0005, 0.013, 0.0045, 0.009, 0.0165, 0.01, 0.002, 0.005, 0.0, 0.026, 0.001]
 The maximum Vas for scanlength 200 is 0.1145, at atoms [0, 200]
 144.024095897 minutes of runtime for 200 scanlength
@@ -539,7 +539,7 @@ The maximum Vas for scanlength 200 is 0.1145, at atoms [0, 200]
 0.1855 at 600:1000
 0.089 at 650:1050
 0.0295 at 700:1100
-0.0 at 1071:1121
+0.0205 at 721:1121
 The Vas measures from 0 to 1121 are [0.079, -0.0745, 0.0295, -0.006, 0.03, 0.024, 0.0755, -0.0305, 0.007, -0.001, 0.0355, 0.049, 0.1855, 0.089, 0.0295, 0.0]
 The maximum Vas for scanlength 400 is 0.1855, at atoms [600, 1000]
 459.800557065 minutes of runtime for 400 scanlength
@@ -555,7 +555,7 @@ The maximum Vas for scanlength 400 is 0.1855, at atoms [600, 1000]
 0.141 at 400:1000
 0.011 at 450:1050
 0.0755 at 500:1100
-0.0 at 1071:1121
+0.089 at 521:1121
 The Vas measures from 0 to 1121 are [0.0995, -0.06, 0.0235, 0.027, 0.0535, 0.043, 0.094, 0.0285, 0.141, 0.011, 0.0755, 0.0]
 The maximum Vas for scanlength 600 is 0.141, at atoms [400, 1000]
 741.649526501 minutes of runtime for 600 scanlength
@@ -637,7 +637,7 @@ The length of 7lyl is 1001.
 0.011 at 700:900
 0.019 at 750:950
 0.0325 at 800:1000
-0.0005 at 951:1001
+0.052 at 801:1001
 The Vas measures from 0 to 1001 are [0.0005, -0.0035, 0.0215, 0.0205, 0.014, 0.029, -0.0135, 0.0, 0.0045, 0.0225, 0.0065, 0.023, 0.013, 0.0995, 0.011, 0.019, 0.0325, 0.0005]
 The maximum Vas for scanlength 200 is 0.0995, at atoms [650, 850]
 94.030471917 minutes of runtime for 200 scanlength
@@ -655,7 +655,7 @@ The maximum Vas for scanlength 200 is 0.0995, at atoms [650, 850]
 0.1785 at 500:900
 0.1195 at 550:950
 0.117 at 600:1000
-0.0005 at 951:1001
+0.155 at 601:1001
 The Vas measures from 0 to 1001 are [-0.0355, -0.002, 0.016, 0.019, 0.0205, 0.027, 0.0005, 0.0065, 0.026, 0.1085, 0.1785, 0.1195, 0.117, 0.0005]
 The maximum Vas for scanlength 400 is 0.1785, at atoms [500, 900]
 405.735955334 minutes of runtime for 400 scanlength
@@ -669,7 +669,7 @@ The maximum Vas for scanlength 400 is 0.1785, at atoms [500, 900]
 0.1705 at 300:900
 0.016 at 350:950
 0.019 at 400:1000
-0.001 at 951:1001
+0.0255 at 401:1001
 The Vas measures from 0 to 1001 are [-0.0375, 0.0245, 0.0385, 0.0365, 0.039, 0.1375, 0.1705, 0.016, 0.019, 0.001]
 The maximum Vas for scanlength 600 is 0.1705, at atoms [300, 900]
 606.608508464 minutes of runtime for 600 scanlength
@@ -806,7 +806,7 @@ The length of 7kdk is 972.
 0.015 at 650:850
 -0.0015 at 700:900
 0.038 at 750:950
-0.0015 at 922:972
+0.0605 at 772:972
 The Vas measures from 0 to 972 are [-0.011, -0.0075, 0.0205, 0.0115, 0.005, 0.025, 0.009, 0.0, 0.006, 0.0035, 0.008, 0.033, 0.011, 0.015, -0.0015, 0.038, 0.0015]
 The maximum Vas for scanlength 200 is 0.038, at atoms [750, 950]
 54.4459457636 minutes of runtime for 200 scanlength
@@ -823,7 +823,7 @@ The maximum Vas for scanlength 200 is 0.038, at atoms [750, 950]
 0.352 at 450:850
 0.0775 at 500:900
 0.1775 at 550:950
-0.0015 at 922:972
+0.131 at 572:972
 The Vas measures from 0 to 972 are [-0.024, 0.0385, 0.025, 0.0285, 0.026, 0.037, 0.0085, 0.0055, 0.059, 0.352, 0.0775, 0.1775, 0.0015]
 The maximum Vas for scanlength 400 is 0.352, at atoms [450, 850]
 165.450123413 minutes of runtime for 400 scanlength
@@ -836,7 +836,7 @@ The maximum Vas for scanlength 400 is 0.352, at atoms [450, 850]
 0.3815 at 250:850
 0.067 at 300:900
 0.037 at 350:950
-0.0015 at 922:972
+0.032 at 372:972
 The Vas measures from 0 to 972 are [-0.0345, 0.031, 0.036, 0.036, 0.0765, 0.3815, 0.067, 0.037, 0.0015]
 The maximum Vas for scanlength 600 is 0.3815, at atoms [250, 850]
 312.109200132 minutes of runtime for 600 scanlength
@@ -862,7 +862,7 @@ The length of 6zgg is 1069.
 0.0065 at 750:950
 -0.0015 at 800:1000
 0.0395 at 850:1050
-0.0005 at 1019:1069
+0.027 at 869:1069
 The Vas measures from 0 to 1069 are [0.085, 0.0635, 0.005, 0.005, 0.0115, 0.0275, 0.0035, -0.003, -0.0555, 0.003, 0.0075, 0.0055, 0.012, 0.0065, 0.013, 0.0065, -0.0015, 0.0395, 0.0005]
 The maximum Vas for scanlength 200 is 0.085, at atoms [0, 200]
 64.1369295518 minutes of runtime for 200 scanlength
@@ -881,7 +881,7 @@ The maximum Vas for scanlength 200 is 0.085, at atoms [0, 200]
 0.2145 at 550:950
 0.0605 at 600:1000
 0.1235 at 650:1050
-0.0015 at 1019:1069
+0.115 at 669:1069
 The Vas measures from 0 to 1069 are [0.0935, -0.0335, 0.0095, 0.038, 0.026, 0.035, 0.036, -0.008, -0.063, 0.007, 0.0825, 0.2145, 0.0605, 0.1235, 0.0015]
 The maximum Vas for scanlength 400 is 0.2145, at atoms [550, 950]
 200.404548685 minutes of runtime for 400 scanlength
@@ -896,7 +896,7 @@ The maximum Vas for scanlength 400 is 0.2145, at atoms [550, 950]
 0.23 at 350:950
 -0.047 at 400:1000
 0.025 at 450:1050
-0.0 at 1019:1069
+0.011 at 469:1069
 The Vas measures from 0 to 1069 are [0.1205, -0.0525, 0.022, 0.02, 0.033, 0.036, 0.1135, 0.23, -0.047, 0.025, 0.0]
 The maximum Vas for scanlength 600 is 0.23, at atoms [350, 950]
 319.664029197 minutes of runtime for 600 scanlength
