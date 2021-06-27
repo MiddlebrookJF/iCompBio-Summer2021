@@ -143,6 +143,7 @@ def vas_proj(walk, proj=[[1,0,0],[0,1,0],[0,0,1]]):
 def vas_open(chain, trials=1000, size=50, poolNum=4):
     random_list = []
     vas_list = []
+    if len(chain) < 4: return 0
     for i in range(trials):
         random_list.append(randomBasis())
 
@@ -155,6 +156,7 @@ def vas_open(chain, trials=1000, size=50, poolNum=4):
 
 def vas_open_parallel(chain, trials=1000, size=50, poolNum=4):
     random_list = []
+    if len(chain) < 4: return 0
     
     for i in range(trials):
         random_list.append(randomBasis())

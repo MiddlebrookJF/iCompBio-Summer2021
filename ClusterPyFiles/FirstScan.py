@@ -143,6 +143,7 @@ def vas_proj(walk, proj=[[1,0,0],[0,1,0],[0,0,1]]):
 def vas_open(chain, trials=1000, size=50, poolNum=4):
     random_list = []
     vas_list = []
+    if len(chain) < 4: return 0
     for i in range(trials):
         random_list.append(randomBasis())
 
@@ -155,6 +156,7 @@ def vas_open(chain, trials=1000, size=50, poolNum=4):
 
 def vas_open_parallel(chain, trials=1000, size=50, poolNum=4):
     random_list = []
+    if len(chain) < 4: return 0
     
     for i in range(trials):
         random_list.append(randomBasis())
@@ -223,17 +225,17 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
 ### Proteins Vas_Scan FOR CLUSTER ###
 
-proteins = ['6zge']
-numProjections=1000
+proteins = ['6acd', '7krq', '6xkl', '7lyl', '7kdk', '6zgg']
+numProjections=1
 print('Number of projections is {proj}'.format(proj=numProjections))
-for proteinPath in proteins:
-    proteinDF = pd.read_csv('Coordinates/{proteinPath}.csv'.format(proteinPath=proteinPath))
-    proteinName = proteinPath
+for proteinName in proteins:
+    proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
     print("The length of {name} is {len}.".format(name=proteinName, len=len(proteinList)))
 
     ## Vas Scan ##
-    startTime = time.time()
-    max_list = vas_scan(proteinList)
-    execTime = runtime(startTime)
-    print('Total runtime for {proteinName} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))
+    for scanlength in (200, 400, 600):
+        pLength = len(proteinList)
+        start = pLength - scanlength
+        vas = vas_open(proteinList[start : pLength])
+        print("{local_vas} at {start}:{pLength}".format(local_vas=vas, start=start, pLength=pLength))
