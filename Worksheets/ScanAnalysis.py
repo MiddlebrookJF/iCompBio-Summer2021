@@ -65,17 +65,17 @@ def plot_vas_change(lines):
             proteinName = words[3]
             scanlength = 200
         if words[1] == 'at':
-            vas_list.append(float(words[0]) * 100)
+            vas_list.append(float(words[0]))
             start_list.append(words[2].split(':')[0])
         if words[1] == 'maximum':
             plt.plot(start_list, vas_list)
             plt.title(f'Change in V2 for {proteinName} at {scanlength} scan length')
             plt.xlabel('Starting Point')
-            plt.ylabel('Local V2 (in hundredths')
+            plt.ylabel('Local Second Vassiliev Measure')
 
             if not os.path.exists(f'Vas-Data/Change/{proteinName}'):
                 os.mkdir(f'Vas-Data/Change/{proteinName}')
-            plt.savefig(f'Vas-Data/Change/{proteinName}/{scanlength}.png')
+            plt.savefig(f'Vas-Data/Change/{proteinName}/{proteinName}{scanlength}.png')
             plt.clf()
             start_list.clear()
             vas_list.clear()
@@ -107,4 +107,3 @@ with open('Vas-Data/All-50inter-one.txt') as scanFile:
     lines = scanFile.readlines()
 
 plot_vas_change(lines)
-plot_all(lines)

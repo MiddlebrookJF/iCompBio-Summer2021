@@ -232,13 +232,13 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
                 matrixDF.loc[i] = np.zeros(len(matrixDF.columns))
             matrixDF.loc[i, j] = local_vas
             print("Local vas at {i}:{j} is {local_vas}".format(i=i, j=j, local_vas=local_vas))
-        with open("Vas-Data/6zge.csv".format(proteinName=proteinName), mode='a', newline='') as f:
-            matrixDF.to_csv(f, header = f.tell()==0)
+    with open("Vas-Data/{proteinName}-0.csv".format(proteinName=proteinName), mode='a') as f:
+        matrixDF.to_csv(f, header = f.tell()==0)
 
 
 
 proteins = ['6zge']
-numProjections = 1000
+numProjections = 1
 print('Number of projections is {proj}'.format(proj=numProjections))
 for proteinName in proteins:
     proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
