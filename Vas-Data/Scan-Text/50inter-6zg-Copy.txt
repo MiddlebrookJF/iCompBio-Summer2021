@@ -1,0 +1,237 @@
+Number of projections is 1000
+The length of 6zge is 1100.
+Scanlength is 200
+0.0895 at 0:200
+0.043 at 50:250
+0.006 at 100:300
+0.0075 at 150:350
+0.0115 at 200:400
+0.023 at 250:450
+0.006 at 300:500
+-0.012 at 350:550
+-0.0725 at 400:600
+0.0005 at 450:650
+0.012 at 500:700
+0.0045 at 550:750
+0.015 at 600:800
+0.0205 at 650:850
+0.007 at 700:900
+0.0015 at 750:950
+0.004 at 800:1000
+0.009 at 850:1050
+The Vas measures from 0 to 1100 are [0.0895, 0.043, 0.006, 0.0075, 0.0115, 0.023, 0.006, -0.012, -0.0725, 0.0005, 0.012, 0.0045, 0.015, 0.0205, 0.007, 0.0015, 0.004, 0.009]
+The maximum Vas for scanlength 200 is 0.0895, at atoms [0, 200]
+67.5958425164 minutes of runtime for 200 scanlength
+
+Scanlength is 400
+0.0725 at 0:400
+-0.0405 at 50:450
+0.014 at 100:500
+0.0315 at 150:550
+0.011 at 200:600
+0.0375 at 250:650
+0.0275 at 300:700
+-0.001 at 350:750
+-0.081 at 400:800
+0.001 at 450:850
+0.044 at 500:900
+0.1335 at 550:950
+0.2095 at 600:1000
+0.1075 at 650:1050
+The Vas measures from 0 to 1100 are [0.0725, -0.0405, 0.014, 0.0315, 0.011, 0.0375, 0.0275, -0.001, -0.081, 0.001, 0.044, 0.1335, 0.2095, 0.1075]
+The maximum Vas for scanlength 400 is 0.2095, at atoms [600, 1000]
+415.044992566 minutes of runtime for 400 scanlength
+
+Scanlength is 600
+0.084 at 0:600
+-0.0685 at 50:650
+0.0345 at 100:700
+0.029 at 150:750
+0.0485 at 200:800
+0.0345 at 250:850
+0.08 at 300:900
+0.152 at 350:950
+0.1 at 400:1000
+-0.0025 at 450:1050
+The Vas measures from 0 to 1100 are [0.084, -0.0685, 0.0345, 0.029, 0.0485, 0.0345, 0.08, 0.152, 0.1, -0.0025]
+The maximum Vas for scanlength 600 is 0.152, at atoms [350, 950]
+558.511960133 minutes of runtime for 600 scanlength
+
+Total runtime for 6zge scan: 62469.1677408 seconds or 1041.15279568 minutes
+
+
+The length of 6zgh is 875.
+Scanlength is 200
+0.09 at 0:200
+0.064 at 50:250
+0.004 at 100:300
+0.002 at 150:350
+0.014 at 200:400
+0.009 at 250:450
+0.0285 at 300:500
+0.006 at 350:550
+0.007 at 400:600
+0.023 at 450:650
+0.004 at 500:700
+0.0095 at 550:750
+0.0035 at 600:800
+0.0225 at 650:850
+0.0045 at 700:875
+The Vas measures from 0 to 875 are [0.09, 0.064, 0.004, 0.002, 0.014, 0.009, 0.0285, 0.006, 0.007, 0.023, 0.004, 0.0095, 0.0035, 0.0225, 0.0045]
+The maximum Vas for scanlength 200 is 0.09, at atoms [0, 200]
+126.833002381 minutes of runtime for 200 scanlength
+
+Scanlength is 400
+0.1145 at 0:400
+-0.0865 at 50:450
+0.016 at 100:500
+0.002 at 150:550
+0.034 at 200:600
+0.0145 at 250:650
+0.0445 at 300:700
+0.166 at 350:750
+0.0725 at 400:800
+0.127 at 450:850
+0.01 at 500:875
+The Vas measures from 0 to 875 are [0.1145, -0.0865, 0.016, 0.002, 0.034, 0.0145, 0.0445, 0.166, 0.0725, 0.127, 0.01]
+The maximum Vas for scanlength 400 is 0.166, at atoms [350, 750]
+388.878344452 minutes of runtime for 400 scanlength
+
+Scanlength is 600
+0.0995 at 0:600
+-0.0605 at 50:650
+0.067 at 100:700
+0.2265 at 150:750
+0.071 at 200:800
+0.0525 at 250:850
+0.1 at 300:875
+The Vas measures from 0 to 875 are [0.0995, -0.0605, 0.067, 0.2265, 0.071, 0.0525, 0.1]
+The maximum Vas for scanlength 600 is 0.2265, at atoms [150, 750]
+587.974357482 minutes of runtime for 600 scanlength
+
+Total runtime for 6zgh scan: 66221.1423168 seconds or 1103.68570528 minutes
+
+
+The length of 6zgi is 1100.
+Scanlength is 200
+0.0895 at 0:200
+0.057 at 50:250
+0.003 at 100:300
+0.0055 at 150:350
+0.0085 at 200:400
+0.033 at 250:450
+0.01 at 300:500
+-0.011 at 350:550
+-0.073 at 400:600
+-0.0005 at 450:650
+0.0125 at 500:700
+0.0025 at 550:750
+0.0095 at 600:800
+0.021 at 650:850
+0.0045 at 700:900
+0.003 at 750:950
+0.004 at 800:1000
+0.0045 at 850:1050
+The Vas measures from 0 to 1100 are [0.0895, 0.057, 0.003, 0.0055, 0.0085, 0.033, 0.01, -0.011, -0.073, -0.0005, 0.0125, 0.0025, 0.0095, 0.021, 0.0045, 0.003, 0.004, 0.0045]
+The maximum Vas for scanlength 200 is 0.0895, at atoms [0, 200]
+134.079783714 minutes of runtime for 200 scanlength
+
+Scanlength is 400
+0.069 at 0:400
+-0.057 at 50:450
+0.007 at 100:500
+0.044 at 150:550
+0.0255 at 200:600
+0.037 at 250:650
+0.0335 at 300:700
+-0.003 at 350:750
+-0.069 at 400:800
+0.0045 at 450:850
+0.039 at 500:900
+0.1455 at 550:950
+0.1905 at 600:1000
+0.0825 at 650:1050
+The Vas measures from 0 to 1100 are [0.069, -0.057, 0.007, 0.044, 0.0255, 0.037, 0.0335, -0.003, -0.069, 0.0045, 0.039, 0.1455, 0.1905, 0.0825]
+The maximum Vas for scanlength 400 is 0.1905, at atoms [600, 1000]
+437.16636428 minutes of runtime for 400 scanlength
+
+Scanlength is 600
+0.104 at 0:600
+-0.072 at 50:650
+0.061 at 100:700
+0.022 at 150:750
+0.0435 at 200:800
+0.0545 at 250:850
+0.0705 at 300:900
+0.149 at 350:950
+0.1115 at 400:1000
+0.0115 at 450:1050
+The Vas measures from 0 to 1100 are [0.104, -0.072, 0.061, 0.022, 0.0435, 0.0545, 0.0705, 0.149, 0.1115, 0.0115]
+The maximum Vas for scanlength 600 is 0.149, at atoms [350, 950]
+662.933337466 minutes of runtime for 600 scanlength
+
+Total runtime for 6zgi scan: 74050.769177 seconds or 1234.17948628 minutes
+
+
+The length of 6zgg is 1069.
+Scanlength is 200
+0.085 at 0:200
+0.0635 at 50:250
+0.005 at 100:300
+0.005 at 150:350
+0.0115 at 200:400
+0.0275 at 250:450
+0.0035 at 300:500
+-0.003 at 350:550
+-0.0555 at 400:600
+0.003 at 450:650
+0.0075 at 500:700
+0.0055 at 550:750
+0.012 at 600:800
+0.0065 at 650:850
+0.013 at 700:900
+0.0065 at 750:950
+-0.0015 at 800:1000
+0.0395 at 850:1050
+0.027 at 869:1069
+The Vas measures from 0 to 1069 are [0.085, 0.0635, 0.005, 0.005, 0.0115, 0.0275, 0.0035, -0.003, -0.0555, 0.003, 0.0075, 0.0055, 0.012, 0.0065, 0.013, 0.0065, -0.0015, 0.0395, 0.0005]
+The maximum Vas for scanlength 200 is 0.085, at atoms [0, 200]
+64.1369295518 minutes of runtime for 200 scanlength
+
+Scanlength is 400
+0.0935 at 0:400
+-0.0335 at 50:450
+0.0095 at 100:500
+0.038 at 150:550
+0.026 at 200:600
+0.035 at 250:650
+0.036 at 300:700
+-0.008 at 350:750
+-0.063 at 400:800
+0.007 at 450:850
+0.0825 at 500:900
+0.2145 at 550:950
+0.0605 at 600:1000
+0.1235 at 650:1050
+0.115 at 669:1069
+The Vas measures from 0 to 1069 are [0.0935, -0.0335, 0.0095, 0.038, 0.026, 0.035, 0.036, -0.008, -0.063, 0.007, 0.0825, 0.2145, 0.0605, 0.1235, 0.0015]
+The maximum Vas for scanlength 400 is 0.2145, at atoms [550, 950]
+200.404548685 minutes of runtime for 400 scanlength
+
+Scanlength is 600
+0.1205 at 0:600
+-0.0525 at 50:650
+0.022 at 100:700
+0.02 at 150:750
+0.033 at 200:800
+0.036 at 250:850
+0.1135 at 300:900
+0.23 at 350:950
+-0.047 at 400:1000
+0.025 at 450:1050
+0.011 at 469:1069
+The Vas measures from 0 to 1069 are [0.1205, -0.0525, 0.022, 0.02, 0.033, 0.036, 0.1135, 0.23, -0.047, 0.025, 0.0]
+The maximum Vas for scanlength 600 is 0.23, at atoms [350, 950]
+319.664029197 minutes of runtime for 600 scanlength
+
+Total runtime for 6zgg scan: 35052.3305058 seconds or 584.205508431 minutes

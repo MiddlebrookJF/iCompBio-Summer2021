@@ -194,7 +194,7 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
         sTime = time.time()
         vas_list = []
 
-        for start in range(0, pLength - scanlength, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
+        for start in range(0, pLength - scanlength + 1, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
             upperbound = start + scanlength
             local_vas = vas_open_parallel(protein[start : upperbound], trials=numProjections, size=50, poolNum=4)
             vas_list.append( local_vas )

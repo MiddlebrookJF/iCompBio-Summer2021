@@ -81,6 +81,42 @@ def plot_vas_change(lines):
             vas_list.clear()
             scanlength += 200
 
+def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
+    proteinName = ''
+    vas_list = []
+    start_list = []
+
+    for scanlength in scanlengths:
+        currentScanLength = 0
+        colors = ['black', 'darkmagenta', 'sandybrown', 'cornflowerblue', 'red', 'forestgreen']
+        plt.figure(figsize=(10, 6)) 
+        for line in lines:
+            words = line.split(' ')
+            if len(words) < 2: continue
+            if words[1] == 'length':
+                proteinName = words[3]
+            if words[0] == 'Scanlength':
+                currentScanLength = int(words[2][0:-1])
+                continue
+            if currentScanLength == scanlength:
+                if words[1] == 'at':
+                    #If current graph being created is for the scanlength at the lines being read, then add those
+                    vas_list.append(float(words[0]))
+                    start_list.append(words[2].split(':')[0])
+                if words[1] == 'maximum':
+                    plt.plot(start_list, vas_list, label=proteinName, color=colors.pop())
+                    start_list.clear()
+                    vas_list.clear()
+
+        plt.title(title, y=1.035)
+        plt.suptitle(f'Scan Length {scanlength}', y=0.915, fontsize=10)
+        plt.xlabel('Starting Point')
+        plt.ylabel('Local Second Vassiliev Measure')
+        plt.legend()
+        plt.savefig(rf'Vas-Data\Change-Graphs\Proteins-6zg\6zg{scanlength}.png')
+        plt.clf()           #Clears the graph
+
+
 def vas_matrix(lines):
     proteinName = ''
     scanlength = 1
@@ -103,7 +139,7 @@ def vas_matrix(lines):
                 pd.DataFrame(matrix).to_csv(f, header = f.tell()==0)
             scanlength += 1
 
-with open('Vas-Data/All-50inter-one.txt') as scanFile:
+with open('Vas-Data/Scan-Text/50inter-6zg.txt') as scanFile:
     lines = scanFile.readlines()
+plot_all_change(lines, title='Change in V2 for S Proteins for SARS-CoV-2')
 
-plot_vas_change(lines)

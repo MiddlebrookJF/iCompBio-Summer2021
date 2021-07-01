@@ -144,6 +144,7 @@ def vas_open(chain, trials=1000, size=50, poolNum=4):
     random_list = []
     vas_list = []
     if len(chain) < 4: return 0.0
+    if trials < 1: return 0
     for i in range(trials):
         random_list.append(randomBasis())
 
@@ -187,7 +188,7 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
         sTime = time.time()
         vas_list = []
 
-        for start in range(0, pLength - scanlength, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
+        for start in range(0, pLength - scanlength + 1, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
             upperbound = start + scanlength
             local_vas = vas_open_parallel(protein[start : upperbound], trials=numProjections, size=50, poolNum=4)
             vas_list.append( local_vas )
@@ -220,8 +221,8 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
 def vas_matrix(proteinList, proteinName, numProjections=1000):
     pLength = len(proteinList)
-    iList = range(450, pLength, 50)
-    jList = range(4, pLength, 50)
+    iList = range(450, pLength-3, 50)
+    jList = range(4, pLength+1, 50)
     matrixDF = pd.DataFrame(columns=jList)
 
     #ith row, jth column
@@ -238,7 +239,7 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
 
 
 proteins = ['6zge']
-numProjections = 1000
+numProjections = 0
 print('Number of projections is {proj}'.format(proj=numProjections))
 for proteinName in proteins:
     proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
