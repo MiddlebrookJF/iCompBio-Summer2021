@@ -229,8 +229,6 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
     for i in iList:
         for j in jList:
             local_vas = vas_open(proteinList[i:j], trials=numProjections)
-            if not i in matrixDF.values:
-                matrixDF.loc[i] = np.zeros(len(matrixDF.columns))
             matrixDF.loc[i, j] = local_vas
             print("Local vas at {i}:{j} is {local_vas}".format(i=i, j=j, local_vas=local_vas))
     with open("Vas-Data/{proteinName}-1.csv".format(proteinName=proteinName), mode='a') as f:
@@ -239,7 +237,7 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
 
 
 proteins = ['6zge']
-numProjections = 0
+numProjections = 1000
 print('Number of projections is {proj}'.format(proj=numProjections))
 for proteinName in proteins:
     proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))

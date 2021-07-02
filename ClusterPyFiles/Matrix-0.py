@@ -221,7 +221,7 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
 def vas_matrix(proteinList, proteinName, numProjections=1000):
     pLength = len(proteinList)
-    iList = range(50, 401, 50)
+    iList = range(0, 401, 50)
     jList = range(0, pLength+1, 50)
     matrixDF = pd.DataFrame(columns=jList)
 
@@ -238,7 +238,7 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
 
 
 proteins = ['6zge']
-numProjections = 1
+numProjections = 1000
 print('Number of projections is {proj}'.format(proj=numProjections))
 for proteinName in proteins:
     proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
