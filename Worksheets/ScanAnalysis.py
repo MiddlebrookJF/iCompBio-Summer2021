@@ -7,6 +7,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from statistics import mean
 
+from pandas.io.pytables import dropna_doc
+
 #Used by plot_all to plot an indiviual protein section and then save the figure as a png
 def plot_vas(proteinName, scanlength, section, vas, maxVas=False):
     knot = pd.read_csv(f'Coordinates/{proteinName}.csv').values.tolist()
@@ -104,7 +106,19 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
                     vas_list.append(float(words[0]))
                     start_list.append(words[2].split(':')[0])
                 if words[1] == 'maximum':
-                    plt.plot(start_list, vas_list, label=proteinName, color=colors.pop())
+
+                    #Change start_list to the appropriate indices based on the dictionary of coord_index to amino_index
+                    amino_index_cols = ['Coord_Index', '6acd', '7krq', '7lwt', '7lws', '7lww', '7lyn', '6zgh',
+                            '6zge', '6zgi', '6xkl', '7lyl', '7kdk', '6zgg', '7m8k', '7mjg']
+                    col_index = [i for i in range(len(amino_index_cols)) if amino_index_cols[i] == proteinName]
+                    amino_indices = pd.read_csv('AminoAcid-Indices.csv', usecols=col_index)
+                    amino_indices = amino_indices.dropna().values.tolist()
+
+                    amino_start_list = []
+                    for i in start_list:
+                        amino_start_list.append(int(amino_indices[int(i)][0]))
+                    
+                    plt.plot(amino_start_list, vas_list, label=proteinName, color=colors.pop())
                     start_list.clear()
                     vas_list.clear()
 
@@ -113,7 +127,7 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
         plt.xlabel('Starting Point')
         plt.ylabel('Local Second Vassiliev Measure')
         plt.legend()
-        plt.savefig(rf'Vas-Data\Change-Graphs\Proteins-6zg\6zg{scanlength}.png')
+        plt.savefig(rf'Vas-Data\Change-Graphs\New\RBD-Up{scanlength}.png')
         plt.clf()           #Clears the graph
 
 
@@ -139,7 +153,7 @@ def vas_matrix(lines):
                 pd.DataFrame(matrix).to_csv(f, header = f.tell()==0)
             scanlength += 1
 
-with open('Vas-Data/Scan-Text/50inter-6zg.txt') as scanFile:
+with open('Vas-Data/Scan-Text/50inter-RBD_Up.txt') as scanFile:
     lines = scanFile.readlines()
-plot_all_change(lines, title='Change in V2 for S Proteins for SARS-CoV-2')
+plot_all_change(lines, title='Change in V2 for SARS-CoV-2 Variant S Proteins in RBD-Up Conformation')
 
