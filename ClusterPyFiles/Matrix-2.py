@@ -9,6 +9,8 @@ import glob
 from multiprocessing import Pool
 from functools import partial
 
+print('This is the only print statement I\'m adding to Matrix-1, and it\'s at the very beginning.')
+
 #finds scalar triple product of 3 3-D vectors
 def tripleProduct(a,b,c): 
     return np.dot(np.cross(a,b),c)
@@ -221,7 +223,7 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
 def vas_matrix(proteinList, proteinName, numProjections=1000):
     pLength = len(proteinList)
-    iList = range(0, 401, 50)
+    iList = range(0, 451, 50)
     jList = range(4, pLength+1, 50)
     matrixDF = pd.DataFrame(columns=jList)
 
@@ -232,8 +234,8 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
             matrixDF.loc[i, j] = local_vas
             print(matrixDF.loc[i].to_list())
             print("Local vas at {i}:{j} is {local_vas}".format(i=i, j=j, local_vas=local_vas))
-    with open("Vas-Data/{proteinName}-0.csv".format(proteinName=proteinName), mode='a') as f:
-        matrixDF.to_csv(f, header = f.tell()==0)
+        with open("Vas-Data/{proteinName}-1.csv".format(proteinName=proteinName), mode='a') as f:
+            matrixDF.to_csv(f, header = f.tell()==0)
 
 
 
