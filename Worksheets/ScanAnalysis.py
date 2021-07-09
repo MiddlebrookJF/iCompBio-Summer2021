@@ -115,8 +115,8 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
                     amino_indices = amino_indices.dropna().values.tolist()
 
                     amino_start_list = []
-                    for i in start_list:
-                        amino_start_list.append(int(amino_indices[int(i)][0]))
+                    for start in start_list:
+                        amino_start_list.append(int(amino_indices[int(start)][0]))
                     
                     plt.plot(amino_start_list, vas_list, label=proteinName, color=colors.pop())
                     start_list.clear()
@@ -124,10 +124,10 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
 
         plt.title(title, y=1.035)
         plt.suptitle(f'Scan Length {scanlength}', y=0.915, fontsize=10)
-        plt.xlabel('Starting Point')
+        plt.xlabel('Amino Acid Starting Point')
         plt.ylabel('Local Second Vassiliev Measure')
         plt.legend()
-        plt.savefig(rf'Vas-Data\Change-Graphs\New\RBD-Up{scanlength}.png')
+        plt.savefig(rf'Vas-Data\Change-Graphs\New\6zg{scanlength}.png')
         plt.clf()           #Clears the graph
 
 
@@ -153,7 +153,7 @@ def vas_matrix(lines):
                 pd.DataFrame(matrix).to_csv(f, header = f.tell()==0)
             scanlength += 1
 
-with open('Vas-Data/Scan-Text/50inter-RBD_Up.txt') as scanFile:
+with open('Vas-Data/Scan-Text/50inter-6zg.txt') as scanFile:
     lines = scanFile.readlines()
-plot_all_change(lines, title='Change in V2 for SARS-CoV-2 Variant S Proteins in RBD-Up Conformation')
+plot_all_change(lines, title='Change in V2 for Wild SARS-CoV-2 S Proteins in Various Conformations')
 
