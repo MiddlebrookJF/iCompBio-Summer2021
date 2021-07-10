@@ -221,7 +221,7 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
 def vas_matrix(proteinList, proteinName, numProjections=1000):
     pLength = len(proteinList)
-    iList = range(0, 401, 50)
+    iList = range(0, 501, 50)
     jList = range(4, pLength+1, 50)
     matrixDF = pd.DataFrame(columns=jList)
 
@@ -230,11 +230,9 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
         for j in jList:
             local_vas = vas_open(proteinList[i:j], trials=numProjections)
             matrixDF.loc[i, j] = local_vas
-            print(matrixDF.loc[i].to_list())
             print("Local vas at {i}:{j} is {local_vas}".format(i=i, j=j, local_vas=local_vas))
-    with open("Vas-Data/{proteinName}-0.csv".format(proteinName=proteinName), mode='a') as f:
-        matrixDF.to_csv(f, header = f.tell()==0)
-
+        with open("Vas-Data/{proteinName}-0.csv".format(proteinName=proteinName), mode='a') as f:
+            matrixDF.to_csv(f, header = f.tell()==0)
 
 
 proteins = ['6zge']
