@@ -9,8 +9,6 @@ import glob
 from multiprocessing import Pool
 from functools import partial
 
-print('This is the only print statement I\'m adding to Matrix-1, and it\'s at the very beginning.')
-
 #finds scalar triple product of 3 3-D vectors
 def tripleProduct(a,b,c): 
     return np.dot(np.cross(a,b),c)
