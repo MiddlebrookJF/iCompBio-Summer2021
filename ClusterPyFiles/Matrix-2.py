@@ -234,7 +234,7 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
             matrixDF.loc[i, j] = local_vas
             print(matrixDF.loc[i].to_list())
             print("Local vas at {i}:{j} is {local_vas}".format(i=i, j=j, local_vas=local_vas))
-        with open("Vas-Data/{proteinName}-1.csv".format(proteinName=proteinName), mode='a') as f:
+        with open("Vas-Data/{proteinName}-2.csv".format(proteinName=proteinName), mode='a') as f:
             matrixDF.to_csv(f, header = f.tell()==0)
 
 

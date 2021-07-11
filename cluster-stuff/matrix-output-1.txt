@@ -1,0 +1,226 @@
+This is the only print statement I'm adding to Matrix-1, and it's at the very beginning.
+Number of projections is 1000
+The length of 6zge is 1100.
+[0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:4 is 0.0
+[0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:54 is 0.0
+[0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:104 is 0.0
+[0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:154 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:204 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:254 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:304 is 0.001
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:354 is 0.0085
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:404 is 0.004
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:454 is 0.013
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:504 is 0.0345
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:554 is 0.039
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:604 is 0.0335
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, 0.026, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:654 is 0.026
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, 0.026, 0.0345, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 250:704 is 0.0345
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, 0.026, 0.0345, 0.0445, nan, nan, nan, nan, nan, nan]
+Local vas at 250:754 is 0.0445
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, 0.026, 0.0345, 0.0445, 0.0625, nan, nan, nan, nan, nan]
+Local vas at 250:804 is 0.0625
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, 0.026, 0.0345, 0.0445, 0.0625, 0.0425, nan, nan, nan, nan]
+Local vas at 250:854 is 0.0425
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, 0.026, 0.0345, 0.0445, 0.0625, 0.0425, 0.07, nan, nan, nan]
+Local vas at 250:904 is 0.07
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, 0.026, 0.0345, 0.0445, 0.0625, 0.0425, 0.07, 0.1945, nan, nan]
+Local vas at 250:954 is 0.1945
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, 0.026, 0.0345, 0.0445, 0.0625, 0.0425, 0.07, 0.1945, 0.453, nan]
+Local vas at 250:1004 is 0.453
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0085, 0.004, 0.013, 0.0345, 0.039, 0.0335, 0.026, 0.0345, 0.0445, 0.0625, 0.0425, 0.07, 0.1945, 0.453, 0.062]
+Local vas at 250:1054 is 0.062
+[0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:4 is 0.0
+[0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:54 is 0.0
+[0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:104 is 0.0
+[0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:154 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:204 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:254 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:304 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:354 is 0.0035
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:404 is 0.0035
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:454 is 0.018
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:504 is 0.021
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:554 is 0.034
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:604 is 0.026
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, 0.0355, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:654 is 0.0355
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, 0.0355, 0.0245, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 300:704 is 0.0245
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, 0.0355, 0.0245, 0.035, nan, nan, nan, nan, nan, nan]
+Local vas at 300:754 is 0.035
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, 0.0355, 0.0245, 0.035, 0.0365, nan, nan, nan, nan, nan]
+Local vas at 300:804 is 0.0365
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, 0.0355, 0.0245, 0.035, 0.0365, 0.056, nan, nan, nan, nan]
+Local vas at 300:854 is 0.056
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, 0.0355, 0.0245, 0.035, 0.0365, 0.056, 0.07, nan, nan, nan]
+Local vas at 300:904 is 0.07
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, 0.0355, 0.0245, 0.035, 0.0365, 0.056, 0.07, 0.173, nan, nan]
+Local vas at 300:954 is 0.173
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, 0.0355, 0.0245, 0.035, 0.0365, 0.056, 0.07, 0.173, 0.4805, nan]
+Local vas at 300:1004 is 0.4805
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0035, 0.0035, 0.018, 0.021, 0.034, 0.026, 0.0355, 0.0245, 0.035, 0.0365, 0.056, 0.07, 0.173, 0.4805, 0.107]
+Local vas at 300:1054 is 0.107
+[0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:4 is 0.0
+[0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:54 is 0.0
+[0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:104 is 0.0
+[0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:154 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:204 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:254 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:304 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:354 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:404 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:454 is 0.011
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:504 is 0.0085
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:554 is -0.012
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:604 is -0.002
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, 0.003, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:654 is 0.003
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, 0.003, 0.0, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 350:704 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, 0.003, 0.0, -0.0065, nan, nan, nan, nan, nan, nan]
+Local vas at 350:754 is -0.0065
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, 0.003, 0.0, -0.0065, 0.0105, nan, nan, nan, nan, nan]
+Local vas at 350:804 is 0.0105
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, 0.003, 0.0, -0.0065, 0.0105, 0.006, nan, nan, nan, nan]
+Local vas at 350:854 is 0.006
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, 0.003, 0.0, -0.0065, 0.0105, 0.006, 0.029, nan, nan, nan]
+Local vas at 350:904 is 0.029
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, 0.003, 0.0, -0.0065, 0.0105, 0.006, 0.029, 0.17, nan, nan]
+Local vas at 350:954 is 0.17
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, 0.003, 0.0, -0.0065, 0.0105, 0.006, 0.029, 0.17, 0.423, nan]
+Local vas at 350:1004 is 0.423
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.011, 0.0085, -0.012, -0.002, 0.003, 0.0, -0.0065, 0.0105, 0.006, 0.029, 0.17, 0.423, 0.0145]
+Local vas at 350:1054 is 0.0145
+[0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:4 is 0.0
+[0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:54 is 0.0
+[0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:104 is 0.0
+[0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:154 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:204 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:254 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:304 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:354 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:404 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:454 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:504 is -0.0665
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:554 is -0.068
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:604 is -0.085
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, -0.0695, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:654 is -0.0695
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, -0.0695, -0.061, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 400:704 is -0.061
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, -0.0695, -0.061, -0.0735, nan, nan, nan, nan, nan, nan]
+Local vas at 400:754 is -0.0735
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, -0.0695, -0.061, -0.0735, -0.0645, nan, nan, nan, nan, nan]
+Local vas at 400:804 is -0.0645
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, -0.0695, -0.061, -0.0735, -0.0645, -0.074, nan, nan, nan, nan]
+Local vas at 400:854 is -0.074
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, -0.0695, -0.061, -0.0735, -0.0645, -0.074, -0.0215, nan, nan, nan]
+Local vas at 400:904 is -0.0215
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, -0.0695, -0.061, -0.0735, -0.0645, -0.074, -0.0215, 0.083, nan, nan]
+Local vas at 400:954 is 0.083
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, -0.0695, -0.061, -0.0735, -0.0645, -0.074, -0.0215, 0.083, 0.356, nan]
+Local vas at 400:1004 is 0.356
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0665, -0.068, -0.085, -0.0695, -0.061, -0.0735, -0.0645, -0.074, -0.0215, 0.083, 0.356, -0.07]
+Local vas at 400:1054 is -0.07
+[0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:4 is 0.0
+[0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:54 is 0.0
+[0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:104 is 0.0
+[0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:154 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:204 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:254 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:304 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:354 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:404 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:454 is 0.0
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:504 is 0.001
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:554 is 0.0015
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:604 is -0.0025
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, 0.002, nan, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:654 is 0.002
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, 0.002, 0.002, nan, nan, nan, nan, nan, nan, nan]
+Local vas at 450:704 is 0.002
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, 0.002, 0.002, 0.0025, nan, nan, nan, nan, nan, nan]
+Local vas at 450:754 is 0.0025
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, 0.002, 0.002, 0.0025, 0.011, nan, nan, nan, nan, nan]
+Local vas at 450:804 is 0.011
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, 0.002, 0.002, 0.0025, 0.011, 0.011, nan, nan, nan, nan]
+Local vas at 450:854 is 0.011
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, 0.002, 0.002, 0.0025, 0.011, 0.011, 0.05, nan, nan, nan]
+Local vas at 450:904 is 0.05
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, 0.002, 0.002, 0.0025, 0.011, 0.011, 0.05, 0.168, nan, nan]
+Local vas at 450:954 is 0.168
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, 0.002, 0.002, 0.0025, 0.011, 0.011, 0.05, 0.168, 0.4115, nan]
+Local vas at 450:1004 is 0.4115
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.0015, -0.0025, 0.002, 0.002, 0.0025, 0.011, 0.011, 0.05, 0.168, 0.4115, 0.014]
+Local vas at 450:1054 is 0.014
+Total runtime for 6zge matrix scan: 335271.72995 seconds or 5587.86216583 minutes
+
+
