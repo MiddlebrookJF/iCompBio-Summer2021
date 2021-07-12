@@ -235,8 +235,6 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
         with open("Vas-Data/{proteinName}-2.csv".format(proteinName=proteinName), mode='a') as f:
             matrixDF.to_csv(f, header = f.tell()==0)
 
-
-
 proteins = ['6zge']
 numProjections = 1000
 print('Number of projections is {proj}'.format(proj=numProjections))
