@@ -15,7 +15,7 @@ def plot_vas(proteinName, scanlength, section, vas, maxVas=False):
 
     x, y, z = [], [], []
     section = section.split(':')
-    section[1] = section[1][0:-1]
+    section[1] = section[1]
     for i in range (int(section[0]), int(section[1])):
         x.append(knot[i][0])
         y.append(knot[i][1])
@@ -29,11 +29,11 @@ def plot_vas(proteinName, scanlength, section, vas, maxVas=False):
         plt.title(f'{proteinName} with Max Vas for {section} of {vas}')
     else:
         plt.title(f'{proteinName} at {section} with Vas of {vas}')
-    if not os.path.exists(f'Vas-Data/Scans/{proteinName}'):
-        os.mkdir(f'Vas-Data/Scans/{proteinName}')
-    if not os.path.exists(f'Vas-Data/Scans/{proteinName}/{scanlength}'):
-        os.mkdir(f'Vas-Data/Scans/{proteinName}/{scanlength}')
-    plt.savefig(f'Vas-Data/Scans/{proteinName}/{scanlength}/{section}.png')
+    if not os.path.exists(f'Vas-Data/Scan-Graphs/{proteinName}'):
+        os.mkdir(f'Vas-Data/Scan-Graphs/{proteinName}')
+    if not os.path.exists(f'Vas-Data/Scan-Graphs/{proteinName}/{scanlength}'):
+        os.mkdir(f'Vas-Data/Scan-Graphs/{proteinName}/{scanlength}')
+    plt.savefig(f'Vas-Data/Scan-Graphs/{proteinName}/{scanlength}/{section}.png')
     plt.clf()
 
 def plot_all(lines):
@@ -48,10 +48,18 @@ def plot_all(lines):
             proteinName = words[3]
             scanlength = 200
         elif words[1] == 'at':          #Plot section at this line along with vas
-            plot_vas(proteinName, scanlength, words[2], words[0])
+            #Change start and end to the appropriate indices based on the dictionary of coord_index to amino_index
+            amino_index_cols = ['Coord_Index', '6acd', '7krq', '7lwt', '7lws', '7lww', '7lyn', '6zgh',
+                    '6zge', '6zgi', '6xkl', '7lyl', '7kdk', '6zgg', '7m8k', '7mjg']
+            col_index = [i for i in range(len(amino_index_cols)) if amino_index_cols[i] == proteinName]
+            amino_indices = pd.read_csv('AminoAcid-Indices.csv', usecols=col_index)
+            amino_indices = amino_indices.dropna().values.tolist()
+
+            old_section = words[2].split(':')
+            section = str(int(amino_indices[int(old_section[0])][0])) + ':'
+            section += str(int(amino_indices[int(old_section[1][0:-2])][0]))
+            plot_vas(proteinName, scanlength, section, words[0])
         elif words[1] == 'maximum':
-            max_loc = words[-2][1:-1] + ':' + words[-1][0:-1]
-            plot_vas(proteinName, int(words[5]), max_loc, words[7][0:-1], maxVas=True)
             scanlength += 200
 
 def plot_vas_change(lines):
@@ -75,9 +83,9 @@ def plot_vas_change(lines):
             plt.xlabel('Starting Point')
             plt.ylabel('Local Second Vassiliev Measure')
 
-            if not os.path.exists(f'Vas-Data/Change/{proteinName}'):
-                os.mkdir(f'Vas-Data/Change/{proteinName}')
-            plt.savefig(f'Vas-Data/Change/{proteinName}/{proteinName}{scanlength}.png')
+            if not os.path.exists(f'Vas-Data/Change-Graphs/{proteinName}'):
+                os.mkdir(f'Vas-Data/Change-Graphs/{proteinName}')
+            plt.savefig(f'Vas-Data/Change-Graphs/{proteinName}/{proteinName}{scanlength}.png')
             plt.clf()
             start_list.clear()
             vas_list.clear()
@@ -153,7 +161,7 @@ def vas_matrix(lines):
                 pd.DataFrame(matrix).to_csv(f, header = f.tell()==0)
             scanlength += 1
 
-with open('Vas-Data/Scan-Text/50inter-6zg.txt') as scanFile:
+with open('Vas-Data/Scan-Text/All-50inter-one.txt') as scanFile:
     lines = scanFile.readlines()
-plot_all_change(lines, title='Change in V2 for Wild SARS-CoV-2 S Proteins in Various Conformations')
+plot_all(lines)
 
