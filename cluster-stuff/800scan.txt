@@ -1,0 +1,11 @@
+Number of projections is 1000
+The length of 6zge is 1100.
+0.119 at 281:1081
+0.1245 at 300:1100
+The Vas measures from 0 to 1100 are [0.119, 0.1245]
+The maximum Vas for scanlength 800 is 0.1245, at atoms [50, 850]
+255.614349584 minutes of runtime for 800 scanlength
+
+Total runtime for 6zge scan: 15336.860985 seconds or 255.614349751 minutes
+
+

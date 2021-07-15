@@ -37,6 +37,7 @@ Scanlength is 400
 0.044 at 500:900
 0.1335 at 550:950
 0.2095 at 600:1000
+* * * * 0.169 at 641:971 (330 scanlength)
 0.1075 at 650:1050
 The Vas measures from 0 to 1100 are [0.0725, -0.0405, 0.014, 0.0315, 0.011, 0.0375, 0.0275, -0.001, -0.081, 0.001, 0.044, 0.1335, 0.2095, 0.1075]
 The maximum Vas for scanlength 400 is 0.2095, at atoms [600, 1000]
@@ -53,6 +54,8 @@ Scanlength is 600
 0.152 at 350:950
 0.1 at 400:1000
 -0.0025 at 450:1050
+* * * * 0.119 at 281:1081 (800 scanlength)
+* * * * 0.1245 at 300:1100 (800 scanlength)
 The Vas measures from 0 to 1100 are [0.084, -0.0685, 0.0345, 0.029, 0.0485, 0.0345, 0.08, 0.152, 0.1, -0.0025]
 The maximum Vas for scanlength 600 is 0.152, at atoms [350, 950]
 558.511960133 minutes of runtime for 600 scanlength
