@@ -185,7 +185,7 @@ def runtime (startTime):
    return time.time()-startTime
 
 #WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
-def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
+def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600), start=0):
     max_list = []
     interval = 50
     pLength = len(protein)
@@ -194,7 +194,7 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
         sTime = time.time()
         vas_list = []
 
-        for start in range(0, pLength - scanlength + 1, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
+        for start in range(start, pLength - scanlength + 1, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
             upperbound = start + scanlength
             local_vas = vas_open_parallel(protein[start : upperbound], trials=numProjections, size=50, poolNum=4)
             vas_list.append( local_vas )
@@ -225,17 +225,16 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
 ### Proteins Vas_Scan FOR CLUSTER ###
 
-proteins = ['6acd', '7krq', '6xkl', '7lyl', '7kdk', '6zgg']
-numProjections=1
+proteins = ['6zge']
+numProjections=1000
 print('Number of projections is {proj}'.format(proj=numProjections))
-for proteinName in proteins:
-    proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
+for proteinPath in proteins:
+    proteinDF = pd.read_csv('Coordinates/{proteinPath}.csv'.format(proteinPath=proteinPath))
     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-    print("The length of {name} is {len}.".format(name=proteinName, len=len(proteinList)))
+    print("The length of {name} is {len}.".format(name=proteinPath, len=len(proteinList)))
 
     ## Vas Scan ##
-    for scanlength in (200, 400, 600):
-        pLength = len(proteinList)
-        start = pLength - scanlength
-        vas = vas_open(proteinList[start : pLength])
-        print("{local_vas} at {start}:{pLength}".format(local_vas=vas, start=start, pLength=pLength))
+    startTime = time.time()
+    max_list = vas_scan(proteinList, scanlengths=[330], start=641)
+    execTime = runtime(startTime)
+    print('Total runtime for {proteinPath} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinPath=proteinPath, execTime=execTime, execMin=execTime/60))

@@ -235,6 +235,6 @@ for proteinPath in proteins:
 
     ## Vas Scan ##
     startTime = time.time()
-    max_list = vas_scan(proteinList, scanlengths=[600])
+    max_list = vas_scan(proteinList)
     execTime = runtime(startTime)
     print('Total runtime for {proteinPath} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinPath=proteinPath, execTime=execTime, execMin=execTime/60))
