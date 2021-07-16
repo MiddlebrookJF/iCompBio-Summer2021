@@ -221,8 +221,8 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
 def vas_matrix(proteinList, proteinName, numProjections=1000):
     pLength = len(proteinList)
-    iList = range(700, pLength-3, 50)
-    jList = range(750, pLength+1, 50)
+    iList = range(250, 351, 50)
+    jList = range(300, pLength+1, 50)
     matrixDF = pd.DataFrame(columns=jList)
 
     #ith row, jth column
@@ -232,19 +232,21 @@ def vas_matrix(proteinList, proteinName, numProjections=1000):
             matrixDF.loc[i, j] = local_vas
             matrixDF.loc[j, i] = local_vas
             print("Local vas at {i}:{j} is {local_vas}".format(i=i, j=j, local_vas=local_vas))
-        with open("Vas-Data/{proteinName}-2.csv".format(proteinName=proteinName), mode='a') as f:
-            matrixDF.to_csv(f, header = f.tell()==0)
+    with open("Vas-Data/{proteinName}-2.csv".format(proteinName=proteinName), mode='a') as f:
+        matrixDF.to_csv(f, header = f.tell()==0)
 
-proteins = ['6zge']
+
+
+proteinName = '6zge'
 numProjections = 1000
 print('Number of projections is {proj}'.format(proj=numProjections))
-for proteinName in proteins:
-    proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
-    proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-    print("The length of {name} is {len}.".format(name=proteinName, len=len(proteinList)))
 
-    ## Vas Scan ##
-    startTime = time.time()
-    vas_matrix(proteinList, proteinName, numProjections)
-    execTime = runtime(startTime)
-    print('Total runtime for {proteinName} matrix scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))
+proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
+proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+print("The length of {name} is {len}.".format(name=proteinName, len=len(proteinList)))
+
+## Vas Scan ##
+startTime = time.time()
+vas_matrix(proteinList, proteinName, numProjections)
+execTime = runtime(startTime)
+print('Total runtime for {proteinName} matrix scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))
