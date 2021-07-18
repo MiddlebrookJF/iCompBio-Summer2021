@@ -193,8 +193,8 @@ print("The length of {name} is {len}.".format(name=proteinName, len=len(proteinL
 startTime = time.time()
 
 pLength = len(proteinList)
-iList = range(0, 700, 50)
-jList = range(50, pLength+1, 50)
+iList = range(300, 500, 50)
+jList = range(350, pLength+1, 50)
 matrixDF = pd.DataFrame(columns=jList)
 
 #ith row, jth column
@@ -204,7 +204,7 @@ for i in iList:
         matrixDF.loc[i, j] = local_vas
         matrixDF.loc[j, i] = local_vas
         print("Local vas at {i}:{j} is {local_vas}".format(i=i, j=j, local_vas=local_vas))
-    with open("Vas-Data/{proteinName}-0-using-scan.csv".format(proteinName=proteinName), mode='w') as f:
+    with open("Vas-Data/{proteinName}-300-new.csv".format(proteinName=proteinName), mode='w') as f:
         matrixDF.to_csv(f, header = f.tell()==0)
 
 execTime = runtime(startTime)
