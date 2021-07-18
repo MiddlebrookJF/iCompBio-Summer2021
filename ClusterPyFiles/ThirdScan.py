@@ -173,68 +173,39 @@ def vas_open_parallel(chain, trials=1000, size=50, poolNum=4):
         p.join()
         return vas_sum
 
-#vas of either open or closed chain, passed as boolean; default is open
-def vas_measure(walk, closed = False, trials=1000):
-    if (closed):
-        walk.append(walk[0])
-        return vas_open_parallel(walk, trials=1)
-    return vas_open_parallel(walk, trials=trials)
-
 #calculate runtime
 def runtime (startTime):
    return time.time()-startTime
-
-#WIII: calculate local second Vassiliev measure with varying number of atoms at once by calculating every length of the protein one index at a time
-def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
-    max_list = []
-    interval = 50
-    pLength = len(protein)
-
-    for scanlength in scanlengths:
-        sTime = time.time()
-        vas_list = []
-
-        for start in range(0, pLength - scanlength + 1, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
-            upperbound = start + scanlength
-            local_vas = vas_open_parallel(protein[start : upperbound], trials=numProjections, size=50, poolNum=4)
-            vas_list.append( local_vas )
-            print("{local_vas} at {start}:{upperbound}".format(local_vas=local_vas, start=start, upperbound=upperbound))
-
-            if(upperbound + interval > pLength):                   #last iteration
-                if(pLength < upperbound + interval - (interval/2)):           #Determines range of last scan
-                    start = pLength - scanlength
-                else: start += interval
-                
-                local_vas = vas_open(protein[start : pLength])
-                vas_list.append( local_vas )
-                print("{local_vas} at {start}:{pLength}".format(local_vas=local_vas, start=start, pLength=pLength))
-
-        print("The Vas measures from 0 to {pLength} are {vas_list}".format(pLength=pLength, vas_list=vas_list))
-        
-        max_vas = max(np.abs(vas_list))                 #find max value of vas in given iteration, then record them
-        max_start = vas_list.index(max(vas_list)) * interval
-        max_loc = [max_start, max_start + scanlength]
-        print("The maximum Vas for scanlength {scanlength} is {max_vas}, at atoms {max_loc}".format(scanlength=scanlength, max_vas=max_vas, max_loc=max_loc))
-        max_list.append([max_loc, max_vas])
-
-        print("{execMin} minutes of runtime for {scanlength} scanlength\n".format(execMin=runtime(sTime)/60, scanlength=scanlength))
-    
-    return max_list
 
 ##########################
 
 ### Proteins Vas_Scan FOR CLUSTER ###
 
-proteins = ['7kdk', '6zgg']
-numProjections=1000
+proteinName = '6zge'
+numProjections = 1000
 print('Number of projections is {proj}'.format(proj=numProjections))
-for proteinPath in proteins:
-    proteinDF = pd.read_csv('Coordinates/{proteinPath}.csv'.format(proteinPath=proteinPath))
-    proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-    print("The length of {name} is {len}.".format(name=proteinPath, len=len(proteinList)))
 
-    ## Vas Scan ##
-    startTime = time.time()
-    max_list = vas_scan(proteinList)
-    execTime = runtime(startTime)
-    print('Total runtime for {proteinPath} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinPath=proteinPath, execTime=execTime, execMin=execTime/60))
+proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
+proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+print("The length of {name} is {len}.".format(name=proteinName, len=len(proteinList)))
+
+## Vas Scan ##
+startTime = time.time()
+
+pLength = len(proteinList)
+iList = range(0, 700, 50)
+jList = range(50, pLength+1, 50)
+matrixDF = pd.DataFrame(columns=jList)
+
+#ith row, jth column
+for i in iList:
+    for j in jList:
+        local_vas = vas_open(proteinList[i:j], trials=numProjections)
+        matrixDF.loc[i, j] = local_vas
+        matrixDF.loc[j, i] = local_vas
+        print("Local vas at {i}:{j} is {local_vas}".format(i=i, j=j, local_vas=local_vas))
+    with open("Vas-Data/{proteinName}-0-using-scan.csv".format(proteinName=proteinName), mode='w') as f:
+        matrixDF.to_csv(f, header = f.tell()==0)
+
+execTime = runtime(startTime)
+print('Total runtime for {proteinName} matrix scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))
