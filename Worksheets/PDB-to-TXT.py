@@ -18,7 +18,7 @@ import pandas as pd
 #             f.writelines(line)
 
 proteins = ['6acd', '7krq', '7lwt', '7lws', '7lww', '7lyn', '6zgh', '6zge',
-        '6zgi', '6xkl', '7lyl', '7kdk', '6zgg', '7m8k', '7mjg']
+        '6zgi', '6xkl', '7lyl', '7kdk', '6zgg', '7m8k', '7mjg', '6xra']
 df = pd.DataFrame()
 data = dict()
 for pName in proteins:

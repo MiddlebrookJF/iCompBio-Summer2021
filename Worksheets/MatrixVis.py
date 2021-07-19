@@ -51,5 +51,5 @@ def read_matrix(path):
 
 #Executed stuff below here
 # protein_matrix = read_matrix('Vas-Data/Matrices/6zge_700-1100.csv')
-proteinDF = pd.read_csv('Vas-Data/Matrices/6zge_700-1100.csv', index_col=0)
+proteinDF = pd.read_csv('Vas-Data/Matrices/6zge_Diagonal.csv', index_col=0)
 matrix_vis(proteinDF)
