@@ -225,8 +225,8 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600)):
 
 ### Proteins Vas_Scan FOR CLUSTER ###
 
-proteins = ('6acd')
-numProjections=1
+proteins = ['6xra']
+numProjections=1000
 print('Number of projections is {proj}'.format(proj=numProjections))
 for proteinPath in proteins:
     proteinDF = pd.read_csv('Coordinates/{proteinPath}.csv'.format(proteinPath=proteinPath))
@@ -235,6 +235,6 @@ for proteinPath in proteins:
 
     ## Vas Scan ##
     startTime = time.time()
-    max_list = vas_scan(proteinList)
+    vas_scan(proteinList, numProjections=numProjections)
     execTime = runtime(startTime)
     print('Total runtime for {proteinPath} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinPath=proteinPath, execTime=execTime, execMin=execTime/60))

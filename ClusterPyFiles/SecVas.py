@@ -225,19 +225,18 @@ def vas_scan(protein, numProjections=1000):
 
 ### Proteins Vas_Scan FOR CLUSTER ###
 
-proteins = glob.glob('Coordinates/*.csv')
 numProjections=1000
-for proteinPath in proteins[int(len(proteins)/3) : int(len(proteins)*2/3)]:
-    proteinDF = pd.read_csv(proteinPath)
-    proteinName = proteinPath[-8:-4]
-    proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+proteinName = '6xra'
+proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
 
-    ## Overall Vas ##
-    startTime = time.time()
-    value = vas_open_parallel(proteinList, trials=numProjections)
-    execTime = runtime(startTime)
-    if(value != None):
-        thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
-            columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
-        with open(f"Vas-Data/NewVas{numProjections}.csv", mode='a') as f:
-            thisDF.to_csv(f, header=f.tell()==0, index=False)
+proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+
+## Overall Vas ##
+startTime = time.time()
+value = vas_open_parallel(proteinList, trials=numProjections)
+execTime = runtime(startTime)
+if(value != None):
+    thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
+        columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
+    with open(f"Vas-Data/NewVas{numProjections}.csv", mode='a') as f:
+        thisDF.to_csv(f, header=f.tell()==0, index=False)

@@ -196,7 +196,7 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600), start=0)
 
         for start in range(start, pLength - scanlength + 1, interval):     #scan the protein in range of length scanlength starting at 'start' which += by interval
             upperbound = start + scanlength
-            local_vas = vas_open_parallel(protein[start : upperbound], trials=numProjections, size=50, poolNum=4)
+            local_vas = vas_open(protein[start : upperbound], trials=numProjections, size=50, poolNum=4)
             vas_list.append( local_vas )
             print("{local_vas} at {start}:{upperbound}".format(local_vas=local_vas, start=start, upperbound=upperbound))
 
@@ -225,16 +225,16 @@ def vas_scan(protein, numProjections=1000, scanlengths=(200, 400, 600), start=0)
 
 ### Proteins Vas_Scan FOR CLUSTER ###
 
-proteins = ['6zge']
 numProjections=1000
 print('Number of projections is {proj}'.format(proj=numProjections))
-for proteinPath in proteins:
-    proteinDF = pd.read_csv('Coordinates/{proteinPath}.csv'.format(proteinPath=proteinPath))
-    proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-    print("The length of {name} is {len}.".format(name=proteinPath, len=len(proteinList)))
+proteinName = '6xra'
 
-    ## Vas Scan ##
-    startTime = time.time()
-    max_list = vas_scan(proteinList, scanlengths=[330], start=641)
-    execTime = runtime(startTime)
-    print('Total runtime for {proteinPath} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinPath=proteinPath, execTime=execTime, execMin=execTime/60))
+proteinDF = pd.read_csv('Coordinates/{proteinName}.csv'.format(proteinName=proteinName))
+proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+print("The length of {name} is {len}.".format(name=proteinName, len=len(proteinList)))
+
+## Vas Scan ##
+startTime = time.time()
+max_list = vas_scan(proteinList, numProjections=numProjections)
+execTime = runtime(startTime)
+print('Total runtime for {proteinName} scan: {execTime} seconds or {execMin} minutes\n\n'.format(proteinName=proteinName, execTime=execTime, execMin=execTime/60))
