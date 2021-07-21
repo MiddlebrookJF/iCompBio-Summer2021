@@ -32,24 +32,10 @@ def matrix_vis(matrixDF):
 
     plt.imshow(matrix, interpolation='none', cmap=cmap, norm=norm, extent=matrix_range) #cmap=plt.cm.ocean)
     plt.colorbar()
-    ax.set_title('Uncleaved Closed S: V2 Values in Matrix Plot')
+    ax.set_title('Uncleaved Closed S: V2 Values in DDM')
     plt.savefig(f"Vas-Data/Matrices/Matrix_{matrix_range[0]}-{matrix_range[1]}.png")
     plt.show()
 
-def read_matrix(path):
-    with open(path, 'r') as scanFile:
-        lines = scanFile.readlines()
-    protein_matrix = []
-    for line in lines[1: len(lines)]:
-        values = line.split(',')
-        values[-1] = values[-1][0:-2]
-        for val in values[1: len(values)]:
-            val = float(val)
-        protein_matrix.append(values)
-
-    return pd.DataFrame(protein_matrix, columns=lines[0][1: len(lines[0])])
-
 #Executed stuff below here
-# protein_matrix = read_matrix('Vas-Data/Matrices/6zge_700-1100.csv')
-proteinDF = pd.read_csv('Vas-Data/Matrices/6zge_Diagonal.csv', index_col=0)
+proteinDF = pd.read_csv('Vas-Data/Matrices/6zge_0-1100.csv', index_col=0)
 matrix_vis(proteinDF)
