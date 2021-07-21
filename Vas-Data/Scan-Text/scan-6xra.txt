@@ -1,0 +1,14 @@
+Number of projections is 1000
+The length of 6xra is 348.
+0.0035 at 0:200
+0.0095 at 50:250
+0.0095 at 100:300
+0.002 at 150:348
+The Vas measures from 0 to 348 are [0.0035, 0.0095, 0.0095, 0.002]
+The maximum Vas for scanlength 200 is 0.0095, at atoms [50, 250]
+48.8902018984 minutes of runtime for 200 scanlength
+
+0.0485 at 0:348
+The Vas measures from 0 to 348 are [0.0485]
+The maximum Vas for scanlength 400 is 0.0.0485, at atoms [0, 348]
+53.14722798 minutes of runtime for 400 scanlength

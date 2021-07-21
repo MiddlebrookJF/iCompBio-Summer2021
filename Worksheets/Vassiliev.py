@@ -189,11 +189,6 @@ def runtime (startTime):
 
 #WII: Calculate second Vassiliev measure of knot and plot it
 def plot_vas(knot, closed=False):
-    vas = 0
-    vas = vas_measure(knot, closed=closed)
-
-    print("\nThe Vassiliev Measure of the knot is " + str(vas) + "\n")
-
     x, y, z = [], [], []
     for i in range (0, len(knot)):
         x.append(knot[i][0])
@@ -268,28 +263,38 @@ def plot_by_section(knot, section, interval):
 
 ##########################
 
+proteinDF = pd.read_csv(f'Coordinates/6zge.csv')
+proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+# proteinList = [[1, 0, 0],             #trefoil
+#             [5, 1, -1],
+#             [1, 6, 2],
+#             [0, 2, -5],
+#             [5, 2, 5],
+#             [3, 6, -2]]
+plot_vas(proteinList)
+
 ### Proteins ###
 
-proteins = glob.glob('Coordinates/*.csv')
-numProjections = 100
-# for proteinPath in proteins:
-#     proteinDF = pd.read_csv(proteinPath)
-#     proteinName = proteinPath[-8:-4]
+# proteins = glob.glob('Coordinates/*.csv')
+# numProjections = 1
+# # for proteinPath in proteins:
+# #     proteinDF = pd.read_csv(proteinPath)
+# #     proteinName = proteinPath[-8:-4]
+# #     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
+# for proteinName in ['7krq', '7m8k', '7mjg', '7lyl', '7lww', '7lws', '7lyn', '7lwt']:
+#     proteinDF = pd.read_csv(f'Coordinates/{proteinName}.csv')
 #     proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
-for proteinName in ['7krq', '7m8k', '7mjg', '7lyl', '7lww', '7lws', '7lyn', '7lwt']:
-    proteinDF = pd.read_csv(f'Coordinates/{proteinName}.csv')
-    proteinList = proteinDF.values.tolist()                 #change df to a list of atoms' coordinates
 
-    ## Overall Vas ##
-    startTime = time.time()
-    value = vas_open_parallel(proteinList, trials=numProjections)
-    execTime = runtime(startTime)
-    if(value != None):
-        thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
-            columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
-        #Add vas data of one protein to a csv
-        with open("Vas-Data/ProteinVas.csv", mode='a') as f:
-            thisDF.to_csv(f, header=f.tell()==0, index=False)
+#     ## Overall Vas ##
+#     startTime = time.time()
+#     value = vas_open_parallel(proteinList, trials=numProjections)
+#     execTime = runtime(startTime)
+#     if(value != None):
+#         thisDF=pd.DataFrame([[proteinName, len(proteinList), value, execTime, numProjections]],
+#             columns=['Name','NumCaAtoms','Vassiliev','RuntimeSeconds','NumProjections'])
+#         #Add vas data of one protein to a csv
+#         with open("Vas-Data/ProteinVas.csv", mode='a') as f:
+#             thisDF.to_csv(f, header=f.tell()==0, index=False)
 
 
 ### Scanning and Plotting ###
