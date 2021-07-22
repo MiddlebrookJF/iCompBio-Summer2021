@@ -15,7 +15,9 @@ def matrix_vis(matrixDF):
     print("\n\nMatrix:")
     print(matrixDF)
 
-    matrix_range = (int(matrixDF.columns[0]), int(matrixDF.columns[-1]), int(matrixDF.columns[0]), int(matrixDF.columns[-1]))
+    start = int(matrixDF.columns[0])
+    end = int(matrixDF.columns[-1])
+    matrix_range = (start, end, start, end)
 
     fig = plt.figure()
     ax = fig.add_subplot(111)                               # means only one plot
@@ -33,7 +35,7 @@ def matrix_vis(matrixDF):
     plt.imshow(matrix, interpolation='none', cmap=cmap, norm=norm, extent=matrix_range) #cmap=plt.cm.ocean)
     plt.colorbar()
     ax.set_title('Uncleaved Closed S: V2 Values in DDM')
-    plt.savefig(f"Vas-Data/Matrices/Matrix_{matrix_range[0]}-{matrix_range[1]}.png")
+    plt.savefig(f"Vas-Data/Matrices/NewMatrix_{matrix_range[0]}-{matrix_range[1]}.png")
     plt.show()
 
 #Executed stuff below here
