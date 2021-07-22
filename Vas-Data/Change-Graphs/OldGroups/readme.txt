@@ -1,0 +1,1 @@
+These graphs are plotted using continuous indices starting at 0 as opposed to the amino acid indices found in the other folder. The other folder was made to more accurately look at the domains of S when compared to the V2 graph.
