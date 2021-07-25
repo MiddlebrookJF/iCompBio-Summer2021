@@ -95,6 +95,20 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
     proteinName = ''
     vas_list = []
     start_list = []
+    proteinNames = {
+        '6zge': 'Uncleaved Closed',
+        '6zgi': 'Cleaved Closed',
+        '6zgg': 'Cleaved Open',
+        '6zgh': 'Cleaved Intermediate',
+        '7lww': 'Brazil 3-Mutant',
+        '7lyn': 'South African',
+        '7lwt': 'United Kingdom',
+        '6xkl': 'Hexapro',
+        '6acd': '2003 SARS-CoV',
+        '7lws': 'United Kingdom',
+        '7lyl': 'South African',
+        '7kdk': 'D614G-Mutated'
+    }
 
     for scanlength in scanlengths:
         currentScanLength = 0
@@ -104,7 +118,8 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
             words = line.split(' ')
             if len(words) < 2: continue
             if words[1] == 'length':
-                proteinName = words[3]
+                proteinName = proteinNames[words[3]]
+                proteinLabel = words[3]
             if words[0] == 'Scanlength':
                 currentScanLength = int(words[2][0:-1])
                 continue
@@ -118,7 +133,7 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
                     #Change start_list to the appropriate indices based on the dictionary of coord_index to amino_index
                     amino_index_cols = ['Coord_Index', '6acd', '7krq', '7lwt', '7lws', '7lww', '7lyn', '6zgh',
                             '6zge', '6zgi', '6xkl', '7lyl', '7kdk', '6zgg', '7m8k', '7mjg', '6xra']
-                    col_index = [i for i in range(len(amino_index_cols)) if amino_index_cols[i] == proteinName]
+                    col_index = [i for i in range(len(amino_index_cols)) if amino_index_cols[i] == proteinLabel]
                     amino_indices = pd.read_csv('Vas-Data/AminoAcid-Indices.csv', usecols=col_index)
                     amino_indices = amino_indices.dropna().values.tolist()
 
@@ -135,7 +150,9 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
         plt.xlabel('Amino Acid Starting Point')
         plt.ylabel('Local Second Vassiliev Measure')
         plt.legend()
-        plt.savefig(rf'Vas-Data\Change-Graphs\Groups\RBD-Up{scanlength}.png')
+        plt.savefig(rf'Vas-Data\Change-Graphs\Groups\6zg{scanlength}.png')
+        # plt.savefig(rf'Vas-Data\Change-Graphs\Groups\RBD-Up{scanlength}.png')
+        # plt.savefig(rf'Vas-Data\Change-Graphs\Groups\RBD-Down{scanlength}.png')
         plt.clf()           #Clears the graph
 
 
@@ -161,6 +178,8 @@ def vas_matrix(lines):
                 pd.DataFrame(matrix).to_csv(f, header = f.tell()==0)
             scanlength += 1
 
-with open('Vas-Data/Scan-Text/50inter-RBD_Up.txt') as scanFile:
+with open('Vas-Data/Scan-Text/50inter-6zg.txt') as scanFile:
     lines = scanFile.readlines()
-plot_all_change(lines, title='Change in V2 for SARS-CoV-2 Variant S Proteins in Open RBD-Up Conformation')
+plot_all_change(lines, title='Change in V2 for Wild SARS-CoV-2 S Proteins in Various Conformations')
+# plot_all_change(lines, title='Change in V2 for SARS-CoV-2 Variant S Proteins in Closed RBD-Up Conformation')
+# plot_all_change(lines, title='Change in V2 for SARS-CoV-2 Variant S Proteins in Closed RBD-Down Conformation')

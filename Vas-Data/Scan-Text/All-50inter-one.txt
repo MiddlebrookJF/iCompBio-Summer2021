@@ -35,7 +35,6 @@ The maximum Vas for scanlength 200 is 0.0895, at atoms [0, 200]
 0.044 at 500:900
 0.1335 at 550:950
 0.2095 at 600:1000
-* * * * 0.169 at 641:971 (330 scanlength)
 0.1075 at 650:1050
 The Vas measures from 0 to 1100 are [0.0725, -0.0405, 0.014, 0.0315, 0.011, 0.0375, 0.0275, -0.001, -0.081, 0.001, 0.044, 0.1335, 0.2095, 0.1075]
 The maximum Vas for scanlength 400 is 0.2095, at atoms [600, 1000]
@@ -258,6 +257,7 @@ The maximum Vas for scanlength 200 is 0.1235, at atoms [0, 200]
 0.057 at 500:900
 0.2915 at 550:950
 0.0995 at 600:1000
+* * * * * * 0.268 at 641:963 (330 scanlength, knot from KnotProt)
 0.1085 at 650:1050
 0.0545 at 665:1065
 The Vas measures from 0 to 1065 are [0.157, -0.0765, 0.0005, 0.0155, 0.028, 0.015, 0.019, -0.005, -0.0115, 0.006, 0.057, 0.2915, 0.0995, 0.1085, 0.001]

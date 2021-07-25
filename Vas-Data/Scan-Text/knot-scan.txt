@@ -1,0 +1,11 @@
+Number of projections is 1000
+The length of 6acd is 1065.
+0.268 at 641:963
+0.0135 at 743:1065
+The Vas measures from 0 to 1065 are [0.268, 0.0135]
+The maximum Vas for scanlength 322 is 0.268, at atoms [0, 322]
+40.5616022031 minutes of runtime for 322 scanlength
+
+Total runtime for 6acd scan: 2433.6961441 seconds or 40.5616024017 minutes
+
+

@@ -261,6 +261,20 @@ def plot_by_section(knot, section, interval):
     
     plt.show()
 
+    
+def plot_knot(knot):
+
+    ax = plt.axes(projection='3d')
+    x, y, z = [], [], []
+    for j in range (0, len(knot), 1):
+        x.append(knot[j][0])
+        y.append(knot[j][1])
+        z.append(knot[j][2])
+
+    ax.plot3D(x, y, z)
+    
+    plt.show()
+
 ##########################
 
 proteinDF = pd.read_csv(f'Coordinates/6zge.csv')
@@ -272,6 +286,8 @@ proteinList = proteinDF.values.tolist()                 #change df to a list of 
 #             [5, 2, 5],
 #             [3, 6, -2]]
 plot_vas(proteinList)
+
+plot_knot(proteinList)
 
 ### Proteins ###
 

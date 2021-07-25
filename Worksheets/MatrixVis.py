@@ -34,7 +34,7 @@ def matrix_vis(matrixDF):
 
     plt.imshow(matrix, interpolation='none', cmap=cmap, norm=norm, extent=matrix_range) #cmap=plt.cm.ocean)
     plt.colorbar()
-    ax.set_title('Uncleaved Closed S: V2 Values in DDM')
+    ax.set_title('Uncleaved Closed S: V2 Values in Fingerprint Matrix')
     plt.savefig(f"Vas-Data/Matrices/NewMatrix_{matrix_range[0]}-{matrix_range[1]}.png")
     plt.show()
 
