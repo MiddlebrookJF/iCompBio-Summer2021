@@ -98,7 +98,7 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
     proteinNames = {
         '6zge': 'Uncleaved Closed',
         '6zgi': 'Cleaved Closed',
-        '6zgg': 'Cleaved Open',
+        '6zgg': 'Wild Cleaved',
         '6zgh': 'Cleaved Intermediate',
         '7lww': 'Brazil 3-Mutant',
         '7lyn': 'South African',
@@ -150,8 +150,8 @@ def plot_all_change(lines, scanlengths=[200,400,600], title='Change in V2'):
         plt.xlabel('Amino Acid Starting Point')
         plt.ylabel('Local Second Vassiliev Measure')
         plt.legend()
-        plt.savefig(rf'Vas-Data\Change-Graphs\Groups\6zg{scanlength}.png')
-        # plt.savefig(rf'Vas-Data\Change-Graphs\Groups\RBD-Up{scanlength}.png')
+        # plt.savefig(rf'Vas-Data\Change-Graphs\Groups\6zg{scanlength}.png')
+        plt.savefig(rf'Vas-Data\Change-Graphs\Groups\RBD-Up{scanlength}.png')
         # plt.savefig(rf'Vas-Data\Change-Graphs\Groups\RBD-Down{scanlength}.png')
         plt.clf()           #Clears the graph
 
@@ -178,8 +178,8 @@ def vas_matrix(lines):
                 pd.DataFrame(matrix).to_csv(f, header = f.tell()==0)
             scanlength += 1
 
-with open('Vas-Data/Scan-Text/50inter-6zg.txt') as scanFile:
+with open('Vas-Data/Scan-Text/50inter-RBD_Up.txt') as scanFile:
     lines = scanFile.readlines()
-plot_all_change(lines, title='Change in V2 for Wild SARS-CoV-2 S Proteins in Various Conformations')
-# plot_all_change(lines, title='Change in V2 for SARS-CoV-2 Variant S Proteins in Closed RBD-Up Conformation')
+# plot_all_change(lines, title='Change in V2 for Wild SARS-CoV-2 S Proteins in Various Conformations')
+plot_all_change(lines, title='Change in V2 for SARS-CoV-2 Variant S Proteins in Open RBD-Up Conformation')
 # plot_all_change(lines, title='Change in V2 for SARS-CoV-2 Variant S Proteins in Closed RBD-Down Conformation')
